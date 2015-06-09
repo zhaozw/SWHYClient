@@ -16,6 +16,7 @@ class Message {
     var loginType:String = ""
     var postUserName:String = ""                //每次点击登陆按钮时 需要传到登陆验证NetworkEngine中的用户名和密码
     var postPassword:String  = ""               //每次点击登陆按钮时 需要传到登陆验证NetworkEngine中的用户名和密码
+    var logout:Bool = false                     //是否登出状态
     class var shared: Message {
         return Inner.instance
     }

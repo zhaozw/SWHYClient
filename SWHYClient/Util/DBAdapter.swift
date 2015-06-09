@@ -12,6 +12,7 @@ import Foundation
 class DBAdapter {
     //Execute 返回 0 代表执行不成功
     private let db = SQLiteDB.sharedInstance()
+    private let queue1:dispatch_queue_t = dispatch_queue_create("sqlite_db_queue", DISPATCH_QUEUE_SERIAL)
     class var shared: DBAdapter {
         return Inner.instance
     }
@@ -41,13 +42,15 @@ class DBAdapter {
         let SQL_DB_CREATE_INNERADDRESSDEPTLIST = "CREATE TABLE IF NOT EXISTS \(Config.TableName.InnerAddressDeptList) ( name text primary key,  showindex integer, updatetime text)"
         
         let result_inneraddressdeptlist = self.db.execute(SQL_DB_CREATE_INNERADDRESSDEPTLIST, parameters: nil)
-               
+        
         //客户通讯录
-        let SQL_DB_CREATE_CUSTOMERADDRESSLIST = "CREATE TABLE IF NOT EXISTS \(Config.TableName.CustomerAddressList) ( customerid text primary key, comp text, groupname text, name text, mobile text, linetel text, comptel text, email text, important text, importantid text, level text, managerlist text, sex text, jobtitle text, custlevel text, status text, query text,showindex integer, updatetime text)"
+        let SQL_DB_CREATE_CUSTOMERADDRESSLIST = "CREATE TABLE IF NOT EXISTS \(Config.TableName.CustomerAddressList) ( customerid text, comp text, groupname text, name text, mobile text, linetel text, comptel text, email text, important text, importantid text, level text, managerlist text, sex text, jobtitle text, custlevel text, status text, query text,showindex integer, updatetime text, PRIMARY KEY(customerid, groupname))"
         
         let result_customeraddresslist = self.db.execute(SQL_DB_CREATE_CUSTOMERADDRESSLIST, parameters: nil)
-        println(result_customeraddresslist
-        )
+        
+        //let SQL_DB_INDEX = "CREATE UNIQUE INDEX IF NOT EXISTS idx_CustomerAddress ON \(Config.TableName.CustomerAddressList)(customerid,custlevel)"
+        //let result_customeraddresslist_index = self.db.execute(SQL_DB_INDEX, parameters: nil)
+        //println(result_customeraddresslist        )
         //客户通讯录群组表
         
         let SQL_DB_CREATE_CUSTOMERADDRESSGROUPLIST = "CREATE TABLE IF NOT EXISTS \(Config.TableName.CustomerAddressGroupList) ( name text primary key,  level text , showindex integer, updatetime text)"
@@ -59,9 +62,12 @@ class DBAdapter {
         
         let result_accessloglist = self.db.execute(SQL_DB_CREATE_ACCESSLOGLIST, parameters: nil)
         
+        //客户通讯录日志
+        let SQL_DB_CREATE_CUSTOMERLOGLIST = "CREATE TABLE IF NOT EXISTS \(Config.TableName.CustomerLogList) ( id INTEGER primary key AUTOINCREMENT, user text, module text, customerid text, phonenumber text, type text, startdatetime text, enddatetime text, duration text, sync text)"
         
+        let result_customerloglist = self.db.execute(SQL_DB_CREATE_CUSTOMERLOGLIST, parameters: nil)
         
-        return Int(result_mainmenulist + result_inneraddresslist + result_inneraddressdeptlist + result_accessloglist + result_customeraddresslist + result_customeraddresslist_group)
+        return Int(result_mainmenulist + result_inneraddresslist + result_inneraddressdeptlist + result_accessloglist + result_customeraddresslist + result_customeraddresslist_group + result_customerloglist)
         
     }
     
@@ -72,13 +78,13 @@ class DBAdapter {
         let data = self.db.query(sql)
         let row = data[0]
         let result = row["NUM"]?.asInt()
-        println("----checkTable \(tablename)--------count = \(Int(result!) ?? 0)-----")
+        //println("----checkTable \(tablename)--------count = \(Int(result!) ?? 0)-----")
         return Int(result!)
         
     }
     
     func dropTable(tablename:String) -> Int{
-        println("----dropTable \(tablename)---------------")
+        //println("----dropTable \(tablename)---------------")
         //删除指定表
         let sql = "DROP TABLE \(tablename)";
         let result = self.db.execute(sql, parameters: nil)
@@ -119,7 +125,7 @@ class DBAdapter {
         sql = "DELETE FROM \(Config.TableName.MainMenuList) WHERE updatetime <> '\(updatetime)'"
         sqlresult = self.db.execute(sql, parameters: nil)
         
-        println("-- syncMainMenuList count = \(sqlresult)------------------")
+        //println("-- syncMainMenuList count = \(sqlresult)------------------")
         return result
     }
     
@@ -152,24 +158,28 @@ class DBAdapter {
     
     func syncInnerAddressList(itemlist:NSArray) -> Int{
         //var index = 0
-        var updatetime = Util.getCurDateString()
-        var sql = ""
-        var updatesql = ""
-        var sqlresult:CInt = 0
         var result = 0
-        for (index, it) in enumerate(itemlist) {
-            var item = it as! InnerAddressItem
-            sql = "REPLACE INTO \(Config.TableName.InnerAddressList) (empid , dept, name, mobile, linetel, mobiletelecom , mobiletelecom1, mobile1, othertel, homephone, researchteam, msn, pic, query,showindex , updatetime)"
-                + "VALUES ('\(item.empid)', '\(item.dept)', '\(item.name)', '\(item.mobile)', '\(item.linetel)', '\(item.mobiletelecom)', '\(item.mobiletelecom1)', '\(item.mobile1)', '\(item.othertel)', '\(item.homephone)', '\(item.researchteam)', '\(item.msn)', '\(item.pic)', '\(item.query)', '\(String(index))','\(updatetime)')"
-            sqlresult = self.db.execute(sql, parameters: nil)
-            //println("----Insert \(item.name) -------- status = \(sqlresult)---------")
+        dispatch_async(self.queue1,{
+            var updatetime = Util.getCurDateString()
+            var sql = ""
+            var updatesql = ""
+            var sqlresult:CInt = 0
             
-            result += (sqlresult == 0 ? 0 : 1)
-        }
-        
-        sql = "DELETE FROM \(Config.TableName.InnerAddressList) WHERE updatetime <> '\(updatetime)'"
-        sqlresult = self.db.execute(sql, parameters: nil)
-        println("-- syncMainInnerAddressList count = \(result)------------------")
+            for (index, it) in enumerate(itemlist) {
+                var item = it as! InnerAddressItem
+                sql = "REPLACE INTO \(Config.TableName.InnerAddressList) (empid , dept, name, mobile, linetel, mobiletelecom , mobiletelecom1, mobile1, othertel, homephone, researchteam, msn, pic, query,showindex , updatetime)"
+                    + "VALUES ('\(item.empid)', '\(item.dept)', '\(item.name)', '\(item.mobile)', '\(item.linetel)', '\(item.mobiletelecom)', '\(item.mobiletelecom1)', '\(item.mobile1)', '\(item.othertel)', '\(item.homephone)', '\(item.researchteam)', '\(item.msn)', '\(item.pic)', '\(item.query)', '\(String(index))','\(updatetime)')"
+                sqlresult = self.db.execute(sql, parameters: nil)
+                //println("----Insert \(item.name) -------- status = \(sqlresult)---------")
+                
+                result += (sqlresult == 0 ? 0 : 1)
+            }
+            
+            sql = "DELETE FROM \(Config.TableName.InnerAddressList) WHERE updatetime <> '\(updatetime)'"
+            sqlresult = self.db.execute(sql, parameters: nil)
+            //println("-- syncMainInnerAddressList count = \(result)------------------")
+            
+        })
         return result
     }
     
@@ -210,26 +220,28 @@ class DBAdapter {
     //==========InnerAddressDeptList==================================================
     func syncInnerAddressDeptList(itemlist:NSArray) -> Int{
         //var index = 0
-        var updatetime = Util.getCurDateString()
-        var sql = ""
-        var updatesql = ""
-        var sqlresult:CInt = 0
         var result = 0
-        for (index, it) in enumerate(itemlist) {
-            var item = it as! InnerAddressDeptItem
-           
+        dispatch_async(self.queue1,{
+            var updatetime = Util.getCurDateString()
+            var sql = ""
+            var updatesql = ""
+            var sqlresult:CInt = 0
+            
+            for (index, it) in enumerate(itemlist) {
+                var item = it as! InnerAddressDeptItem
+                
                 sql = "REPLACE INTO \(Config.TableName.InnerAddressDeptList) (name, showindex , updatetime)"
                     + "VALUES ('\(item.name)','\(String(index))','\(updatetime)')"
                 sqlresult = self.db.execute(sql, parameters: nil)
                 //println("----Insert \(item.name) -------- status = \(sqlresult)---------")
+                
+                result += (sqlresult == 0 ? 0 : 1)
+            }
             
-            result += (sqlresult == 0 ? 0 : 1)
-        }
-        
-        sql = "DELETE FROM \(Config.TableName.InnerAddressDeptList) WHERE updatetime <> '\(updatetime)'"
-        sqlresult = self.db.execute(sql, parameters: nil)
-
-        println("-- syncMainInnerAddressDeptList count = \(result)------------------")
+            sql = "DELETE FROM \(Config.TableName.InnerAddressDeptList) WHERE updatetime <> '\(updatetime)'"
+            sqlresult = self.db.execute(sql, parameters: nil)
+        })
+        //println("-- syncMainInnerAddressDeptList count = \(result)------------------")
         return result
     }
     
@@ -262,33 +274,43 @@ class DBAdapter {
     
     func syncCustomerAddressList(itemlist:NSArray) -> Int{
         //var index = 0
-        var updatetime = Util.getCurDateString()
-        var sql = ""
-        var updatesql = ""
-        var sqlresult:CInt = 0
         var result = 0
-        for (index, it) in enumerate(itemlist) {
-            var item = it as! CustomerAddressItem
-            sql = "REPLACE INTO \(Config.TableName.CustomerAddressList) (customerid , comp , groupname , name , mobile , linetel , comptel , email, important , importantid , level , managerlist , sex , jobtitle , custlevel , status ,  query ,showindex , updatetime)"
-                + "VALUES ('\(item.customerid)', '\(item.comp)', '\(item.group)', '\(item.name)', '\(item.mobile)', '\(item.linetel)', '\(item.comptel)', '\(item.email)', '\(item.importantid)', '\(item.level)', '\(item.managerlist)', '\(item.sex)','\(item.jobtitle)','\(item.jobtitle)', '\(item.custlevel)','\(item.status)', '\(item.query)', '\(String(index))','\(updatetime)')"
-            sqlresult = self.db.execute(sql, parameters: nil)
-            //println("----Insert \(item.name) -------- status = \(sqlresult)---------")
+        //queue1
+        //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+        dispatch_async(self.queue1,{
+            println(itemlist.count)
+            var updatetime = Util.getCurDateString()
+            var sql = ""
+            var updatesql = ""
+            var sqlresult:CInt = 0
             
-            result += (sqlresult == 0 ? 0 : 1)
-        }
-        
-        sql = "DELETE FROM \(Config.TableName.CustomerAddressList) WHERE updatetime <> '\(updatetime)'"
-        sqlresult = self.db.execute(sql, parameters: nil)
-        println("-- syncMainCustomerAddressList count = \(result)------------------")
+            for (index, it) in enumerate(itemlist) {
+                var item = it as! CustomerAddressItem
+                sql = "REPLACE INTO \(Config.TableName.CustomerAddressList) (customerid , comp , groupname , name , mobile , linetel , comptel , email, important , importantid , level , managerlist , sex , jobtitle , custlevel , status ,  query ,showindex , updatetime)"
+                    + "VALUES ('\(item.customerid)', '\(item.comp)', '\(item.group)', '\(item.name)', '\(item.mobile)', '\(item.linetel)', '\(item.comptel)', '\(item.email)','\(item.important)', '\(item.importantid)', '\(item.level)', '\(item.managerlist)', '\(item.sex)','\(item.jobtitle)', '\(item.custlevel)','\(item.status)', '\(item.query)', '\(String(index))','\(updatetime)')"
+                sqlresult = self.db.execute(sql, parameters: nil)
+                //println("----Insert \(item.name) -------- status = \(sqlresult)---------")
+                
+                result += (sqlresult == 0 ? 0 : 1)
+            }
+            sql = "DELETE FROM \(Config.TableName.CustomerAddressList) WHERE updatetime <> '\(updatetime)'"
+            sqlresult = self.db.execute(sql, parameters: nil)
+            println("-- syncMainCustomerAddressList count = \(result)------------------")
+            
+        })
         return result
+        
     }
     
     func queryCustomerAddressList(query:String,paralist:[String]?) -> NSMutableArray?{
-        var userInfo = NSMutableArray()
-        let datalist = self.db.query("SELECT * FROM \(Config.TableName.CustomerAddressList) WHERE \(query)", parameters:paralist)
+        var userInfo:NSMutableArray? = NSMutableArray()
+        //dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
         
+        
+        let datalist = self.db.query("SELECT * FROM \(Config.TableName.CustomerAddressList) WHERE \(query)", parameters:paralist)
         if datalist.isEmpty {
-            return nil
+            userInfo = nil
+            //return nil
         } else{
             for (index, elem ) in enumerate(datalist) {
                 
@@ -311,10 +333,12 @@ class DBAdapter {
                 customerAddressItem.status = elem["status"]?.asString() ?? ""
                 customerAddressItem.query = elem["query"]?.asString() ?? ""
                 
-                userInfo.addObject(customerAddressItem)
+                userInfo!.addObject(customerAddressItem)
             }
-            return userInfo
+            //return userInfo
         }
+        //})
+        return userInfo
     }
     
     
@@ -323,46 +347,57 @@ class DBAdapter {
     //==========CustomerAddressGroupList==================================================
     func syncCustomerAddressGroupList(itemlist:NSArray) -> Int{
         //var index = 0
-        var updatetime = Util.getCurDateString()
-        var sql = ""
-        var updatesql = ""
-        var sqlresult:CInt = 0
         var result = 0
-        for (index, it) in enumerate(itemlist) {
-            var item = it as! CustomerAddressGroupItem
+        //dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+        dispatch_async(self.queue1,{
+            var updatetime = Util.getCurDateString()
+            var sql = ""
+            var updatesql = ""
+            var sqlresult:CInt = 0
             
-            sql = "REPLACE INTO \(Config.TableName.CustomerAddressGroupList) (name, level, showindex , updatetime)"
-                + "VALUES ('\(item.name)','\(item.level)','\(String(index))','\(updatetime)')"
+            for (index, it) in enumerate(itemlist) {
+                var item = it as! CustomerAddressGroupItem
+                
+                sql = "REPLACE INTO \(Config.TableName.CustomerAddressGroupList) (name, level, showindex , updatetime)"
+                    + "VALUES ('\(item.name)','\(item.level)','\(String(index))','\(updatetime)')"
+                sqlresult = self.db.execute(sql, parameters: nil)
+                //println("----Insert \(item.name) -------- status = \(sqlresult)---------")
+                
+                result += (sqlresult == 0 ? 0 : 1)
+            }
+            
+            sql = "DELETE FROM \(Config.TableName.CustomerAddressGroupList) WHERE updatetime <> '\(updatetime)'"
             sqlresult = self.db.execute(sql, parameters: nil)
-            println("----Insert \(item.name) -------- status = \(sqlresult)---------")
             
-            result += (sqlresult == 0 ? 0 : 1)
-        }
+            //println("-- syncMainCustomerAddressGroupList count = \(result)------------------")
+        })
         
-        sql = "DELETE FROM \(Config.TableName.CustomerAddressGroupList) WHERE updatetime <> '\(updatetime)'"
-        sqlresult = self.db.execute(sql, parameters: nil)
-        
-        println("-- syncMainCustomerAddressGroupList count = \(result)------------------")
         return result
     }
     
     
     func queryCustomerAddressGroupList(query:String,paralist:[String]?) -> NSMutableArray?{
-        var userInfo = NSMutableArray()
+        
+        var userInfo:NSMutableArray? = NSMutableArray()
+        //dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+        
         let datalist = self.db.query("SELECT * FROM \(Config.TableName.CustomerAddressGroupList) WHERE \(query)", parameters:paralist)
         
         if datalist.isEmpty {
-            return nil
+            userInfo = nil
+            //return nil
         } else{
             for (index, elem ) in enumerate(datalist) {
                 
                 var customerAddressGroupItem:CustomerAddressGroupItem = CustomerAddressGroupItem()
                 customerAddressGroupItem.name = elem["name"]?.asString() ?? ""
                 customerAddressGroupItem.level = elem["level"]?.asString() ?? ""
-                userInfo.addObject(customerAddressGroupItem)
+                userInfo!.addObject(customerAddressGroupItem)
             }
-            return userInfo
+            //return userInfo
         }
+        //})
+        return userInfo
     }
     
     
@@ -378,7 +413,7 @@ class DBAdapter {
         sql = "REPLACE INTO \(Config.TableName.AccessLogList) (userid, type, online, moduleid, modulename, time, sync)"
             + "VALUES ('\(item.userid)','\(item.type))','\(item.online)','\(item.moduleid)','\(item.modulename)','\(item.time)','\(item.sync)')"
         sqlresult = self.db.execute(sql, parameters: nil)
-        println("----Insert \(item.userid) -------- status = \(sqlresult)---------")
+        //println("----Insert \(item.userid) -------- status = \(sqlresult)---------")
         
         return Int(sqlresult)
     }
@@ -427,6 +462,71 @@ class DBAdapter {
         return result
     }
     //====================================================================================
+    
+    
+    //=======================CustomerLogList================================================
+    
+    func syncCustomerLogItem(item:CustomerLogItem) -> Int{
+        
+        var sql = ""
+        var sqlresult:CInt = 0
+        //id 自增长，所以增加时不用传值
+        //id INTEGER primary key AUTOINCREMENT, user text, module text, customerid text, phonenumber text, type text, startdatetime text, enddatetime text, duration text, sync text
+        sql = "REPLACE INTO \(Config.TableName.CustomerLogList) (user, module, customerid, phonenumber, type, startdatetime, enddatetime, duration, sync)"
+            + "VALUES ('\(item.user)','\(item.module))','\(item.customerid)','\(item.phonenumber)','\(item.type)','\(item.startdatetime)','\(item.enddatetime)','\(item.duration)','\(item.sync)')"
+        sqlresult = self.db.execute(sql, parameters: nil)
+        //println("----Insert \(item.userid) -------- status = \(sqlresult)---------")
+        
+        return Int(sqlresult)
+    }
+    
+    func queryCustomerLogList(query:String,paralist:[String]?) -> NSMutableArray?{
+        var userInfo = NSMutableArray()
+        let datalist = self.db.query("SELECT * FROM \(Config.TableName.CustomerLogList) WHERE \(query)", parameters:paralist)
+        
+        if datalist.isEmpty {
+            return nil
+        } else{
+            for (index, elem ) in enumerate(datalist) {
+                
+                var customerLogItem:CustomerLogItem = CustomerLogItem()
+                customerLogItem.id = elem["id"]?.asInt() ?? 0
+                customerLogItem.user = elem["user"]?.asString() ?? ""
+                customerLogItem.module = elem["module"]?.asString() ?? ""
+                customerLogItem.customerid = elem["customerid"]?.asString() ?? ""
+                customerLogItem.phonenumber = elem["phonenumber"]?.asString() ?? ""
+                customerLogItem.type = elem["type"]?.asString() ?? ""
+                customerLogItem.startdatetime = elem["startdatetime"]?.asString() ?? ""
+                customerLogItem.enddatetime = elem["enddatetime"]?.asString() ?? ""
+                customerLogItem.duration = elem["duration"]?.asString() ?? ""
+                customerLogItem.sync = elem["sync"]?.asString() ?? ""
+                
+                userInfo.addObject(customerLogItem)
+            }
+            return userInfo
+        }
+    } 
+    
+    func markCustomerLogListSync(itemlist:NSArray) -> Int{
+        //var index = 0
+        var updatetime = Util.getCurDateString()
+        var sql = ""
+        var sqlresult:CInt = 0
+        var result = 0
+        for (index, it) in enumerate(itemlist) {
+            var item = it as! CustomerLogItem
+            
+            sql = "UPDATE \(Config.TableName.CustomerLogList) SET SYNC = 'Y' WHERE id = \(item.id)"
+            sqlresult = self.db.execute(sql, parameters: nil)
+            //println("----Update \(item.userid) -------- status = \(sqlresult)---------")
+            
+            result += (sqlresult == 0 ? 0 : 1)
+        }
+        
+        return result
+    }
+    //====================================================================================
+
 }
 
 

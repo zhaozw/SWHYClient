@@ -17,10 +17,15 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="553"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <searchBar key="tableHeaderView" contentMode="redraw" translucent="NO" id="ELH-nT-h9Q">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="44"/>
+            <searchBar key="tableHeaderView" contentMode="redraw" placeholder="全部" translucent="NO" showsScopeBar="YES" id="ELH-nT-h9Q">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="88"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 <textInputTraits key="textInputTraits"/>
+                <scopeButtonTitles>
+                    <string>全部</string>
+                    <string>重点人脉</string>
+                    <string>次要人脉</string>
+                </scopeButtonTitles>
                 <connections>
                     <outlet property="delegate" destination="-1" id="c4r-RM-9Fy"/>
                 </connections>

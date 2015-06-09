@@ -10,6 +10,7 @@ import UIKit
 
 public extension UIButton {
     
+    
     public var hnk_imageFormat : Format<UIImage> {
         let bounds = self.bounds
             assert(bounds.size.width > 0 && bounds.size.height > 0, "[\(reflect(self).summary) \(__FUNCTION__)]: UIButton size is zero. Set its frame, call sizeToFit or force layout first. You can also set a custom format with a defined size if you don't want to force layout.")

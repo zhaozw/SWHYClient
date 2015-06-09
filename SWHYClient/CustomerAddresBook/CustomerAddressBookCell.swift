@@ -14,8 +14,8 @@ class CustomerAddressBookCell: UITableViewCell {
     @IBOutlet weak var lblName: UILabel!
 
     @IBOutlet weak var lblComp: UILabel!
-    @IBOutlet weak var btnMobile: UIButton!
-    @IBOutlet weak var btnLinetel: UIButton!
+    @IBOutlet weak var btnMobile: MKButton!
+    @IBOutlet weak var btnLinetel: MKButton!
        
     
     override func awakeFromNib() {

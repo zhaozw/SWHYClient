@@ -233,7 +233,8 @@ class LoginViewController: UIViewController {
             sim = "89860064090506059492"   //36F75479-6635-410C-AA27-D3385726432D
         }else{
             println(" iphone device ")
-            sim = UIDevice.currentDevice().identifierForVendor.UUIDString
+            //sim = UIDevice.currentDevice().identifierForVendor.UUIDString
+            sim = "89860064090506059492"
         }
         
         username  = self.txtUserName.text

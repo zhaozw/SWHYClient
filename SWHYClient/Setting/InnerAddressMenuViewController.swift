@@ -26,6 +26,8 @@ class InnerAddressMenuViewController : UIViewController {
         
         let tap_setting:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onClickEvent_Setting:")
         btnSetting.addGestureRecognizer(tap_setting)
+        
+       
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -41,6 +43,8 @@ class InnerAddressMenuViewController : UIViewController {
         
         self.lblVersion.text = "版本号：\(majorVersion!).\(minorVersion!)"        
         self.lblTitle.text = Config.UI.Title
+         
+        
 
     }
     

@@ -67,11 +67,9 @@
 		A3BA35C81B11658B00BF5B63 /* UIImageView+Haneke.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3B76CD11B11556800F2E1DD /* UIImageView+Haneke.swift */; };
 		A3BA35C91B11658B00BF5B63 /* UIView+Haneke.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3B76CD21B11556800F2E1DD /* UIView+Haneke.swift */; };
 		A3BA3A9C1ADE299C003025E4 /* DBAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3A9B1ADE299C003025E4 /* DBAdapter.swift */; };
-		A3BA3AC61ADE40B3003025E4 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A3BA3AC51ADE40B3003025E4 /* libsqlite3.0.dylib */; };
 		A3BA3B101ADE434B003025E4 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3AFD1ADE434B003025E4 /* README.md */; };
 		A3BA3B111ADE434B003025E4 /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3AFE1ADE434B003025E4 /* SQLiteDB.swift */; };
 		A3BA3B121ADE434B003025E4 /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3AFF1ADE434B003025E4 /* String-Extras.swift */; };
-		A3BA3B191ADE545F003025E4 /* libsqlite3.0.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = A3BA3AC51ADE40B3003025E4 /* libsqlite3.0.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A3BA3B1A1ADE55DD003025E4 /* LoginViewController.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3C73B2E1ABDF00D002C299D /* LoginViewController.swift */; };
 		A3BA3B1B1ADE5624003025E4 /* PKNotification.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3CAA52B1AC9185100600394 /* PKNotification.swift */; };
 		A3BA3B1C1ADE563A003025E4 /* Config.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3C73B291ABDEFD5002C299D /* Config.swift */; };
@@ -112,6 +110,8 @@
 		A3BA8A691AC1508900CDDE05 /* InnerAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA8A671AC1508900CDDE05 /* InnerAddressBook.swift */; };
 		A3BA8A6A1AC1508900CDDE05 /* InnerAddressBook.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BA8A681AC1508900CDDE05 /* InnerAddressBook.xib */; };
 		A3BA8A6C1AC1532800CDDE05 /* InnerAddresItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA8A6B1AC1532800CDDE05 /* InnerAddresItem.swift */; };
+		A3BAAC481B1BC59700A912E6 /* CustomerAddressMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BAAC471B1BC59700A912E6 /* CustomerAddressMenuViewController.swift */; };
+		A3BAAC491B1BC6DC00A912E6 /* CustomerAddressMenuViewController.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BAAC471B1BC59700A912E6 /* CustomerAddressMenuViewController.swift */; };
 		A3BAC9B41B18284700DA141B /* CustomerAddressBook.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BAC9B31B18284700DA141B /* CustomerAddressBook.xib */; };
 		A3BAC9B71B18364900DA141B /* CustomerAddressBookCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BAC9B51B18364900DA141B /* CustomerAddressBookCell.xib */; };
 		A3BAC9B81B18364900DA141B /* CustomerAddressBookHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BAC9B61B18364900DA141B /* CustomerAddressBookHeader.xib */; };
@@ -147,6 +147,30 @@
 		A3BDBDD81B0463740085DFF1 /* UITableViewExtension.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BDBDCC1B04625D0085DFF1 /* UITableViewExtension.swift */; };
 		A3BDBDD91B0463740085DFF1 /* StringExtension.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BDBDCE1B0462AB0085DFF1 /* StringExtension.swift */; };
 		A3BE90791AD4FD5300D3630B /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BE90781AD4FD5300D3630B /* Util.swift */; };
+		A3BF39D81B201F8500FDAB7F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A3BF39D71B201F8500FDAB7F /* libsqlite3.dylib */; };
+		A3BF77901B270D5F009EBD5A /* MKButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BF778F1B270D5F009EBD5A /* MKButton.swift */; };
+		A3BF77921B270E13009EBD5A /* MKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BF77911B270E13009EBD5A /* MKColor.swift */; };
+		A3BF77941B270E3F009EBD5A /* MKImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BF77931B270E3F009EBD5A /* MKImageView.swift */; };
+		A3BF77961B270E70009EBD5A /* MKLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BF77951B270E70009EBD5A /* MKLabel.swift */; };
+		A3BF77981B270E9B009EBD5A /* MKLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BF77971B270E9B009EBD5A /* MKLayer.swift */; };
+		A3BF779A1B270EFB009EBD5A /* MKTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BF77991B270EFB009EBD5A /* MKTableViewCell.swift */; };
+		A3BF779C1B270F23009EBD5A /* MKTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BF779B1B270F23009EBD5A /* MKTextField.swift */; };
+		A3BF779D1B271043009EBD5A /* MKButton.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BF778F1B270D5F009EBD5A /* MKButton.swift */; };
+		A3BF779E1B271043009EBD5A /* MKColor.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BF77911B270E13009EBD5A /* MKColor.swift */; };
+		A3BF779F1B271043009EBD5A /* MKImageView.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BF77931B270E3F009EBD5A /* MKImageView.swift */; };
+		A3BF77A01B271043009EBD5A /* MKLabel.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BF77951B270E70009EBD5A /* MKLabel.swift */; };
+		A3BF77A11B271043009EBD5A /* MKLayer.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BF77971B270E9B009EBD5A /* MKLayer.swift */; };
+		A3BF77A21B271043009EBD5A /* MKTableViewCell.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BF77991B270EFB009EBD5A /* MKTableViewCell.swift */; };
+		A3BF77A31B271043009EBD5A /* MKTextField.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3BF779B1B270F23009EBD5A /* MKTextField.swift */; };
+		A3C0000C1B1C95AD0050EBCE /* SMSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0000B1B1C95AD0050EBCE /* SMSegment.swift */; };
+		A3C0000E1B1C96130050EBCE /* SMSegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C0000D1B1C96130050EBCE /* SMSegmentView.swift */; };
+		A3C0000F1B1C96660050EBCE /* SMSegment.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3C0000B1B1C95AD0050EBCE /* SMSegment.swift */; };
+		A3C000101B1C96660050EBCE /* SMSegmentView.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3C0000D1B1C96130050EBCE /* SMSegmentView.swift */; };
+		A3C1EA2C1B27211800075F8E /* CustomerLogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C1EA2B1B27211800075F8E /* CustomerLogItem.swift */; };
+		A3C1EA2D1B27280E00075F8E /* CustomerLogItem.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3C1EA2B1B27211800075F8E /* CustomerLogItem.swift */; };
+		A3C28C9F1B25CD9A0018F308 /* CustomerAddressDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C28C9D1B25CD9A0018F308 /* CustomerAddressDetail.swift */; };
+		A3C28CA01B25CD9A0018F308 /* CustomerAddressDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3C28C9E1B25CD9A0018F308 /* CustomerAddressDetail.xib */; };
+		A3C28CA11B25E64A0018F308 /* CustomerAddressDetail.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3C28C9D1B25CD9A0018F308 /* CustomerAddressDetail.swift */; };
 		A3C2E2FD1AF2199400BBBB9A /* InnerAddressDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C2E2FB1AF2199400BBBB9A /* InnerAddressDetail.swift */; };
 		A3C2E2FE1AF2199400BBBB9A /* InnerAddressDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3C2E2FC1AF2199400BBBB9A /* InnerAddressDetail.xib */; };
 		A3C2E3021AF2213200BBBB9A /* InnerAddressDetail.swift in Resources */ = {isa = PBXBuildFile; fileRef = A3C2E2FB1AF2199400BBBB9A /* InnerAddressDetail.swift */; };
@@ -196,7 +220,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A3BA3B191ADE545F003025E4 /* libsqlite3.0.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,7 +260,6 @@
 		A3BA34971B16E8B8002C08C5 /* CustomerAddressBookHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerAddressBookHeader.swift; path = SWHYClient/CustomerAddresBook/CustomerAddressBookHeader.swift; sourceTree = SOURCE_ROOT; };
 		A3BA3A9B1ADE299C003025E4 /* DBAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBAdapter.swift; sourceTree = "<group>"; };
 		A3BA3AC41ADE3B5B003025E4 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
-		A3BA3AC51ADE40B3003025E4 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		A3BA3ADB1ADE434B003025E4 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		A3BA3AFD1ADE434B003025E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A3BA3AFE1ADE434B003025E4 /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
@@ -252,6 +274,7 @@
 		A3BA8A671AC1508900CDDE05 /* InnerAddressBook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerAddressBook.swift; sourceTree = "<group>"; };
 		A3BA8A681AC1508900CDDE05 /* InnerAddressBook.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InnerAddressBook.xib; sourceTree = "<group>"; };
 		A3BA8A6B1AC1532800CDDE05 /* InnerAddresItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerAddresItem.swift; sourceTree = "<group>"; };
+		A3BAAC471B1BC59700A912E6 /* CustomerAddressMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerAddressMenuViewController.swift; sourceTree = "<group>"; };
 		A3BAC9B31B18284700DA141B /* CustomerAddressBook.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomerAddressBook.xib; path = SWHYClient/CustomerAddresBook/CustomerAddressBook.xib; sourceTree = SOURCE_ROOT; };
 		A3BAC9B51B18364900DA141B /* CustomerAddressBookCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomerAddressBookCell.xib; path = SWHYClient/CustomerAddresBook/CustomerAddressBookCell.xib; sourceTree = SOURCE_ROOT; };
 		A3BAC9B61B18364900DA141B /* CustomerAddressBookHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomerAddressBookHeader.xib; path = SWHYClient/CustomerAddresBook/CustomerAddressBookHeader.xib; sourceTree = SOURCE_ROOT; };
@@ -276,9 +299,22 @@
 		A3BDBDCC1B04625D0085DFF1 /* UITableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableViewExtension.swift; sourceTree = "<group>"; };
 		A3BDBDCE1B0462AB0085DFF1 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		A3BE90781AD4FD5300D3630B /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		A3BF39D71B201F8500FDAB7F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A3BF778F1B270D5F009EBD5A /* MKButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKButton.swift; sourceTree = "<group>"; };
+		A3BF77911B270E13009EBD5A /* MKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKColor.swift; sourceTree = "<group>"; };
+		A3BF77931B270E3F009EBD5A /* MKImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKImageView.swift; sourceTree = "<group>"; };
+		A3BF77951B270E70009EBD5A /* MKLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLabel.swift; sourceTree = "<group>"; };
+		A3BF77971B270E9B009EBD5A /* MKLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKLayer.swift; sourceTree = "<group>"; };
+		A3BF77991B270EFB009EBD5A /* MKTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTableViewCell.swift; sourceTree = "<group>"; };
+		A3BF779B1B270F23009EBD5A /* MKTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MKTextField.swift; sourceTree = "<group>"; };
+		A3C0000B1B1C95AD0050EBCE /* SMSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegment.swift; sourceTree = "<group>"; };
+		A3C0000D1B1C96130050EBCE /* SMSegmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SMSegmentView.swift; sourceTree = "<group>"; };
+		A3C1EA2B1B27211800075F8E /* CustomerLogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerLogItem.swift; sourceTree = "<group>"; };
+		A3C28C9D1B25CD9A0018F308 /* CustomerAddressDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomerAddressDetail.swift; path = SWHYClient/CustomerAddresBook/CustomerAddressDetail.swift; sourceTree = SOURCE_ROOT; };
+		A3C28C9E1B25CD9A0018F308 /* CustomerAddressDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CustomerAddressDetail.xib; path = SWHYClient/CustomerAddresBook/CustomerAddressDetail.xib; sourceTree = SOURCE_ROOT; };
 		A3C2E2FB1AF2199400BBBB9A /* InnerAddressDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerAddressDetail.swift; sourceTree = "<group>"; };
 		A3C2E2FC1AF2199400BBBB9A /* InnerAddressDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InnerAddressDetail.xib; sourceTree = "<group>"; };
-		A3C73B001ABDEF96002C299D /* 申万宏源.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "申万宏源.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3C73B001ABDEF96002C299D /* SWHYClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWHYClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3C73B041ABDEF96002C299D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3C73B051ABDEF96002C299D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3C73B081ABDEF96002C299D /* SWHYClient.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SWHYClient.xcdatamodel; sourceTree = "<group>"; };
@@ -306,7 +342,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3BA3AC61ADE40B3003025E4 /* libsqlite3.0.dylib in Frameworks */,
+				A3BF39D81B201F8500FDAB7F /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +386,7 @@
 		A3BA012A1B09B9D900EA1448 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				A3BF778E1B270D3C009EBD5A /* MaterialKit */,
 				A3BA012D1B09BA1800EA1448 /* AIFlatSwitch.swift */,
 			);
 			path = UIKit;
@@ -367,6 +404,8 @@
 				A3BA34931B16E510002C08C5 /* CustomerAddressGroupItem.swift */,
 				A3BA34951B16E81F002C08C5 /* CustomerSectionInfo.swift */,
 				A3BA34971B16E8B8002C08C5 /* CustomerAddressBookHeader.swift */,
+				A3C28C9D1B25CD9A0018F308 /* CustomerAddressDetail.swift */,
+				A3C28C9E1B25CD9A0018F308 /* CustomerAddressDetail.xib */,
 			);
 			name = CustomerAddresBook;
 			path = Setting/CustomerAddresBook;
@@ -388,6 +427,7 @@
 			children = (
 				A3BA73D21AFB3F82002B5C2F /* Loger.swift */,
 				A3BA73CD1AFB3A4C002B5C2F /* AccessLogItem.swift */,
+				A3C1EA2B1B27211800075F8E /* CustomerLogItem.swift */,
 			);
 			path = Loger;
 			sourceTree = "<group>";
@@ -478,14 +518,38 @@
 				A352DAFC1B05D0B90035B4AF /* MenuViewController.swift */,
 				A3BA87C61B05C2350098936C /* Setting.storyboard */,
 				A352DB001B05D3770035B4AF /* SettingViewController.swift */,
+				A3BAAC471B1BC59700A912E6 /* CustomerAddressMenuViewController.swift */,
 			);
 			path = Setting;
+			sourceTree = "<group>";
+		};
+		A3BF778E1B270D3C009EBD5A /* MaterialKit */ = {
+			isa = PBXGroup;
+			children = (
+				A3BF778F1B270D5F009EBD5A /* MKButton.swift */,
+				A3BF77911B270E13009EBD5A /* MKColor.swift */,
+				A3BF77931B270E3F009EBD5A /* MKImageView.swift */,
+				A3BF77951B270E70009EBD5A /* MKLabel.swift */,
+				A3BF77971B270E9B009EBD5A /* MKLayer.swift */,
+				A3BF77991B270EFB009EBD5A /* MKTableViewCell.swift */,
+				A3BF779B1B270F23009EBD5A /* MKTextField.swift */,
+			);
+			path = MaterialKit;
+			sourceTree = "<group>";
+		};
+		A3C0000A1B1C957E0050EBCE /* SMSegmentView */ = {
+			isa = PBXGroup;
+			children = (
+				A3C0000B1B1C95AD0050EBCE /* SMSegment.swift */,
+				A3C0000D1B1C96130050EBCE /* SMSegmentView.swift */,
+			);
+			path = SMSegmentView;
 			sourceTree = "<group>";
 		};
 		A3C73AF71ABDEF96002C299D = {
 			isa = PBXGroup;
 			children = (
-				A3BA3AC51ADE40B3003025E4 /* libsqlite3.0.dylib */,
+				A3BF39D71B201F8500FDAB7F /* libsqlite3.dylib */,
 				A3C73B011ABDEF96002C299D /* Products */,
 				A3C73B021ABDEF96002C299D /* SWHYClient */,
 				A3C73B1B1ABDEF97002C299D /* SWHYClientTests */,
@@ -495,7 +559,7 @@
 		A3C73B011ABDEF96002C299D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A3C73B001ABDEF96002C299D /* 申万宏源.app */,
+				A3C73B001ABDEF96002C299D /* SWHYClient.app */,
 				A3C73B181ABDEF96002C299D /* SWHYClientTests.xctest */,
 			);
 			name = Products;
@@ -556,6 +620,7 @@
 		A3C73B281ABDEFD5002C299D /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				A3C0000A1B1C957E0050EBCE /* SMSegmentView */,
 				A3B76CBE1B11556800F2E1DD /* Haneke */,
 				A3BA51471B07F21A00F1800A /* ContactHelper.swift */,
 				A3BDBDB81B045A940085DFF1 /* SlideMenuController.swift */,
@@ -610,9 +675,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A3C73AFF1ABDEF96002C299D /* 申万宏源 */ = {
+		A3C73AFF1ABDEF96002C299D /* SWHYClient */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A3C73B221ABDEF97002C299D /* Build configuration list for PBXNativeTarget "申万宏源" */;
+			buildConfigurationList = A3C73B221ABDEF97002C299D /* Build configuration list for PBXNativeTarget "SWHYClient" */;
 			buildPhases = (
 				A3C73AFC1ABDEF96002C299D /* Sources */,
 				A3C73AFD1ABDEF96002C299D /* Frameworks */,
@@ -624,9 +689,9 @@
 			);
 			dependencies = (
 			);
-			name = "申万宏源";
+			name = SWHYClient;
 			productName = SWHYClient;
-			productReference = A3C73B001ABDEF96002C299D /* 申万宏源.app */;
+			productReference = A3C73B001ABDEF96002C299D /* SWHYClient.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A3C73B171ABDEF96002C299D /* SWHYClientTests */ = {
@@ -658,9 +723,11 @@
 				TargetAttributes = {
 					A3C73AFF1ABDEF96002C299D = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = VWY3F558EY;
 					};
 					A3C73B171ABDEF96002C299D = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = VWY3F558EY;
 						TestTargetID = A3C73AFF1ABDEF96002C299D;
 					};
 				};
@@ -678,7 +745,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A3C73AFF1ABDEF96002C299D /* 申万宏源 */,
+				A3C73AFF1ABDEF96002C299D /* SWHYClient */,
 				A3C73B171ABDEF96002C299D /* SWHYClientTests */,
 			);
 		};
@@ -689,12 +756,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3C1EA2D1B27280E00075F8E /* CustomerLogItem.swift in Resources */,
+				A3BF779D1B271043009EBD5A /* MKButton.swift in Resources */,
+				A3BF779E1B271043009EBD5A /* MKColor.swift in Resources */,
+				A3BF779F1B271043009EBD5A /* MKImageView.swift in Resources */,
+				A3BF77A01B271043009EBD5A /* MKLabel.swift in Resources */,
+				A3BF77A11B271043009EBD5A /* MKLayer.swift in Resources */,
+				A3BF77A21B271043009EBD5A /* MKTableViewCell.swift in Resources */,
+				A3BF77A31B271043009EBD5A /* MKTextField.swift in Resources */,
+				A3C28CA11B25E64A0018F308 /* CustomerAddressDetail.swift in Resources */,
+				A3C0000F1B1C96660050EBCE /* SMSegment.swift in Resources */,
+				A3C000101B1C96660050EBCE /* SMSegmentView.swift in Resources */,
+				A3BAAC491B1BC6DC00A912E6 /* CustomerAddressMenuViewController.swift in Resources */,
 				A3BAF41E1B197BF800D3EA3C /* CustomerAddressBookCell.swift in Resources */,
 				A3BA34991B1701BC002C08C5 /* CustomerAddressBook.swift in Resources */,
 				A3BA349A1B1701BC002C08C5 /* CustomerAddressItem.swift in Resources */,
 				A3BA349B1B1701BC002C08C5 /* CustomerAddressGroupItem.swift in Resources */,
 				A3BA349C1B1701BC002C08C5 /* CustomerSectionInfo.swift in Resources */,
 				A3BA349D1B1701BC002C08C5 /* CustomerAddressBookHeader.swift in Resources */,
+				A3C28CA01B25CD9A0018F308 /* CustomerAddressDetail.xib in Resources */,
 				A3BA35B71B11658B00BF5B63 /* Cache.swift in Resources */,
 				A3BA35B81B11658B00BF5B63 /* CryptoSwiftMD5.swift in Resources */,
 				A3BA35B91B11658B00BF5B63 /* CGSize+Swift.swift in Resources */,
@@ -795,7 +875,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A352DAFE1B05D1A20035B4AF /* LoginViewController.xib in Sources */,
+				A3BF77981B270E9B009EBD5A /* MKLayer.swift in Sources */,
 				A3BA34941B16E510002C08C5 /* CustomerAddressGroupItem.swift in Sources */,
+				A3BF77941B270E3F009EBD5A /* MKImageView.swift in Sources */,
 				A3BA87C91B05C3080098936C /* FlowWebViewController.xib in Sources */,
 				A3BA87C81B05C2FF0098936C /* Setting.storyboard in Sources */,
 				A3B76CE71B115D3400F2E1DD /* CryptoSwiftMD5.swift in Sources */,
@@ -812,8 +894,11 @@
 				A3BE90791AD4FD5300D3630B /* Util.swift in Sources */,
 				A3BDBDC91B0461980085DFF1 /* UIImageViewController.swift in Sources */,
 				A3BA73CE1AFB3A4C002B5C2F /* AccessLogItem.swift in Sources */,
+				A3BF77921B270E13009EBD5A /* MKColor.swift in Sources */,
 				A3C73B3F1ABDF00D002C299D /* WebViewController.swift in Sources */,
+				A3BF77901B270D5F009EBD5A /* MKButton.swift in Sources */,
 				A3BDBDBF1B045EEF0085DFF1 /* InnerAddressMenuViewController.swift in Sources */,
+				A3BAAC481B1BC59700A912E6 /* CustomerAddressMenuViewController.swift in Sources */,
 				A3B76CDC1B11556800F2E1DD /* Haneke.swift in Sources */,
 				A3B76CE01B11556800F2E1DD /* NSHTTPURLResponse+Haneke.swift in Sources */,
 				A3BA3B111ADE434B003025E4 /* SQLiteDB.swift in Sources */,
@@ -828,6 +913,7 @@
 				A3C73B2C1ABDEFD5002C299D /* NetworkEngine.swift in Sources */,
 				A352DAFD1B05D0B90035B4AF /* MenuViewController.swift in Sources */,
 				A3BA8A161AC11A1200CDDE05 /* README.md in Sources */,
+				A3C1EA2C1B27211800075F8E /* CustomerLogItem.swift in Sources */,
 				A3B76CE51B11556800F2E1DD /* UIView+Haneke.swift in Sources */,
 				A3BDBDCB1B0462050085DFF1 /* BaseTableViewCell.swift in Sources */,
 				A3B76CD41B11556800F2E1DD /* CGSize+Swift.swift in Sources */,
@@ -835,6 +921,7 @@
 				A3C73B3E1ABDF00D002C299D /* MainViewController.swift in Sources */,
 				A3B76CE41B11556800F2E1DD /* UIImageView+Haneke.swift in Sources */,
 				A3C73B061ABDEF96002C299D /* AppDelegate.swift in Sources */,
+				A3C0000C1B1C95AD0050EBCE /* SMSegment.swift in Sources */,
 				A3BA8A171AC11A1200CDDE05 /* SWXMLHash.swift in Sources */,
 				A3B76CD61B11556800F2E1DD /* Data.swift in Sources */,
 				A3B91B9A1AC2895900DC3D5A /* InnerAddressBookCell.swift in Sources */,
@@ -849,17 +936,22 @@
 				A3BA3B121ADE434B003025E4 /* String-Extras.swift in Sources */,
 				A3B76CD91B11556800F2E1DD /* Fetch.swift in Sources */,
 				A3B76CE21B11556800F2E1DD /* UIButton+Haneke.swift in Sources */,
+				A3BF779C1B270F23009EBD5A /* MKTextField.swift in Sources */,
 				A3BC9A5A1ACE64FA0047F5C1 /* InnerAddressDeptItem.swift in Sources */,
 				A3BA73D31AFB3F82002B5C2F /* Loger.swift in Sources */,
+				A3BF77961B270E70009EBD5A /* MKLabel.swift in Sources */,
 				A3BA8A6C1AC1532800CDDE05 /* InnerAddresItem.swift in Sources */,
 				A3BA3A9C1ADE299C003025E4 /* DBAdapter.swift in Sources */,
 				A3B76CE31B11556800F2E1DD /* UIImage+Haneke.swift in Sources */,
+				A3BF779A1B270EFB009EBD5A /* MKTableViewCell.swift in Sources */,
 				A3BD365E1AD7944700B59399 /* Message.swift in Sources */,
+				A3C28C9F1B25CD9A0018F308 /* CustomerAddressDetail.swift in Sources */,
 				A352DB011B05D3770035B4AF /* SettingViewController.swift in Sources */,
 				A3BA51481B07F21A00F1800A /* ContactHelper.swift in Sources */,
 				A3B76CD81B11556800F2E1DD /* DiskFetcher.swift in Sources */,
 				A3BDBDC31B04601A0085DFF1 /* NonMemuController.swift in Sources */,
 				A3BDBDB91B045A940085DFF1 /* SlideMenuController.swift in Sources */,
+				A3C0000E1B1C96130050EBCE /* SMSegmentView.swift in Sources */,
 				A3B76CDF1B11556800F2E1DD /* NSFileManager+Haneke.swift in Sources */,
 				A3BAF41D1B19796E00D3EA3C /* CustomerAddressBookCell.swift in Sources */,
 				A3CAA52C1AC9185100600394 /* PKNotification.swift in Sources */,
@@ -879,7 +971,7 @@
 /* Begin PBXTargetDependency section */
 		A3C73B1A1ABDEF96002C299D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A3C73AFF1ABDEF96002C299D /* 申万宏源 */;
+			target = A3C73AFF1ABDEF96002C299D /* SWHYClient */;
 			targetProxy = A3C73B191ABDEF96002C299D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -922,7 +1014,8 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -941,6 +1034,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "b5c35b90-4852-495e-acb1-d30f5bad520b";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -963,8 +1057,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Dengyan Information Technology Co., Ltd.";
 				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -976,6 +1071,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "b5c35b90-4852-495e-acb1-d30f5bad520b";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -987,6 +1083,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_LOADER = "";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -998,8 +1096,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b5c35b90-4852-495e-acb1-d30f5bad520b";
 				SWIFT_OBJC_BRIDGING_HEADER = SWHYClient/Util/BridgeHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1009,6 +1109,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_LOADER = "";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Dengyan Information Technology Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Dengyan Information Technology Co., Ltd.";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1020,7 +1122,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "b5c35b90-4852-495e-acb1-d30f5bad520b";
 				SWIFT_OBJC_BRIDGING_HEADER = SWHYClient/Util/BridgeHeader.h;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1028,6 +1132,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1039,6 +1145,7 @@
 				INFOPLIST_FILE = SWHYClientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SWHYClient.app/SWHYClient";
 			};
 			name = Debug;
@@ -1047,6 +1154,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1054,6 +1163,7 @@
 				INFOPLIST_FILE = SWHYClientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SWHYClient.app/SWHYClient";
 			};
 			name = Release;
@@ -1070,7 +1180,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A3C73B221ABDEF97002C299D /* Build configuration list for PBXNativeTarget "申万宏源" */ = {
+		A3C73B221ABDEF97002C299D /* Build configuration list for PBXNativeTarget "SWHYClient" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A3C73B231ABDEF97002C299D /* Debug */,

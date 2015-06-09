@@ -3,12 +3,11 @@
     <dependencies>
         <deployment version="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="default" indentationWidth="10" rowHeight="45" id="KGk-i7-Jjw" customClass="CustomerAddressBookCell" customModule="申万宏源" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="Cell" selectionStyle="default" indentationWidth="10" rowHeight="45" id="KGk-i7-Jjw" customClass="CustomerAddressBookCell" customModule="SWHYClient" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="358" height="45"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -25,8 +24,8 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKz-UI-uFG" userLabel="name">
-                        <rect key="frame" x="60" y="4" width="100" height="20"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKz-UI-uFG" userLabel="name">
+                        <rect key="frame" x="58" y="4" width="100" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="tFe-jj-Xl2"/>
                         </constraints>
@@ -34,14 +33,14 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nuN-Zy-d3E">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nuN-Zy-d3E">
                         <rect key="frame" x="8" y="3" width="44" height="38"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="44" id="8zL-En-uUb"/>
-                            <constraint firstAttribute="height" constant="38" id="Mg3-Uh-kMV"/>
+                            <constraint firstAttribute="height" constant="38" id="VSz-KU-8ZC"/>
+                            <constraint firstAttribute="width" constant="44" id="g7W-pF-Rok"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pm9-l2-ZPt">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pm9-l2-ZPt" customClass="MKButton" customModule="SWHYClient" customModuleProvider="target">
                         <rect key="frame" x="60" y="22" width="80" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="Fb3-Us-cYH"/>
@@ -53,7 +52,7 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cn0-TP-jbu">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cn0-TP-jbu" customClass="MKButton" customModule="SWHYClient" customModuleProvider="target">
                         <rect key="frame" x="228" y="22" width="100" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="22" id="Vq0-7F-Jve"/>
@@ -67,16 +66,16 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="pm9-l2-ZPt" firstAttribute="leading" secondItem="nuN-Zy-d3E" secondAttribute="trailing" constant="4" id="33P-KM-qNq"/>
                     <constraint firstAttribute="bottom" secondItem="cn0-TP-jbu" secondAttribute="bottom" id="4SK-Iv-bPu"/>
                     <constraint firstItem="7vQ-30-AMd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="CvT-qT-Etg"/>
-                    <constraint firstAttribute="centerY" secondItem="nuN-Zy-d3E" secondAttribute="centerY" id="PPv-98-rxr"/>
-                    <constraint firstItem="nuN-Zy-d3E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="WkH-zl-XV1"/>
+                    <constraint firstItem="nuN-Zy-d3E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Cw7-sT-0gj"/>
+                    <constraint firstItem="XKz-UI-uFG" firstAttribute="leading" secondItem="nuN-Zy-d3E" secondAttribute="trailing" constant="6" id="DHW-r0-6Z1"/>
+                    <constraint firstItem="XKz-UI-uFG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="G94-Xz-aQJ"/>
                     <constraint firstAttribute="bottom" secondItem="pm9-l2-ZPt" secondAttribute="bottom" id="Xbk-0S-gCE"/>
                     <constraint firstAttribute="trailing" secondItem="cn0-TP-jbu" secondAttribute="trailing" constant="30" id="bAJ-fc-O6t"/>
                     <constraint firstAttribute="trailing" secondItem="7vQ-30-AMd" secondAttribute="trailing" id="dkg-xl-5h2"/>
-                    <constraint firstItem="XKz-UI-uFG" firstAttribute="leading" secondItem="nuN-Zy-d3E" secondAttribute="trailing" constant="4" id="qKG-pC-DNX"/>
-                    <constraint firstItem="nuN-Zy-d3E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="tdD-7J-qaE"/>
+                    <constraint firstItem="nuN-Zy-d3E" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="eIZ-AH-HHs"/>
+                    <constraint firstItem="pm9-l2-ZPt" firstAttribute="leading" secondItem="nuN-Zy-d3E" secondAttribute="trailing" constant="8" id="lE2-xH-L2T"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

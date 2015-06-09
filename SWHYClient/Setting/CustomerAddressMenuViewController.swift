@@ -1,36 +1,24 @@
-//
-//  MenuViewController.swift
-//  SWHYClient
-//
-//  Created by sunny on 5/14/15.
-//  Copyright (c) 2015 DY-INFO. All rights reserved.
-//
-
-import Foundation
-import Darwin
-
 import UIKit
 
-class MenuViewController: UIViewController{
+class CustomerAddressMenuViewController : UIViewController {
     
+   
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblVersion: UILabel!
     @IBOutlet weak var btnSetting: UIView!
-    
     @IBOutlet weak var btnLogout: UIView!
-    
-    @IBOutlet weak var btnUI: UIView!
     var settingViewController: UIViewController!
     
-    @IBOutlet weak var lblVersion: UILabel!
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
     
-    @IBOutlet weak var lblTitle: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+                
         
         let tap_setting:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onClickEvent_Setting:")
         btnSetting.addGestureRecognizer(tap_setting)
-        
-        let tap_ui:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onClickEvent_UI:")
-        btnUI.addGestureRecognizer(tap_ui)
         
         let tap_logout:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onClickEvent_Logout:")
         btnLogout.addGestureRecognizer(tap_logout)
@@ -39,7 +27,6 @@ class MenuViewController: UIViewController{
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.setNavigationBarItem()
         let infoDictionary = NSBundle.mainBundle().infoDictionary
         
         let appDisplayName: AnyObject? = infoDictionary!["CFBundleDisplayName"]
@@ -52,17 +39,7 @@ class MenuViewController: UIViewController{
         self.lblVersion.text = "版本号：\(majorVersion!).\(minorVersion!)"        
         self.lblTitle.text = Config.UI.Title
         
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    //self.slideMenuController()?.changeMainViewController(self.nonMenuViewController, close: true)
-    
-    
-    func returnNavView(){
-        println("click return button")
-        self.navigationController?.popViewControllerAnimated(true)
+        
         
     }
     
@@ -74,13 +51,6 @@ class MenuViewController: UIViewController{
         self.slideMenuController()?.changeMainViewController(self.settingViewController, close: true)
     }
     
-    func onClickEvent_UI(sender:UITapGestureRecognizer!){
-        println("click UI button")
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
-        let settingController = storyboard.instantiateViewControllerWithIdentifier("UIImageViewController") as! UIImageViewController
-        self.settingViewController = UINavigationController(rootViewController: settingController)
-        self.slideMenuController()?.changeMainViewController(self.settingViewController, close: true)
-    }
     
     func onClickEvent_Logout(sender:UITapGestureRecognizer!){
         println("click Logout button")
@@ -107,4 +77,6 @@ class MenuViewController: UIViewController{
             tintColor: nil)
         
     }
+
+    
 }

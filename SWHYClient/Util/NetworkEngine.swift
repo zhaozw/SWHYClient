@@ -156,7 +156,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                         //println(sqlresult)
                         //let sqlresult = 999
                         
-                        self.dispatchResponse("同步访问日志:\(String(sqlresult)) 条",tag: tag)
+                        self.dispatchResponse("系统已自动同步访问日志:\(String(sqlresult)) 条",tag: tag)
                         
                     }else if (tag != Config.RequestTag.PostAccessLog){
                         
@@ -166,7 +166,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                     
                 }else if res.componentsSeparatedByString("Error").count > 1{
                 
-                    result = "Error: 同步日志出错)"
+                    result = "Error: 同步访问日志出错)"
                     //println(result)
                     self.dispatchResponse(result,tag: tag)
                 }
@@ -176,10 +176,104 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             
         }
         
-        
-        
-        
     }
+    
+    //===========同步 客户通讯录日志===============================
+    func postCustomerLogList(url:String,tag:String){
+        
+        println("同步客户通讯录日志")
+        
+        if let itemlist:NSArray = DBAdapter.shared.queryCustomerLogList("sync <> ?", paralist: ["Y"]) {
+            /*
+            [{"CustContactMode":"18616829776","CustContactID":"","Type":"1","Duration":"42","ID":"15","EndTime":"","UserName":"shenyd","StartTime":"2014-11-22+14:55:22","Module":"com.simpleflow.androidtest.PhoneTaskReceiver"},{"CustContactMode":"13641694940","CustContactID":"","Type":"2","Duration":"19","ID":"16","EndTime":"","UserName":"shenyd","StartTime":"2014-11-22+16:12:48","Module":"com.simpleflow.androidtest.PhoneTaskReceiver"}]
+            */
+            
+            var json:String = ""
+            for var i:Int=0;i<itemlist.count; i++ {
+                
+                let item:CustomerLogItem = itemlist[i] as! CustomerLogItem
+                let timestart = item.startdatetime.stringByReplacingOccurrencesOfString(" ", withString: "+")
+                let timeend = item.enddatetime.stringByReplacingOccurrencesOfString(" ", withString: "+")
+                json += "{\"CustContactMode\":\"\(item.phonenumber)\",\"CustContactID\":\"\(item.customerid)\",\"Type\":\"\(item.type)\",\"Duration\":\"\(item.duration)\",\"ID\":\"\(item.id)\",\"EndTime\":\"\(timeend)\",\"UserName\":\"\(item.user)\",\"StartTime\":\"\(timestart)\",\"Module\":\"\(item.module)\"}"
+                
+                if i<itemlist.count-1 {
+                    json += ","
+                }
+            }
+            json = "&CustomerLogs=["+json+"]"
+            
+            //println(json)
+            
+            var result:String = ""
+            let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+            request.setValue("application/json; charset=gb2312", forHTTPHeaderField: "Content-Type")
+            
+            let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
+            //NSUTF8StringEncoding
+            
+            //这步是字符串的URLEncode
+            let data = json.stringByAddingPercentEscapesUsingEncoding(enc)
+            
+            
+            request.HTTPBody = data!.dataUsingEncoding(enc)             
+            request.HTTPMethod = "POST"
+            
+            //print(request.HTTPBody)
+            
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+                data, response, error in
+                
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    if httpResponse.statusCode != 200 {
+                        println("response was not 200: \(response)")
+                        result =  "Error: \(httpResponse.statusCode)"
+                        self.dispatchResponse(result,tag: tag)
+                        
+                    }
+                }
+                if (error != nil) {
+                    println("error submitting request: \(error)")
+                    result = "Error: \(error)"
+                    self.dispatchResponse(result,tag: tag)
+                    
+                }
+                
+                // handle the data of the successful response here
+                let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
+                let res:String = NSString(data: data, encoding: enc)! as String
+                
+                println(res)
+                if res.componentsSeparatedByString("OK").count > 1 {
+                    
+                    if (tag == Config.RequestTag.PostCustomerLog){
+                        
+                        let sqlresult = DBAdapter.shared.markCustomerLogListSync(itemlist)
+                        //println(sqlresult)
+                        //let sqlresult = 999
+                        
+                        self.dispatchResponse("系统已自动同步客户通讯录日志:\(String(sqlresult)) 条",tag: tag)
+                        
+                    }else if (tag != Config.RequestTag.PostCustomerLog){
+                                                
+                    }
+                    
+                }else if res.componentsSeparatedByString("Error").count > 1{
+                    
+                    result = "Error: 同步客户通讯录日志出错)"
+                    //println(result)
+                    self.dispatchResponse(result,tag: tag)
+                }
+            }
+            task.resume()
+            
+        }
+      
+    }
+
+    
+    
+    //==========================================================
+    
     
     func addRequestWithUrlString(url:String,tag:String,useCache:Bool?){
         var getcache = false
@@ -237,7 +331,8 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                     let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
                     let res:String = NSString(data: data, encoding: enc)! as String
                     //println("______________get ReS_____________")
-
+                    
+                    
                     self.dispatchResponse(res,tag: tag)
                 }
                 //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: res)
@@ -248,186 +343,214 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
     
     private func dispatchResponse(res:String,tag:String){
         
-        switch tag{
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             
-        case Config.RequestTag.DoLogin:
-            //println(res)
-            //True@@2.0.06@@swinbak.swsresearch.net/Mobile/mobileinterface.nsf/c3d933b0b726ea7c48257dcf002c8a01/$FILE/SwsresearchMobileTest.apk?openelement@@登录成功@@
-            
-            let tmparr = res.componentsSeparatedByString("@@")
-            var userInfo = Dictionary<String, String>()
-            userInfo.updateValue(tmparr[0], forKey: "Flag")
-            userInfo.updateValue(tmparr[1], forKey: "Version")
-            userInfo.updateValue(tmparr[2], forKey: "UpgradeURL")
-            userInfo.updateValue(tmparr[3], forKey: "Message")
-            
-            var result:Result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
-            NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
-            
-            
-        case Config.RequestTag.GetMainMenu:
-            let xml = SWXMLHash.parse(res)
-            var userInfo = NSMutableArray()
-            for elem in xml["entries"]["entry"]{
-                var mainMenuItemBO:MainMenuItemBO = MainMenuItemBO()
-                mainMenuItemBO.name = elem["itemtext"][0].element?.text ?? ""
-                mainMenuItemBO.itemimage = Config.URL.BaseURL + (elem["itemimage"][0].element?.text ?? "")
-                mainMenuItemBO.classname = elem["class"][0].element?.text ?? ""
-                mainMenuItemBO.uri = elem["uri"][0].element?.text ?? ""
-                //println(elem["uri"][0].element?.text ?? "")
-                mainMenuItemBO.id = elem["id"][0].element?.text ?? ""
-                mainMenuItemBO.offline = elem["offl"][0].element?.text ?? ""
+            //这里写需要大量时间的代码
+            //println("这里写需要大量时间的代码----Dispatch")
+                        
+            var result:Result
+            switch tag{
                 
-                /*
-                let URL = NSURL(string: Config.URL.BaseURL+mainMenuItemBO.itemimage)!
-                let fetcher = HNKNetworkFetcher< UIImage >(URL: URL)
-                Haneke.Shared.imageCache.fetch(fetcher: fetcher).onSuccess { image in
-                // Do something with image
-                mainMenuItemBO.icon = UIImagePNGRepresentation(image)
+            case Config.RequestTag.DoLogin:
+                //println(res)
+                //True@@2.0.06@@swinbak.swsresearch.net/Mobile/mobileinterface.nsf/c3d933b0b726ea7c48257dcf002c8a01/$FILE/SwsresearchMobileTest.apk?openelement@@登录成功@@
                 
-                }
-                */
-                //mainMenuItemBO.initWithDic(dict as NSDictionary)
-                userInfo.addObject(mainMenuItemBO)
-            }
-            var result:Result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
-            NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)   
-            
-        case Config.RequestTag.GetInnerAddressBook:
-            println("取得所内通讯录在线数据 网络解析 开始 ")
-            let xml = SWXMLHash.parse(res)
-            var userInfo = NSMutableArray()
-            for elem in xml["entries"]["entry"]{
-                var item:InnerAddressItem = InnerAddressItem()
-                item.name = elem["name"][0].element?.text ?? ""
-                item.dept = elem["dept"][0].element?.text ?? ""
-                item.mobile = elem["mobile"][0].element?.text ?? ""
-                item.linetel = elem["linetel"][0].element?.text ?? ""
-                item.empid = elem["empid"][0].element?.text ?? ""
-                item.mobiletelecom = elem["mobiletelecom"][0].element?.text ?? ""
-                item.mobiletelecom1 = elem["mobiletelecom1"][0].element?.text ?? ""
-                item.mobile1 = elem["mobile1"][0].element?.text ?? ""
-                item.othertel = elem["othertel"][0].element?.text ?? ""
-                item.homephone = elem["homephone"][0].element?.text ?? ""
-                item.researchteam = elem["researchteam"][0].element?.text ?? ""
-                item.msn = elem["msn"][0].element?.text ?? ""
-                item.pic = elem["pic"][0].element?.text ?? ""
-                item.query = ""
-                if item.name.isEmpty == false {
-                    item.query = item.query + item.name
-                }
-                if item.dept.isEmpty == false {
-                    item.query = item.query + item.dept
-                }
-                if item.mobile.isEmpty == false {
-                    item.query = item.query + item.mobile
-                }
-                if item.mobiletelecom.isEmpty == false {
-                    item.query = item.query + item.mobiletelecom
-                }
+                let tmparr = res.componentsSeparatedByString("@@")
+                var userInfo = Dictionary<String, String>()
+                userInfo.updateValue(tmparr[0], forKey: "Flag")
+                userInfo.updateValue(tmparr[1], forKey: "Version")
+                userInfo.updateValue(tmparr[2], forKey: "UpgradeURL")
+                userInfo.updateValue(tmparr[3], forKey: "Message")
+                
+                result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
+                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
                 
                 
-                userInfo.addObject(item)
-            }
-            var result:Result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
-            NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
-            
-        case Config.RequestTag.GetInnerAddressBook_Dept:
-            let xml = SWXMLHash.parse(res)
-            var userInfo = NSMutableArray()
-            for elem in xml["entries"]["entry"]{
-                var item:InnerAddressDeptItem = InnerAddressDeptItem()
-                item.name = elem["dept"][0].element?.text ?? ""
-                if item.name != "" {
+            case Config.RequestTag.GetMainMenu:
+                let xml = SWXMLHash.parse(res)
+                var userInfo = NSMutableArray()
+                for elem in xml["entries"]["entry"]{
+                    var mainMenuItemBO:MainMenuItemBO = MainMenuItemBO()
+                    mainMenuItemBO.name = elem["itemtext"][0].element?.text ?? ""
+                    mainMenuItemBO.itemimage = Config.URL.BaseURL + (elem["itemimage"][0].element?.text ?? "")
+                    mainMenuItemBO.classname = elem["class"][0].element?.text ?? ""
+                    mainMenuItemBO.uri = elem["uri"][0].element?.text ?? ""
+                    //println(elem["uri"][0].element?.text ?? "")
+                    mainMenuItemBO.id = elem["id"][0].element?.text ?? ""
+                    mainMenuItemBO.offline = elem["offl"][0].element?.text ?? ""
+                    
+                    /*
+                    let URL = NSURL(string: Config.URL.BaseURL+mainMenuItemBO.itemimage)!
+                    let fetcher = HNKNetworkFetcher< UIImage >(URL: URL)
+                    Haneke.Shared.imageCache.fetch(fetcher: fetcher).onSuccess { image in
+                    // Do something with image
+                    mainMenuItemBO.icon = UIImagePNGRepresentation(image)
+                    
+                    }
+                    */
+                    //mainMenuItemBO.initWithDic(dict as NSDictionary)
+                    userInfo.addObject(mainMenuItemBO)
+                }
+                result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
+                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)   
+                
+            case Config.RequestTag.GetInnerAddressBook:
+                println("取得所内通讯录在线数据 网络解析 开始 ")
+                let xml = SWXMLHash.parse(res)
+                var userInfo = NSMutableArray()
+                for elem in xml["entries"]["entry"]{
+                    var item:InnerAddressItem = InnerAddressItem()
+                    item.name = elem["name"][0].element?.text ?? ""
+                    item.dept = elem["dept"][0].element?.text ?? ""
+                    item.mobile = elem["mobile"][0].element?.text ?? ""
+                    item.linetel = elem["linetel"][0].element?.text ?? ""
+                    item.empid = elem["empid"][0].element?.text ?? ""
+                    item.mobiletelecom = elem["mobiletelecom"][0].element?.text ?? ""
+                    item.mobiletelecom1 = elem["mobiletelecom1"][0].element?.text ?? ""
+                    item.mobile1 = elem["mobile1"][0].element?.text ?? ""
+                    item.othertel = elem["othertel"][0].element?.text ?? ""
+                    item.homephone = elem["homephone"][0].element?.text ?? ""
+                    item.researchteam = elem["researchteam"][0].element?.text ?? ""
+                    item.msn = elem["msn"][0].element?.text ?? ""
+                    item.pic = elem["pic"][0].element?.text ?? ""
+                    item.query = ""
+                    if item.name.isEmpty == false {
+                        item.query = item.query + item.name
+                    }
+                    if item.dept.isEmpty == false {
+                        item.query = item.query + item.dept
+                    }
+                    if item.mobile.isEmpty == false {
+                        item.query = item.query + item.mobile
+                    }
+                    if item.mobiletelecom.isEmpty == false {
+                        item.query = item.query + item.mobiletelecom
+                    }
+                    
+                    
                     userInfo.addObject(item)
                 }
+                result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
+                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
                 
+            case Config.RequestTag.GetInnerAddressBook_Dept:
+                let xml = SWXMLHash.parse(res)
+                var userInfo = NSMutableArray()
+                for elem in xml["entries"]["entry"]{
+                    var item:InnerAddressDeptItem = InnerAddressDeptItem()
+                    item.name = elem["dept"][0].element?.text ?? ""
+                    if item.name != "" {
+                        userInfo.addObject(item)
+                    }
+                    
+                }
+                result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
+                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+            case Config.RequestTag.WebViewPreGet:
+                result = Result(status: "OK",message:"",userinfo:NSObject(),tag:tag)
+                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                
+            case Config.RequestTag.PostAccessLog:
+                //println("dispatch \(res)  \(tag)")
+                if res.componentsSeparatedByString("Error").count > 1{
+                    //println("========postnotification =====\(res)")
+                    result = Result(status: "Error",message:res,userinfo:NSObject(),tag:tag)
+                    //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                }else{
+                    //println("========postnotification =====\(res)  \(tag)")
+                    result = Result(status: "OK",message:res,userinfo:NSObject(),tag:tag)
+                    //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                }
+            case Config.RequestTag.PostCustomerLog:
+                //println("dispatch \(res)  \(tag)")
+                if res.componentsSeparatedByString("Error").count > 1{
+                    //println("========postnotification =====\(res)")
+                    result = Result(status: "Error",message:res,userinfo:NSObject(),tag:tag)
+                    //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                }else{
+                    //println("========postnotification =====\(res)  \(tag)")
+                    result = Result(status: "OK",message:res,userinfo:NSObject(),tag:tag)
+                    //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                }
+            case Config.RequestTag.GetCustomerAddressBook:
+                //只能处理 xml encoding utf-8的
+                println("取得所内通讯录在线数据 网络解析 开始 ")
+                let xml = SWXMLHash.parse(res.stringByReplacingOccurrencesOfString("gb2312", withString: "utf-8"))
+                
+                var userInfo = NSMutableArray()
+                for elem in xml["entries"]["entry"]{
+                    
+                    var item:CustomerAddressItem = CustomerAddressItem()
+                    
+                    item.name = elem["name"][0].element?.text ?? ""
+                    item.comp = elem["comp"][0].element?.text ?? ""
+                    item.group = elem["group"][0].element?.text ?? ""
+                    item.comptel = elem["comptel"][0].element?.text ?? ""
+                    item.linetel = elem["linetel"][0].element?.text ?? ""
+                    item.mobile = elem["mobile"][0].element?.text ?? ""
+                    item.email = elem["email"][0].element?.text ?? ""
+                    item.important = elem["important"][0].element?.text ?? ""
+                    item.importantid = elem["importantid"][0].element?.text ?? ""
+                    item.level = elem["level"][0].element?.text ?? ""
+                    item.managerlist = elem["managerlist"][0].element?.text ?? ""
+                    item.sex = elem["sex"][0].element?.text ?? ""
+                    item.jobtitle = elem["jobtitle"][0].element?.text ?? ""
+                    item.custlevel = elem["custlevel"][0].element?.text ?? ""
+                    item.status = elem["status"][0].element?.text ?? ""
+                    item.customerid = elem["customerid"][0].element?.text ?? ""
+                    
+                    item.query = ""
+                    if item.name.isEmpty == false {
+                        item.query = item.query + item.name
+                    }
+                    if item.group.isEmpty == false {
+                        item.query = item.query + item.group
+                    }
+                    if item.mobile.isEmpty == false {
+                        item.query = item.query + item.mobile
+                    }
+                    if item.comp.isEmpty == false {
+                        item.query = item.query + item.comp
+                    }
+                    
+                    
+                    userInfo.addObject(item)
+                }
+                result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
+                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                
+            case Config.RequestTag.GetCustomerAddressBook_Group:
+                
+                //只能处理 xml encoding utf-8的
+                let xml = SWXMLHash.parse(res.stringByReplacingOccurrencesOfString("gb2312", withString: "utf-8"))
+                var userInfo = NSMutableArray()
+                for elem in xml["entries"]["entry"]{
+                    var item:CustomerAddressGroupItem = CustomerAddressGroupItem()
+                    item.name = elem["group"][0].element?.text ?? ""
+                    item.level = elem["custlevel"][0].element?.text ?? ""
+                    if item.name != "" {
+                        userInfo.addObject(item)
+                    }
+                    
+                }
+                result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
+                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                
+            default:
+                return        
             }
-            var result:Result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
-            NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
-        case Config.RequestTag.WebViewPreGet:
-            var result:Result = Result(status: "OK",message:"",userinfo:NSObject(),tag:tag)
-            NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
-            
-        case Config.RequestTag.PostAccessLog:
-            //println("dispatch \(res)  \(tag)")
-            if res.componentsSeparatedByString("Error").count > 1{
-                //println("========postnotification =====\(res)")
-                var result:Result = Result(status: "Error",message:res,userinfo:NSObject(),tag:tag)
-                NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
-            }else{
-                //println("========postnotification =====\(res)  \(tag)")
-                var result:Result = Result(status: "OK",message:res,userinfo:NSObject(),tag:tag)
-                NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
-            }
-        case Config.RequestTag.GetCustomerAddressBook:
-            //只能处理 xml encoding utf-8的
-            let xml = SWXMLHash.parse(res.stringByReplacingOccurrencesOfString("gb2312", withString: "utf-8"))
-   
-            var userInfo = NSMutableArray()
-            for elem in xml["entries"]["entry"]{
 
-                var item:CustomerAddressItem = CustomerAddressItem()
-                           
-                item.name = elem["name"][0].element?.text ?? ""
-                item.comp = elem["comp"][0].element?.text ?? ""
-                item.group = elem["group"][0].element?.text ?? ""
-                item.comptel = elem["comptel"][0].element?.text ?? ""
-                item.linetel = elem["linetel"][0].element?.text ?? ""
-                item.mobile = elem["mobile"][0].element?.text ?? ""
-                item.email = elem["email"][0].element?.text ?? ""
-                item.important = elem["important"][0].element?.text ?? ""
-                item.importantid = elem["importantid"][0].element?.text ?? ""
-                item.level = elem["level"][0].element?.text ?? ""
-                item.managerlist = elem["managerlist"][0].element?.text ?? ""
-                item.sex = elem["sex"][0].element?.text ?? ""
-                item.jobtitle = elem["jobtitle"][0].element?.text ?? ""
-                item.custlevel = elem["custlevel"][0].element?.text ?? ""
-                item.status = elem["status"][0].element?.text ?? ""
-                item.customerid = elem["customerid"][0].element?.text ?? ""
+            dispatch_async(dispatch_get_main_queue(), {
                 
-                item.query = ""
-                if item.name.isEmpty == false {
-                    item.query = item.query + item.name
-                }
-                if item.group.isEmpty == false {
-                    item.query = item.query + item.group
-                }
-                if item.mobile.isEmpty == false {
-                    item.query = item.query + item.mobile
-                }
-                if item.comp.isEmpty == false {
-                    item.query = item.query + item.comp
-                }
-                
-                
-                userInfo.addObject(item)
-            }
-            var result:Result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
-            NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
-            
-        case Config.RequestTag.GetCustomerAddressBook_Group:
-            
-            //只能处理 xml encoding utf-8的
-            let xml = SWXMLHash.parse(res.stringByReplacingOccurrencesOfString("gb2312", withString: "utf-8"))
-            var userInfo = NSMutableArray()
-            for elem in xml["entries"]["entry"]{
-                var item:CustomerAddressGroupItem = CustomerAddressGroupItem()
-                item.name = elem["group"][0].element?.text ?? ""
-                item.level = elem["custlevel"][0].element?.text ?? ""
-                if item.name != "" {
-                    userInfo.addObject(item)
-                }
-                
-            }
-            var result:Result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
-            NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
-            
-        default:
-            return        
-        }
+                //这里返回主线程，写需要主线程执行的代码
+                //println("这里返回主线程，写需要主线程执行的代码  --  Dispatch")
+                NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+            })
+        }) 
         
-        
+                
+         
     }
     
     /*

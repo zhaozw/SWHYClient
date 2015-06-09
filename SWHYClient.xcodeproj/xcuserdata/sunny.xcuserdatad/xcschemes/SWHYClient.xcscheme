@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A3C73AFF1ABDEF96002C299D"
-               BuildableName = "&#x7533;&#x4e07;&#x5b8f;&#x6e90;.app"
-               BlueprintName = "&#x7533;&#x4e07;&#x5b8f;&#x6e90;"
+               BuildableName = "SWHYClient.app"
+               BlueprintName = "SWHYClient"
                ReferencedContainer = "container:SWHYClient.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -57,8 +57,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A3C73AFF1ABDEF96002C299D"
-            BuildableName = "&#x7533;&#x4e07;&#x5b8f;&#x6e90;.app"
-            BlueprintName = "&#x7533;&#x4e07;&#x5b8f;&#x6e90;"
+            BuildableName = "SWHYClient.app"
+            BlueprintName = "SWHYClient"
             ReferencedContainer = "container:SWHYClient.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -72,12 +72,13 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A3C73AFF1ABDEF96002C299D"
-            BuildableName = "&#x7533;&#x4e07;&#x5b8f;&#x6e90;.app"
-            BlueprintName = "&#x7533;&#x4e07;&#x5b8f;&#x6e90;"
+            BuildableName = "SWHYClient.app"
+            BlueprintName = "SWHYClient"
             ReferencedContainer = "container:SWHYClient.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -90,12 +91,13 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A3C73AFF1ABDEF96002C299D"
-            BuildableName = "&#x7533;&#x4e07;&#x5b8f;&#x6e90;.app"
-            BlueprintName = "&#x7533;&#x4e07;&#x5b8f;&#x6e90;"
+            BuildableName = "SWHYClient.app"
+            BlueprintName = "SWHYClient"
             ReferencedContainer = "container:SWHYClient.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

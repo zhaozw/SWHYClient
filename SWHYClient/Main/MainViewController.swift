@@ -45,7 +45,7 @@ class MainViewController: UIViewController{
         self.scrollview.frame.origin.x = 0
         self.scrollview.frame.origin.y = 0 //20
         
-                self.margin = (Util.getScreen().width - col*viewW) / (col+1)
+        self.margin = (Util.getScreen().width - col*viewW) / (col+1)
 
         //用于更新后台SQL及缓存
         if Message.shared.loginType == "Online"{
@@ -60,8 +60,12 @@ class MainViewController: UIViewController{
             }
             //登陆成功后，上传日志
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.PostAccessLog, object: nil)
-            
             NetworkEngine.sharedInstance.postLogList(Config.URL.PostAccessLog, tag: Config.RequestTag.PostAccessLog)
+            
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.PostCustomerLog, object: nil)
+            NetworkEngine.sharedInstance.postCustomerLogList(Config.URL.PostCustomerLog, tag: Config.RequestTag.PostCustomerLog)
+            
             //Loger.shared.uploadAccessLogList()
         }
         else{
@@ -114,7 +118,7 @@ class MainViewController: UIViewController{
                 println("------Update MainMenuList to SQLite--------")
                 DBAdapter.shared.syncMainMenuList(self.arrMutiData)
             }
-            else if result.tag == Config.RequestTag.PostAccessLog {
+            else if result.tag == Config.RequestTag.PostAccessLog || result.tag == Config.RequestTag.PostCustomerLog {
                 println("--+++----Update SQLite AccessLog to already sync--------\(result.message)")
                 PKNotification.toast(result.message)
             }

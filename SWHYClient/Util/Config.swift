@@ -21,6 +21,7 @@ class Config{
         static let WebViewPreGet = "WebViewPreGet"
         
         static let PostAccessLog = "PostAccessLog"
+        static let PostCustomerLog = "PostCustomerLog"
     } 
 
     struct NotifyTag {
@@ -44,6 +45,7 @@ class Config{
         static let CustomerAddressBook_Group = "https://swinbak.swsresearch.net/mobile/customerinfo.nsf/GetGroupInfoByUserName?openagent"
         
         static let PostAccessLog = "https://swinbak.swsresearch.net/mobile/Log.nsf/DoPostAccessLog?openagent"
+        static let PostCustomerLog = "https://swinbak.swsresearch.net/mobile/Log.nsf/DoPostCustomerLog?openagent"
     }
     struct Net {
         static let Domain = "swsresearch"
@@ -65,6 +67,7 @@ class Config{
         static let CustomerAddressGroupList = "CustomerAddressGroupList"
         
         static let AccessLogList = "AccessLogList"
+        static let CustomerLogList = "CustomerLogList"
     }
     
     struct AddressBook {

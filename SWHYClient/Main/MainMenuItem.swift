@@ -16,7 +16,7 @@ class MainMenuItem:UIView{
         
     }
     
-    @IBOutlet weak var icon: UIImageView!
+    @IBOutlet weak var icon: MKImageView!
     
     @IBOutlet weak var label: UILabel!
     
@@ -27,6 +27,8 @@ class MainMenuItem:UIView{
             
             //这里应该直接加载对象里的图片DATA
             icon.hnk_setImageFromURL(url)   //简单方式
+            icon.rippleLocation = MKRippleLocation.Center
+            icon.userInteractionEnabled = true
             //NSData *imageData = UIImagePNGRepresentation(icon.image); 
             //icon.image.
             //以下用常规方式 ，以可以捕获网络图片加载错误

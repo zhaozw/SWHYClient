@@ -1,5 +1,6 @@
 //
 //  CustomerAddressBook.swift
+
 //  SWHYClient
 //
 //  Created by sunny on 5/27/15.
@@ -19,8 +20,9 @@ import Foundation
     var getdept = false
     var preopenindex = NSNotFound  //上次打开的setion
     var opensectionindex = NSNotFound
-        
+    
     var fillViewFromSql = false
+    var custlevel:String = ""
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?){
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -69,9 +71,10 @@ import Foundation
         getdept = false
         
         var username:String = NSUserDefaults.standardUserDefaults().stringForKey("UserName")!
-
+        
         
         if Message.shared.loginType == "Online" {
+            println("customer address start online data")
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.GetCustomerAddressBook, object: nil)
             NetworkEngine.sharedInstance.addRequestWithUrlString(Config.URL.CustomerAddressBook+"&user=\(username)", tag: Config.RequestTag.GetCustomerAddressBook,useCache:false)
             
@@ -81,20 +84,6 @@ import Foundation
         }
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        
-        //println(self.navigationController?.navigationBar.frame.origin.y)
-        //println(self.navigationController?.navigationBar.frame.height)
-        //self.tableView.frame.origin.y = 64
-        //println(self.tableView.frame.origin.y)
-        //self.tableView.backgroundColor = UIColor.redColor()
-        
-        //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-        
-        //var storyboard = UIStoryboard(name: "Setting", bundle: nil)
-        //let settingController = storyboard.instantiateViewControllerWithIdentifier("SettingMenuController") as! SettingViewController
-
-        
-        
         
         var nib = UINib(nibName:"CustomerAddressBookCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "Cell")
@@ -111,6 +100,7 @@ import Foundation
         if let data:AnyObject = DBAdapter.shared.queryCustomerAddressList("'1'=?", paralist: ["1"]) {
             //self.fillViewFromSql = true
             self.itemlist = data as! [CustomerAddressItem]
+            println("从sql里取客户通讯录\(self.itemlist.count)")
             self.getaddress = true
         }
         if let deptdata:AnyObject = DBAdapter.shared.queryCustomerAddressGroupList("'1'=?", paralist: ["1"]) {
@@ -119,16 +109,18 @@ import Foundation
             self.getdept = true
             
         }
-        println("get SQL表信息 部门个数 \(self.grouplist.count) , SQL 人员个数 \(self.itemlist.count)")
+        //println("get SQL表信息 部门个数 \(self.grouplist.count) , SQL 人员个数 \(self.itemlist.count)")
         if self.getaddress == true && self.getdept == true {
             //此处加载视图  已经获得所有通讯录和部门信息
-            println("======================load view from sql=================")
+            //println("======================load view from sql=================")
             self.fillViewFromSql = true
             ComputeAddressInfo()
         }else{
             if Message.shared.loginType != "Online" {
-                println("=====客户通讯录未初始化")
+                //println("=====客户通讯录未初始化")
                 PKNotification.toast("客户通讯录还未首次在线访问，无法提供离线数据！")
+            }else{
+                PKNotification.toast("客户通讯录首次访问，数据加载中！")
             }
         }
         
@@ -136,15 +128,19 @@ import Foundation
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         let backitem = UIBarButtonItem(title: Config.UI.PreNavItem, style: UIBarButtonItemStyle.Plain, target: self, action: "returnNavView")
         self.navigationItem.leftBarButtonItem = backitem
         
         var storyboard = UIStoryboard(name: "Setting", bundle: nil)
-        let innerAddressViewController = storyboard.instantiateViewControllerWithIdentifier("InnerAddresMenuViewController") as! InnerAddressMenuViewController
-        self.slideMenuController()?.changeRightViewController(innerAddressViewController, closeRight: true)
+        let customerAddressViewController = storyboard.instantiateViewControllerWithIdentifier("CustomerAddresMenuViewController") as! CustomerAddressMenuViewController
+        self.slideMenuController()?.changeRightViewController(customerAddressViewController, closeRight: true)
         self.setNavigationBarItem()
-    }
+        
+        //self.searchDisplayController?.setActive(true, animated: true)
+        
+        }
+    
+  
     
     func returnNavView(){
         println("click return button")
@@ -154,7 +150,7 @@ import Foundation
     
     func HandleNetworkResult(notify:NSNotification)
     {
-        println("取得在线数据")
+        println("取得在线数据\(notify.name)")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notify.name, object: nil)
         
         let result:Result = notify.valueForKey("object") as! Result
@@ -165,19 +161,21 @@ import Foundation
             if notify.name == Config.RequestTag.GetCustomerAddressBook {
                 self.itemlist = result.userinfo as! [CustomerAddressItem]
                 self.getaddress = true
-                println("客户通讯录 count = \(self.itemlist.count)")
+                
                 DBAdapter.shared.syncCustomerAddressList(self.itemlist)
+                
+                
             }else if notify.name == Config.RequestTag.GetCustomerAddressBook_Group{
-                println("开始获取在线部门数")
+                //println("开始获取在线部门数")
                 self.grouplist = result.userinfo as! [CustomerAddressGroupItem]
                 self.getdept = true
                 DBAdapter.shared.syncCustomerAddressGroupList(self.grouplist)
-                println("get 在线表信息 部门个数 \(self.grouplist.count) ")
+                 
             }
             if self.fillViewFromSql == false {
                 if self.getaddress == true && self.getdept == true {
                     //此处加载视图  已经获得所有通讯录和部门信息
-                    
+                    println("没有从SQL中取得数据，通过在线数据显示客户通讯录")
                     ComputeAddressInfo()
                 }
             }
@@ -187,33 +185,17 @@ import Foundation
     
     
     func ComputeAddressInfo() {
-        var addressInfoList: NSMutableArray?
-        
-        addressInfoList = NSMutableArray(capacity: self.grouplist.count)
-        
-        println(self.grouplist.count)        
-        for item in self.itemlist{
-            for group in self.grouplist{
-                
-                if group.name == item.group {
-                    group.addresslist.append(item)
-                }
-                
-            }
-            
-            
+        println("Start Compute -------------------\(self.custlevel)------------->>")
+        /*
+        for group in self.grouplist{
+            group.addresslist = [CustomerAddressItem]() 
         }
+        */
+        var infoArray: NSMutableArray = NSMutableArray()
         
-        //return self.deptlist!
-        
-        
-        // 检查SectionInfoArray是否已被创建，如果已被创建，则检查组的数量是否匹配当前实际组的数量。通常情况下，您需要保持SectionInfo与组、单元格信息保持同步。如果扩展功能以让用户能够在表视图中编辑信息，那么需要在编辑操作中适当更新SectionInfo
-        println("reload data=================")
-        if self.sectionInfoArray == nil || self.sectionInfoArray.count != self.numberOfSectionsInTableView(self.tableView) {
-            // 对于每个用户组来说，需要为每个单元格设立一个一致的SectionInfo对象
-            var infoArray: NSMutableArray = NSMutableArray()
-            
-            for group in self.grouplist {
+        for group in self.grouplist {
+            group.addresslist = [CustomerAddressItem]() 
+            if self.custlevel == "" || self.custlevel == group.level {
                 var dictionary: NSArray = (group as CustomerAddressGroupItem).addresslist
                 var sectionInfo = CustomerSectionInfo()
                 sectionInfo.group = group as CustomerAddressGroupItem
@@ -221,9 +203,75 @@ import Foundation
                 
                 infoArray.addObject(sectionInfo)
             }
-            self.sectionInfoArray = infoArray
-            self.tableView.reloadData()
+            
+            
+            for item in self.itemlist{
+                if group.name == item.group && (self.custlevel == "" || self.custlevel == item.custlevel) {
+                    //println(self.custlevel)
+                    group.addresslist.append(item)
+                }
+            }   
+            
         }
+        
+        for arr in infoArray{
+            let obj = arr as! CustomerSectionInfo
+            if obj.group.name == "基金公司投资总监（潜在）" {
+                println("qqqqqqqqqqqqqqqqq\(obj.group.addresslist.count)")
+            }
+        
+        }
+        
+        self.sectionInfoArray = infoArray
+        println("============================>> End Compute")
+        self.tableView.reloadData()
+        /*
+        for group in self.grouplist{
+            for item in self.itemlist{
+                if group.name == item.group && (self.custlevel == "" || self.custlevel == item.custlevel) {
+                    //println(self.custlevel)
+                    group.addresslist.append(item)
+                }
+            }   
+        }
+*/
+        
+        /*
+        for item in self.itemlist{
+            
+            for group in self.grouplist{
+                
+                if group.name == item.group && (self.custlevel == "" || self.custlevel == item.custlevel) {
+                    //println(self.custlevel)
+                    group.addresslist.append(item)
+                    break
+                }
+            }   
+        }
+*/
+        // 检查SectionInfoArray是否已被创建，如果已被创建，则检查组的数量是否匹配当前实际组的数量。通常情况下，您需要保持SectionInfo与组、单元格信息保持同步。如果扩展功能以让用户能够在表视图中编辑信息，那么需要在编辑操作中适当更新SectionInfo
+        //println("reload data=================")
+        //if self.sectionInfoArray == nil || self.sectionInfoArray.count != self.numberOfSectionsInTableView(self.tableView) {
+        //println("load =====++++++++++++++")
+        // 对于每个用户组来说，需要为每个单元格设立一个一致的SectionInfo对象
+/*
+        var infoArray: NSMutableArray = NSMutableArray()
+        
+        for group in self.grouplist {
+            if self.custlevel == "" || self.custlevel == group.level {
+                var dictionary: NSArray = (group as CustomerAddressGroupItem).addresslist
+                var sectionInfo = CustomerSectionInfo()
+                sectionInfo.group = group as CustomerAddressGroupItem
+                sectionInfo.headerView.HeaderOpen = false
+                
+                infoArray.addObject(sectionInfo)
+            }
+        }
+        self.sectionInfoArray = infoArray
+
+*/
+        
+       
         
     }
     
@@ -237,20 +285,21 @@ import Foundation
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        
+        //println ("numberOfSectionsInTableView *************************\(self.sectionInfoArray.count)")
         if tableView == self.searchDisplayController?.searchResultsTableView {
             return 1
+            //return self.grouplist.count
             
         } else {
-            return self.grouplist.count
+            //return self.grouplist.count
+            return self.sectionInfoArray.count
         }
         
     }
     
     // UITableViewDataSource Functions
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return self.itemlist.count
-        //println("---start numberOfRowsInSection section----\(sectionInfoArray.count)--\(section)")
+        
         if tableView == self.searchDisplayController?.searchResultsTableView {
             //println("rows in section search bar")
             return self.filteredItemList.count
@@ -309,16 +358,18 @@ import Foundation
         }
         var cell:CustomerAddressBookCell! = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as? CustomerAddressBookCell
         
-       
+        
         cell.lblComp.text = item.comp
         cell.lblName.text = item.name
         cell.icon?.image = UIImage(named: "contactbook")
-       
+        
         cell.btnMobile.setTitle(item.mobile, forState:UIControlState.Normal)
         cell.btnLinetel.setTitle(item.linetel, forState:UIControlState.Normal)
         
-        //点击事件
         
+        //点击事件
+        cell.btnMobile.customerproperty1 = item.customerid
+        cell.btnLinetel.customerproperty1 = item.customerid
         cell.btnMobile.addTarget(self, action: "onClick_Call:", forControlEvents: UIControlEvents.TouchUpInside)
         cell.btnLinetel.addTarget(self, action: "onClick_Call:", forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -351,12 +402,10 @@ import Foundation
         return sectionHeaderView
     }
     
-    func onClick_Call(sender:UIButton) {
+    func onClick_Call(sender:MKButton) {
         let num = sender.titleLabel?.text
+        let customerid = sender.customerproperty1
         if num != nil {
-            
-            
-            
             
             let btn_OK:PKButton = PKButton(title: "拨打",
                 action: { (messageLabel, items) -> Bool in
@@ -364,6 +413,21 @@ import Foundation
                     println("=========click==========\(urlstr)")
                     var url1 = NSURL(string: urlstr)
                     UIApplication.sharedApplication().openURL(url1!)
+                    
+                    //记录客户拨打日志
+                    let logItem = CustomerLogItem()
+                    logItem.user = NSUserDefaults.standardUserDefaults().objectForKey("UserName") as! String
+                    logItem.module = "CustomerAddressBook"
+                    logItem.customerid = customerid
+                    logItem.phonenumber = num
+                    logItem.type = "2"
+                    logItem.startdatetime = Util.getCurDateString()
+                    logItem.enddatetime = ""
+                    logItem.duration = "300"               
+                    
+                    DBAdapter.shared.syncCustomerLogItem(logItem)
+                    
+                    
                     return true
                 },
                 fontColor: UIColor(red: 0, green: 0.55, blue: 0.9, alpha: 1.0),
@@ -380,26 +444,54 @@ import Foundation
         }
     }
     
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int){
+        println("selectedScopeButtonIndexDidChange scope = \(selectedScope)")
+        /*
+        if selectedScope == 1 {
+        self.custlevel =  "重点人脉"
+        }else if selectedScope == 2 {
+        self.custlevel = "次要人脉"
+        }else{
+        self.custlevel = ""
+        }
+        println("filter scope = \(selectedScope) \(self.custlevel)")
+        */
+    }
+    
+    
     func filterContentForSearchText(searchText: String) {
         
         // 使用过滤方法过滤数组 陈陈
-        println("filter content \(searchText)")
+        //println("filterContentForSearchText = \(searchText)  \(self.custlevel)")
+        /*
+        self.filteredItemList = self.itemlist.filter({( customerAddressItem: CustomerAddressItem) -> Bool in
+        
+        //let categoryMatch = (scope == "All") || (innerAddressItem.dept == scope)
+        let stringMatch = customerAddressItem.query.rangeOfString(searchText)
+        
+        //return categoryMatch && (stringMatch != nil)
+        return (stringMatch != nil)
+        
+        })
+        */
+        
         self.filteredItemList = self.itemlist.filter({( customerAddressItem: CustomerAddressItem) -> Bool in
             
             //let categoryMatch = (scope == "All") || (innerAddressItem.dept == scope)
             let stringMatch = customerAddressItem.query.rangeOfString(searchText)
-            
+            let custLevelMatch = self.custlevel == "" || customerAddressItem.custlevel == self.custlevel
             //return categoryMatch && (stringMatch != nil)
-            return (stringMatch != nil)
+            return (stringMatch != nil && custLevelMatch == true)
             
         })
+        //self.ComputeAddressInfo(self.filteredItemList)
+        //self.tableView.reloadData()
         
     }
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String!) -> Bool {
         
-        println(searchString)
+        println("shouldReloadTableForSearchString")
         self.filterContentForSearchText(searchString)
-        
         return true
         
     }
@@ -407,10 +499,29 @@ import Foundation
     
     
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
+        println("selectedScopeButtonIndexShouldChange scope = \(searchOption)")
         
-        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)
+        if searchOption == 1 {
+            self.custlevel =  "重点人脉"
+        }else if searchOption == 2 {
+            self.custlevel = "次要人脉"
+        }else{
+            self.custlevel = ""
+        }
         
-        return true
+        self.searchDisplayController!.searchBar.placeholder = self.custlevel == "" ? "全部" : self.custlevel
+        
+        println(self.searchDisplayController!.searchBar.placeholder)
+        
+        if self.searchDisplayController!.searchBar.text != ""{
+            self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)
+            return true
+        }else{
+            self.opensectionindex = NSNotFound
+            self.searchDisplayController?.setActive(false, animated: true)
+            self.ComputeAddressInfo()
+            return false
+        }
         
     }
     
@@ -428,7 +539,7 @@ import Foundation
         //println("---\(indexPath.row)/\(dept.addresslist.count)---")
         let item = dept.addresslist[indexPath.row] as CustomerAddressItem
         
-        let nextController:InnerAddressDetail = InnerAddressDetail()
+        let nextController:CustomerAddressDetail = CustomerAddressDetail()
         Message.shared.curCustomerAddressItem = item
         self.navigationController?.pushViewController(nextController,animated:false);
         
@@ -469,7 +580,7 @@ import Foundation
         // 创建一个包含单元格索引路径的数组来实现删除单元格的操作：这些路径对应之前打开的节的单元格
         var indexPathsToDelete = NSMutableArray()
         var previousOpenSectionIndex = opensectionindex
-        var perviousOpenSectionIndex = preopenindex
+        //var perviousOpenSectionIndex = preopenindex
         //println("本次打开的section\(sectionOpened)  上次打开的section\(opensectionindex)")
         if previousOpenSectionIndex != NSNotFound {
             var previousOpenSection: CustomerSectionInfo = self.sectionInfoArray[previousOpenSectionIndex] as! CustomerSectionInfo
