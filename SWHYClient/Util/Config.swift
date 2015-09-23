@@ -22,6 +22,7 @@ class Config{
         
         static let PostAccessLog = "PostAccessLog"
         static let PostCustomerLog = "PostCustomerLog"
+        static let GetParameter_CallDuration = "GetParameter_CallDuration"
     } 
 
     struct NotifyTag {
@@ -46,6 +47,8 @@ class Config{
         
         static let PostAccessLog = "https://swinbak.swsresearch.net/mobile/Log.nsf/DoPostAccessLog?openagent"
         static let PostCustomerLog = "https://swinbak.swsresearch.net/mobile/Log.nsf/DoPostCustomerLog?openagent"
+        
+        static let GetParameter_CallDuration = "https://swinbak.swsresearch.net/Mobile/mobileInterface.nsf/ag_getparameter?Openagent&key=IOS-Call-Duration-Default"
     }
     struct Net {
         static let Domain = "swsresearch"

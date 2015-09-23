@@ -51,6 +51,12 @@ class MainViewController: UIViewController{
         if Message.shared.loginType == "Online"{
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.GetMainMenu, object: nil)
             NetworkEngine.sharedInstance.addRequestWithUrlString(Config.URL.MainMenuList, tag: Config.RequestTag.GetMainMenu,useCache:false)
+            
+            //取IOS的默认Call_Duration
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.GetParameter_CallDuration, object: nil)
+            NetworkEngine.sharedInstance.addRequestWithUrlString(Config.URL.GetParameter_CallDuration, tag: Config.RequestTag.GetParameter_CallDuration,useCache:false)
+            
+            
             //从SQL里取得表信息并加载
             if let data:NSMutableArray = DBAdapter.shared.queryMainMenuList("'1'=?", paralist: ["1"]) {
                 self.fillViewFromSql = true
@@ -121,6 +127,10 @@ class MainViewController: UIViewController{
             else if result.tag == Config.RequestTag.PostAccessLog || result.tag == Config.RequestTag.PostCustomerLog {
                 println("--+++----Update SQLite AccessLog to already sync--------\(result.message)")
                 PKNotification.toast(result.message)
+            }
+            else if result.tag == Config.RequestTag.GetParameter_CallDuration {
+                
+                NSUserDefaults.standardUserDefaults().setObject(result.userinfo, forKey: "CallDuration")
             }
         }
         

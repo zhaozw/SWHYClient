@@ -423,7 +423,8 @@ import Foundation
                     logItem.type = "2"
                     logItem.startdatetime = Util.getCurDateString()
                     logItem.enddatetime = ""
-                    logItem.duration = "300"               
+                    logItem.duration = NSUserDefaults.standardUserDefaults().objectForKey("CallDuration") as! String
+              
                     
                     DBAdapter.shared.syncCustomerLogItem(logItem)
                     

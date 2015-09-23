@@ -218,7 +218,8 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             request.HTTPBody = data!.dataUsingEncoding(enc)             
             request.HTTPMethod = "POST"
             
-            //print(request.HTTPBody)
+            //
+            print(request.HTTPBody)
             
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
                 data, response, error in
@@ -536,7 +537,15 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 }
                 result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
                 //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+            case Config.RequestTag.GetParameter_CallDuration:
+                var userInfo = ""
+                //只能处理 xml encoding utf-8的
+                let json = JSONClass(string:res)
+                userInfo = json["JSON"][0]["value"].asString  ?? "++"
+                result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
+                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
                 
+   
             default:
                 return        
             }
