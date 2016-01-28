@@ -10,7 +10,6 @@
 		A352DAFD1B05D0B90035B4AF /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A352DAFC1B05D0B90035B4AF /* MenuViewController.swift */; };
 		A352DB011B05D3770035B4AF /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A352DB001B05D3770035B4AF /* SettingViewController.swift */; };
 		A3A082811BB92CE6009E5A04 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3A082801BB92CE6009E5A04 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
-		A3AC2F161C5A255A00356744 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC2F151C5A255A00356744 /* Log.swift */; settings = {ASSET_TAGS = (); }; };
 		A3B91B9A1AC2895900DC3D5A /* InnerAddressBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B91B981AC2895900DC3D5A /* InnerAddressBookCell.swift */; };
 		A3BA012E1B09BA1800EA1448 /* AIFlatSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA012D1B09BA1800EA1448 /* AIFlatSwitch.swift */; };
 		A3BA348E1B16DC95002C08C5 /* CustomerAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA348D1B16DC95002C08C5 /* CustomerAddressBook.swift */; };
@@ -603,6 +602,8 @@
 		A3D2D8171BB7D5F7002491ED /* Haneke */ = {
 			isa = PBXGroup;
 			children = (
+				A3D2D8211BB7D5F7002491ED /* Haneke.h */,
+				A3D2D8231BB7D5F7002491ED /* Info.plist */,
 				A3D2D8181BB7D5F7002491ED /* Cache.swift */,
 				A3D2D8191BB7D5F7002491ED /* CGSize+Swift.swift */,
 				A3D2D81A1BB7D5F7002491ED /* CryptoSwiftMD5.swift */,
@@ -612,9 +613,8 @@
 				A3D2D81E1BB7D5F7002491ED /* Fetch.swift */,
 				A3D2D81F1BB7D5F7002491ED /* Fetcher.swift */,
 				A3D2D8201BB7D5F7002491ED /* Format.swift */,
-				A3D2D8211BB7D5F7002491ED /* Haneke.h */,
 				A3D2D8221BB7D5F7002491ED /* Haneke.swift */,
-				A3D2D8231BB7D5F7002491ED /* Info.plist */,
+				A3AC2F151C5A255A00356744 /* Log.swift */,
 				A3D2D8251BB7D5F7002491ED /* NetworkFetcher.swift */,
 				A3D2D8261BB7D5F7002491ED /* NSFileManager+Haneke.swift */,
 				A3D2D8271BB7D5F7002491ED /* NSHTTPURLResponse+Haneke.swift */,
@@ -623,7 +623,6 @@
 				A3D2D82A1BB7D5F7002491ED /* UIImage+Haneke.swift */,
 				A3D2D82B1BB7D5F7002491ED /* UIImageView+Haneke.swift */,
 				A3D2D82C1BB7D5F7002491ED /* UIView+Haneke.swift */,
-				A3AC2F151C5A255A00356744 /* Log.swift */,
 			);
 			path = Haneke;
 			sourceTree = "<group>";
@@ -805,7 +804,6 @@
 				A3D2D8361BB7D5F7002491ED /* Haneke.swift in Sources */,
 				A3D2D8341BB7D5F7002491ED /* Fetcher.swift in Sources */,
 				A3D2D8401BB7D5F7002491ED /* UIView+Haneke.swift in Sources */,
-				A3AC2F161C5A255A00356744 /* Log.swift in Sources */,
 				A3D2D83A1BB7D5F7002491ED /* NSFileManager+Haneke.swift in Sources */,
 				A3BA34921B16DEC5002C08C5 /* CustomerAddressItem.swift in Sources */,
 				A3BA348E1B16DC95002C08C5 /* CustomerAddressBook.swift in Sources */,
