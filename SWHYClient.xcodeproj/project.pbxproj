@@ -10,6 +10,7 @@
 		A352DAFD1B05D0B90035B4AF /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A352DAFC1B05D0B90035B4AF /* MenuViewController.swift */; };
 		A352DB011B05D3770035B4AF /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A352DB001B05D3770035B4AF /* SettingViewController.swift */; };
 		A3A082811BB92CE6009E5A04 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3A082801BB92CE6009E5A04 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
+		A3AC2F161C5A255A00356744 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC2F151C5A255A00356744 /* Log.swift */; settings = {ASSET_TAGS = (); }; };
 		A3B91B9A1AC2895900DC3D5A /* InnerAddressBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B91B981AC2895900DC3D5A /* InnerAddressBookCell.swift */; };
 		A3BA012E1B09BA1800EA1448 /* AIFlatSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA012D1B09BA1800EA1448 /* AIFlatSwitch.swift */; };
 		A3BA348E1B16DC95002C08C5 /* CustomerAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA348D1B16DC95002C08C5 /* CustomerAddressBook.swift */; };
@@ -70,7 +71,6 @@
 		A3D2D8341BB7D5F7002491ED /* Fetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D81F1BB7D5F7002491ED /* Fetcher.swift */; settings = {ASSET_TAGS = (); }; };
 		A3D2D8351BB7D5F7002491ED /* Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D8201BB7D5F7002491ED /* Format.swift */; settings = {ASSET_TAGS = (); }; };
 		A3D2D8361BB7D5F7002491ED /* Haneke.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D8221BB7D5F7002491ED /* Haneke.swift */; settings = {ASSET_TAGS = (); }; };
-		A3D2D8381BB7D5F7002491ED /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D8241BB7D5F7002491ED /* Log.swift */; settings = {ASSET_TAGS = (); }; };
 		A3D2D8391BB7D5F7002491ED /* NetworkFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D8251BB7D5F7002491ED /* NetworkFetcher.swift */; settings = {ASSET_TAGS = (); }; };
 		A3D2D83A1BB7D5F7002491ED /* NSFileManager+Haneke.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D8261BB7D5F7002491ED /* NSFileManager+Haneke.swift */; settings = {ASSET_TAGS = (); }; };
 		A3D2D83B1BB7D5F7002491ED /* NSHTTPURLResponse+Haneke.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D8271BB7D5F7002491ED /* NSHTTPURLResponse+Haneke.swift */; settings = {ASSET_TAGS = (); }; };
@@ -158,6 +158,7 @@
 		A352DAFC1B05D0B90035B4AF /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		A352DB001B05D3770035B4AF /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		A3A082801BB92CE6009E5A04 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SWHYClient/Info.plist; sourceTree = "<group>"; };
+		A3AC2F151C5A255A00356744 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		A3B91B981AC2895900DC3D5A /* InnerAddressBookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerAddressBookCell.swift; sourceTree = "<group>"; };
 		A3B91B991AC2895900DC3D5A /* InnerAddressBookCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InnerAddressBookCell.xib; sourceTree = "<group>"; };
 		A3BA012D1B09BA1800EA1448 /* AIFlatSwitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIFlatSwitch.swift; sourceTree = "<group>"; };
@@ -249,7 +250,6 @@
 		A3D2D8211BB7D5F7002491ED /* Haneke.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Haneke.h; sourceTree = "<group>"; };
 		A3D2D8221BB7D5F7002491ED /* Haneke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Haneke.swift; sourceTree = "<group>"; };
 		A3D2D8231BB7D5F7002491ED /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A3D2D8241BB7D5F7002491ED /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		A3D2D8251BB7D5F7002491ED /* NetworkFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkFetcher.swift; sourceTree = "<group>"; };
 		A3D2D8261BB7D5F7002491ED /* NSFileManager+Haneke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFileManager+Haneke.swift"; sourceTree = "<group>"; };
 		A3D2D8271BB7D5F7002491ED /* NSHTTPURLResponse+Haneke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSHTTPURLResponse+Haneke.swift"; sourceTree = "<group>"; };
@@ -615,7 +615,6 @@
 				A3D2D8211BB7D5F7002491ED /* Haneke.h */,
 				A3D2D8221BB7D5F7002491ED /* Haneke.swift */,
 				A3D2D8231BB7D5F7002491ED /* Info.plist */,
-				A3D2D8241BB7D5F7002491ED /* Log.swift */,
 				A3D2D8251BB7D5F7002491ED /* NetworkFetcher.swift */,
 				A3D2D8261BB7D5F7002491ED /* NSFileManager+Haneke.swift */,
 				A3D2D8271BB7D5F7002491ED /* NSHTTPURLResponse+Haneke.swift */,
@@ -624,6 +623,7 @@
 				A3D2D82A1BB7D5F7002491ED /* UIImage+Haneke.swift */,
 				A3D2D82B1BB7D5F7002491ED /* UIImageView+Haneke.swift */,
 				A3D2D82C1BB7D5F7002491ED /* UIView+Haneke.swift */,
+				A3AC2F151C5A255A00356744 /* Log.swift */,
 			);
 			path = Haneke;
 			sourceTree = "<group>";
@@ -805,6 +805,7 @@
 				A3D2D8361BB7D5F7002491ED /* Haneke.swift in Sources */,
 				A3D2D8341BB7D5F7002491ED /* Fetcher.swift in Sources */,
 				A3D2D8401BB7D5F7002491ED /* UIView+Haneke.swift in Sources */,
+				A3AC2F161C5A255A00356744 /* Log.swift in Sources */,
 				A3D2D83A1BB7D5F7002491ED /* NSFileManager+Haneke.swift in Sources */,
 				A3BA34921B16DEC5002C08C5 /* CustomerAddressItem.swift in Sources */,
 				A3BA348E1B16DC95002C08C5 /* CustomerAddressBook.swift in Sources */,
@@ -830,7 +831,6 @@
 				A3D2D8351BB7D5F7002491ED /* Format.swift in Sources */,
 				A3BA012E1B09BA1800EA1448 /* AIFlatSwitch.swift in Sources */,
 				A3C325461B288A3C000953C8 /* Json.swift in Sources */,
-				A3D2D8381BB7D5F7002491ED /* Log.swift in Sources */,
 				A3BA34961B16E81F002C08C5 /* CustomerSectionInfo.swift in Sources */,
 				A3D2D83B1BB7D5F7002491ED /* NSHTTPURLResponse+Haneke.swift in Sources */,
 				A3F7A9D31BDBA61100923D23 /* KeychainService.swift in Sources */,
