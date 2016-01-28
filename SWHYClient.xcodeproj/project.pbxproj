@@ -10,6 +10,7 @@
 		A352DAFD1B05D0B90035B4AF /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A352DAFC1B05D0B90035B4AF /* MenuViewController.swift */; };
 		A352DB011B05D3770035B4AF /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A352DB001B05D3770035B4AF /* SettingViewController.swift */; };
 		A3A082811BB92CE6009E5A04 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3A082801BB92CE6009E5A04 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
+		A3AC2F191C5A357F00356744 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AC2F151C5A255A00356744 /* Log.swift */; };
 		A3B91B9A1AC2895900DC3D5A /* InnerAddressBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B91B981AC2895900DC3D5A /* InnerAddressBookCell.swift */; };
 		A3BA012E1B09BA1800EA1448 /* AIFlatSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA012D1B09BA1800EA1448 /* AIFlatSwitch.swift */; };
 		A3BA348E1B16DC95002C08C5 /* CustomerAddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA348D1B16DC95002C08C5 /* CustomerAddressBook.swift */; };
@@ -769,6 +770,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3AC2F191C5A357F00356744 /* Log.swift in Sources */,
 				A3D2D8901BB80DFA002491ED /* MKButton.swift in Sources */,
 				A3D2D8911BB80DFA002491ED /* MKColor.swift in Sources */,
 				A3D2D8921BB80DFA002491ED /* MKImageView.swift in Sources */,
