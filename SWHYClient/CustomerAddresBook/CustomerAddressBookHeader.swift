@@ -47,12 +47,12 @@ class CustomerAddressBookHeader: UITableViewHeaderFooterView {
         //self.BtnDisclosure.setImage(UIImage(named: "carat-open"), forState: UIControlState.Selected)
         
         // 单击手势识别
-        var tapGesture = UITapGestureRecognizer(target: self, action: "btnTap:")
+        let tapGesture = UITapGestureRecognizer(target: self, action: "btnTap:")
         self.addGestureRecognizer(tapGesture)
     }
     
     @IBAction func btnTap(sender: UITapGestureRecognizer) {
-        println("   click    ")
+        //print("   click    ")
         self.toggleOpen(true)
     }
     

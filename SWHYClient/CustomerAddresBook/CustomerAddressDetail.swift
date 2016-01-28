@@ -40,13 +40,13 @@ class CustomerAddressDetail: UIViewController {
         super.viewDidLoad()
         
         //self.contentView.frame.origin.y = 30
-        println("inner address detail view did load")
+        print("inner address detail view did load")
         // Do any additional setup after loading the view.
         //self.scrollview.scrollEnabled = true
         let item:CustomerAddressItem =  Message.shared.curCustomerAddressItem
         self.title = item.name
         self.lblName.text = item.name
-        println(item.sex)
+        print(item.sex)
         self.lblSex.text = item.sex
         self.lblCompany.text = item.comp
         self.lblLevel.text = item.level
@@ -97,9 +97,9 @@ class CustomerAddressDetail: UIViewController {
         var navbar = self.navigationController?.navigationBar
         //println(self.navigationController?.navigationBar.frame.origin.y)
         //println(self.navigationController?.navigationBar.frame.height)
-        var y = self.navigationController?.navigationBar.frame.origin.y 
-        var h = self.navigationController?.navigationBar.frame.height
-        var s = y! + h!
+        let y = self.navigationController?.navigationBar.frame.origin.y 
+        let h = self.navigationController?.navigationBar.frame.height
+        let s = y! + h!
         self.contentView.frame.origin.y = s
         //self.scrollview.contentSize = CGSizeMake(200.0, 200.0)
         //println(self.scrollview.contentSize)
@@ -110,7 +110,7 @@ class CustomerAddressDetail: UIViewController {
     
     
     func returnNavView(){
-        println("click return button")
+        print("click return button")
         self.navigationController?.popViewControllerAnimated(true)
         
     }
@@ -152,7 +152,7 @@ override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?){
 convenience init() {
     
     self.init(nibName: "CustomerAddressDetail", bundle: nil)
-    println("over ride init =======after=======")
+    print("over ride init =======after=======")
     //self.init(nibName: "LaunchScreen", bundle: nil)
     
 }
@@ -163,7 +163,7 @@ override func didReceiveMemoryWarning() {
 
 
 
-required init(coder aDecoder: NSCoder) {
+required init?(coder aDecoder: NSCoder) {
     
     fatalError("init(coder:) has not been implemented")
     
@@ -175,8 +175,8 @@ func confirmCall(num:String){
         let btn_OK:PKButton = PKButton(title: "拨打",
             action: { (messageLabel, items) -> Bool in
                 let urlstr = "tel://\(num)"
-                println("=========click==========\(urlstr)")
-                var url1 = NSURL(string: urlstr)
+                //print("=========click==========\(urlstr)")
+                let url1 = NSURL(string: urlstr)
                 UIApplication.sharedApplication().openURL(url1!)
                 
                 
@@ -217,8 +217,8 @@ func confirmSMS(num:String){
         let btn_OK:PKButton = PKButton(title: "短信确认",
             action: { (messageLabel, items) -> Bool in
                 let urlstr = "sms://\(num)"
-                println("=========sms==========\(urlstr)")
-                var url1 = NSURL(string: urlstr)
+                //print("=========sms==========\(urlstr)")
+                let url1 = NSURL(string: urlstr)
                 UIApplication.sharedApplication().openURL(url1!)
                 return true
             },

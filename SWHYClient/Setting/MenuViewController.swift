@@ -42,7 +42,7 @@ class MenuViewController: UIViewController{
         self.setNavigationBarItem()
         let infoDictionary = NSBundle.mainBundle().infoDictionary
         
-        let appDisplayName: AnyObject? = infoDictionary!["CFBundleDisplayName"]
+        //_;: AnyObject? = infoDictionary!["CFBundleDisplayName"]
         
         let majorVersion : AnyObject? = infoDictionary! ["CFBundleShortVersionString"]
         
@@ -61,39 +61,39 @@ class MenuViewController: UIViewController{
     
     
     func returnNavView(){
-        println("click return button")
+        print("click return button")
         self.navigationController?.popViewControllerAnimated(true)
         
     }
     
     func onClickEvent_Setting(sender:UITapGestureRecognizer!){
-        println("click setting button")
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        print("click setting button")
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let settingController = storyboard.instantiateViewControllerWithIdentifier("SettingMenuController") as! SettingViewController
         self.settingViewController = UINavigationController(rootViewController: settingController)
         self.slideMenuController()?.changeMainViewController(self.settingViewController, close: true)
     }
     
     func onClickEvent_UI(sender:UITapGestureRecognizer!){
-        println("click UI button")
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        print("click UI button")
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let settingController = storyboard.instantiateViewControllerWithIdentifier("UIImageViewController") as! UIImageViewController
         self.settingViewController = UINavigationController(rootViewController: settingController)
         self.slideMenuController()?.changeMainViewController(self.settingViewController, close: true)
     }
     
     func onClickEvent_Logout(sender:UITapGestureRecognizer!){
-        println("click Logout button")
+        print("click Logout button")
         
         self.slideMenuController()?.closeRight()
         let btn_OK:PKButton = PKButton(title: "登出",
             action: { (messageLabel, items) -> Bool in
-                println("=========click==========)")
+                print("=========click==========)")
                 //===code here
                 Message.shared.logout = true
                 exit(0)
                 //self.removeAddressFromSystemContact()
-                return true
+                //return true
             },
             fontColor: UIColor(red: 0, green: 0.55, blue: 0.9, alpha: 1.0),
             backgroundColor: nil)

@@ -28,7 +28,7 @@ class UIImageViewController: UIViewController,UINavigationControllerDelegate, UI
     
     @IBAction func btnCustomImage(sender: AnyObject) {
         
-        var btn=UIImagePickerController()
+        let btn=UIImagePickerController()
         btn.sourceType=UIImagePickerControllerSourceType.PhotoLibrary
         btn.delegate=self
         //To display the UIImagePickerController
@@ -44,9 +44,9 @@ class UIImageViewController: UIViewController,UINavigationControllerDelegate, UI
         let filename:String = "uibg_customize"
         
         if (UIImagePNGRepresentation(image) == nil) {
-            data = UIImageJPEGRepresentation(image, 1);
+            data = UIImageJPEGRepresentation(image, 1)!;
         } else {
-            data = UIImagePNGRepresentation(image);
+            data = UIImagePNGRepresentation(image)!;
             filename         
         }
         
@@ -104,7 +104,7 @@ class UIImageViewController: UIViewController,UINavigationControllerDelegate, UI
             }
         }
         
-        var filePath = Util.applicationFilePath ("uibg_customize", directory: nil)
+        let filePath = Util.applicationFilePath ("uibg_customize", directory: nil)
         let image = UIImage(contentsOfFile: filePath)
         
         bgimageview6.image=image
@@ -113,7 +113,7 @@ class UIImageViewController: UIViewController,UINavigationControllerDelegate, UI
     
     
     func onClick_tapView(sender:UITapGestureRecognizer!){
-        println(" tap ")
+        print(" tap ")
         let viewlist = [bgview1 , bgview2 , bgview3 , bgview4 , bgview5 , bgview6] as [UIView]
         let chklist = [chk1 , chk2 , chk3 , chk4 , chk5 , chk6] as [UIImageView]
         
@@ -169,12 +169,12 @@ class UIImageViewController: UIViewController,UINavigationControllerDelegate, UI
     }    
     */
     func returnNavView(){
-        println("click return button")
+        print("click return button")
         
         let mainViewController:MainViewController = MainViewController()
         let nvc=UINavigationController(rootViewController:mainViewController);
         
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let rightViewController = storyboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
         
         let slideMenuController = SlideMenuController(mainViewController: nvc, rightMenuViewController: rightViewController)

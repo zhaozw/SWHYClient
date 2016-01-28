@@ -30,7 +30,7 @@ class MainViewController: UIViewController{
     
     
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
         
@@ -41,7 +41,7 @@ class MainViewController: UIViewController{
         super.viewDidLoad()
         self.title = Config.UI.Title
         self.scrollview.scrollEnabled = true
-        println("---view did load ------\(Message.shared.loginType)----")
+        print("---view did load ------\(Message.shared.loginType)----")
         self.scrollview.frame.origin.x = 0
         self.scrollview.frame.origin.y = 0 //20
         
@@ -61,9 +61,36 @@ class MainViewController: UIViewController{
             if let data:NSMutableArray = DBAdapter.shared.queryMainMenuList("'1'=?", paralist: ["1"]) {
                 self.fillViewFromSql = true
                 self.arrMutiData = data
-                println("======================load view from sql=================")
+                print("======================load view from sql=================")
                 loadView(self.arrMutiData)
             }
+           
+            print("App Version \(Util.getAppVersion())")
+            print("config Version \(Message.shared.version)")
+            if Util.getAppVersion() < Message.shared.version {
+                let btn_OK:PKButton = PKButton(title: "升级",
+                    action: { (messageLabel, items) -> Bool in
+                        print("=========upgrade ...==========)")
+                        //===code here
+                        let upgradeUrl:NSURL = NSURL(string: Message.shared.upgradeURL)!
+                        UIApplication.sharedApplication().openURL(upgradeUrl)
+                        exit(0)
+                        //self.removeAddressFromSystemContact()
+                        //return true
+                    },
+                    fontColor: UIColor(red: 0, green: 0.55, blue: 0.9, alpha: 1.0),
+                    backgroundColor: nil)
+                
+                // call alert
+                PKNotification.alert(
+                    title: "升级提醒",
+                    message: "新版本提示：是否升级到最新版本 \(Message.shared.version)?",
+                    items: [btn_OK],
+                    cancelButtonTitle: "取消",
+                    tintColor: nil)
+            
+            }
+            
             //登陆成功后，上传日志
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.PostAccessLog, object: nil)
             NetworkEngine.sharedInstance.postLogList(Config.URL.PostAccessLog, tag: Config.RequestTag.PostAccessLog)
@@ -79,7 +106,7 @@ class MainViewController: UIViewController{
             if let data:NSMutableArray = DBAdapter.shared.queryMainMenuList("offline=?", paralist:["Yes"]) {
                 self.fillViewFromSql = true
                 self.arrMutiData = data
-                println("======================load view from sql=================")
+                print("======================load view from sql=================")
                 loadView(self.arrMutiData)
             }
         }
@@ -93,7 +120,7 @@ class MainViewController: UIViewController{
         //
         //self.navigationController?.setNavigationBarHidden(false, animated: false)
         //self.navigationController?.navigationBar.setBackgroundImage(UIImage(named: "default_ios_2"), forBarMetrics:UIBarMetrics.Default)
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let rightViewController = storyboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
         self.slideMenuController()?.changeRightViewController(rightViewController, closeRight: true)
         self.setNavigationBarItem()
@@ -121,11 +148,11 @@ class MainViewController: UIViewController{
                 loadView(self.arrMutiData)
                 //}
                 //将最新模块信息更新至sqlite
-                println("------Update MainMenuList to SQLite--------")
+                print("------Update MainMenuList to SQLite--------")
                 DBAdapter.shared.syncMainMenuList(self.arrMutiData)
             }
             else if result.tag == Config.RequestTag.PostAccessLog || result.tag == Config.RequestTag.PostCustomerLog {
-                println("--+++----Update SQLite AccessLog to already sync--------\(result.message)")
+                print("--+++----Update SQLite AccessLog to already sync--------\(result.message)")
                 PKNotification.toast(result.message)
             }
             else if result.tag == Config.RequestTag.GetParameter_CallDuration {
@@ -143,10 +170,10 @@ class MainViewController: UIViewController{
         let result:Result = notify.valueForKey("object") as! Result
         
         if result.status.componentsSeparatedByString("Error").count > 1 {
-            println("-------post log error-------------")
+            print("-------post log error-------------")
             PKNotification.toast(result.message)
         }else if result.status=="OK"{
-            println("------Update SQLite AccessLog to already sync--------\(result.message)")
+            print("------Update SQLite AccessLog to already sync--------\(result.message)")
             PKNotification.toast("result.message")
             
         }
@@ -162,7 +189,7 @@ class MainViewController: UIViewController{
             
             let arrobj:MainMenuItemBO = self.arrMutiData[i] as! MainMenuItemBO
             
-            var bundle:NSBundle = NSBundle.mainBundle()
+            let bundle:NSBundle = NSBundle.mainBundle()
             let uiViewArray:NSArray = bundle.loadNibNamed("MainMenuItem", owner: nil, options: nil)
             let uiView = uiViewArray.lastObject as! MainMenuItem
             
@@ -201,7 +228,7 @@ class MainViewController: UIViewController{
         if arrobj.classname != nil {
             if arrobj.classname != "" {
                 let aClass = NSClassFromString(arrobj.classname) as! UIViewController.Type
-                let aObject = aClass() as UIViewController
+                let aObject = aClass.init() as UIViewController
                 Message.shared.curMenuItem = arrobj
                 //记录模块访问日志
                 let accessLogItem = AccessLogItem()
@@ -222,8 +249,8 @@ class MainViewController: UIViewController{
     func getData()->NSArray{
         
         
-        var bundle:NSBundle = NSBundle.mainBundle()
-        var path:String = bundle.pathForResource("app", ofType: "plist")!
+        let bundle:NSBundle = NSBundle.mainBundle()
+        let path:String = bundle.pathForResource("app", ofType: "plist")!
         return NSArray(contentsOfFile: path)!
     }
     

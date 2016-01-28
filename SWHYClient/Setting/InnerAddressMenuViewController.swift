@@ -34,7 +34,7 @@ class InnerAddressMenuViewController : UIViewController {
         super.viewWillAppear(animated)
         let infoDictionary = NSBundle.mainBundle().infoDictionary
         
-        let appDisplayName: AnyObject? = infoDictionary!["CFBundleDisplayName"]
+        //let appDisplayName: AnyObject? = infoDictionary!["CFBundleDisplayName"]
         
         let majorVersion : AnyObject? = infoDictionary! ["CFBundleShortVersionString"]
         
@@ -52,10 +52,10 @@ class InnerAddressMenuViewController : UIViewController {
         
         //self.slideMenuController()?.hidesBottomBarWhenPushed
         self.slideMenuController()?.closeRight()
-        println("click")
+        print("click")
         let btn_OK:PKButton = PKButton(title: "确认",
             action: { (messageLabel, items) -> Bool in
-                println("=========click==========)")
+                print("=========click==========)")
                 //===code here
                 self.syncAddressToSystemContact()
                 return true
@@ -77,10 +77,10 @@ class InnerAddressMenuViewController : UIViewController {
         
         //self.slideMenuController()?.hidesBottomBarWhenPushed
         self.slideMenuController()?.closeRight()
-        println("click")
+        print("click")
         let btn_OK:PKButton = PKButton(title: "确认",
             action: { (messageLabel, items) -> Bool in
-                println("=========click==========)")
+                print("=========click==========)")
                 //===code here
                 
                 self.removeAddressFromSystemContact()
@@ -109,13 +109,13 @@ class InnerAddressMenuViewController : UIViewController {
             //self.itemlist = data as [InnerAddressItem]
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleResult:", name: Config.NotifyTag.RevokeSyncAddressbook, object: nil)
             
-            println("-----------remove start at --\(Util.getCurDateString())")
+            print("-----------remove start at --\(Util.getCurDateString())")
             contacthelper.removeAllFromAddressBookByGroupName(Config.AddressBook.SyncAddressBookGroupName)
-            println("-----------remove end at --\(Util.getCurDateString())")
+            print("-----------remove end at --\(Util.getCurDateString())")
             
-            println("-----------sync start at --\(Util.getCurDateString())")
+            print("-----------sync start at --\(Util.getCurDateString())")
             contacthelper.syncToAddressBook(itemlist as! [InnerAddressItem])
-            println("-----------sync end at --\(Util.getCurDateString())")
+            print("-----------sync end at --\(Util.getCurDateString())")
         }
         
         /*
@@ -132,16 +132,16 @@ class InnerAddressMenuViewController : UIViewController {
         
         let contacthelper = ContactsHelper()
          NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleResult:", name: Config.NotifyTag.RevokeRemoveAddressbook, object: nil)
-        println("-----------remove start at --\(Util.getCurDateString())")
+        print("-----------remove start at --\(Util.getCurDateString())")
         contacthelper.removeAllFromAddressBookByGroupName(Config.AddressBook.SyncAddressBookGroupName)
-        println("-----------remove end at --\(Util.getCurDateString())")
+        print("-----------remove end at --\(Util.getCurDateString())")
        
         
     }
     
     func HandleResult(notify:NSNotification)
     {
-        println("拷贝所内通讯录完成")
+        print("拷贝所内通讯录完成")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notify.name, object: nil)
         
         let result:Result = notify.valueForKey("object") as! Result
@@ -150,8 +150,8 @@ class InnerAddressMenuViewController : UIViewController {
     }
     
     func onClickEvent_Setting(sender:UITapGestureRecognizer!){
-        println("click setting button")
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        print("click setting button")
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let settingController = storyboard.instantiateViewControllerWithIdentifier("SettingMenuController") as! SettingViewController
         self.settingViewController = UINavigationController(rootViewController: settingController)
         self.slideMenuController()?.changeMainViewController(self.settingViewController, close: true)

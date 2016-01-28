@@ -25,7 +25,7 @@ class DBAdapter {
     //处理表数据前，先判断表是否存在，如果不存在，则创建，以备后续使用该表
     func initTable() -> Int {
         //如果没有对应表 就直接创建一个
-        println("----Init Table------------")
+        print("----Init Table------------")
         //MainMenuList
         let SQL_DB_CREATE_MAINMENULIST = "CREATE TABLE IF NOT EXISTS \(Config.TableName.MainMenuList) ( id text primary key, itemtext text, uri text, class text, offline text,itemimage text,icon BLOB, showindex integer, updatetime text)"
         
@@ -106,13 +106,13 @@ class DBAdapter {
     //=============MainNemuList=====================================================
     func syncMainMenuList(itemlist:NSMutableArray) -> Int{
         //var index = 0
-        var updatetime = Util.getCurDateString()
+        let updatetime = Util.getCurDateString()
         var sql = ""
         var updatesql = ""
         var sqlresult:CInt = 0
         var result = 0
-        for (index, it) in enumerate(itemlist) {
-            var item = it as! MainMenuItemBO
+        for (index, it) in itemlist.enumerate() {
+            let item = it as! MainMenuItemBO
             
             sql = "REPLACE INTO \(Config.TableName.MainMenuList) (id, itemtext, uri, class, offline, itemimage, showindex, updatetime)"
                 + "VALUES ('\(item.id)', '\(item.name)', '\(item.uri)', '\(item.classname)', '\(item.offline)', '\(item.itemimage)', \(index),'\(updatetime)')"
@@ -130,15 +130,15 @@ class DBAdapter {
     }
     
     func queryMainMenuList(query:String,paralist:[String]?) -> NSMutableArray?{
-        var userInfo = NSMutableArray()
+        let userInfo = NSMutableArray()
         let datalist = self.db.query("SELECT * FROM \(Config.TableName.MainMenuList) WHERE \(query)", parameters:paralist)
         
         if datalist.isEmpty {
             return nil
         } else{
-            for (index, elem ) in enumerate(datalist) {
+            for (index, elem ) in datalist.enumerate() {
                 
-                var mainMenuItemBO:MainMenuItemBO = MainMenuItemBO()
+                let mainMenuItemBO:MainMenuItemBO = MainMenuItemBO()
                 mainMenuItemBO.id = elem["id"]?.asString() ?? ""
                 mainMenuItemBO.name = elem["itemtext"]?.asString() ?? ""
                 mainMenuItemBO.itemimage = elem["itemimage"]?.asString() ?? ""
@@ -160,13 +160,13 @@ class DBAdapter {
         //var index = 0
         var result = 0
         dispatch_async(self.queue1,{
-            var updatetime = Util.getCurDateString()
+            let updatetime = Util.getCurDateString()
             var sql = ""
             var updatesql = ""
             var sqlresult:CInt = 0
             
-            for (index, it) in enumerate(itemlist) {
-                var item = it as! InnerAddressItem
+            for (index, it) in itemlist.enumerate() {
+                let item = it as! InnerAddressItem
                 sql = "REPLACE INTO \(Config.TableName.InnerAddressList) (empid , dept, name, mobile, linetel, mobiletelecom , mobiletelecom1, mobile1, othertel, homephone, researchteam, msn, pic, query,showindex , updatetime)"
                     + "VALUES ('\(item.empid)', '\(item.dept)', '\(item.name)', '\(item.mobile)', '\(item.linetel)', '\(item.mobiletelecom)', '\(item.mobiletelecom1)', '\(item.mobile1)', '\(item.othertel)', '\(item.homephone)', '\(item.researchteam)', '\(item.msn)', '\(item.pic)', '\(item.query)', '\(String(index))','\(updatetime)')"
                 sqlresult = self.db.execute(sql, parameters: nil)
@@ -184,15 +184,15 @@ class DBAdapter {
     }
     
     func queryInnerAddressList(query:String,paralist:[String]?) -> NSMutableArray?{
-        var userInfo = NSMutableArray()
+        let userInfo = NSMutableArray()
         let datalist = self.db.query("SELECT * FROM \(Config.TableName.InnerAddressList) WHERE \(query)", parameters:paralist)
         
         if datalist.isEmpty {
             return nil
         } else{
-            for (index, elem ) in enumerate(datalist) {
+            for (index, elem ) in datalist.enumerate() {
                 
-                var innerAddressItem:InnerAddressItem = InnerAddressItem()
+                let innerAddressItem:InnerAddressItem = InnerAddressItem()
                 innerAddressItem.dept = elem["dept"]?.asString() ?? ""
                 innerAddressItem.name = elem["name"]?.asString() ?? ""
                 innerAddressItem.mobile = elem["mobile"]?.asString() ?? ""
@@ -222,13 +222,13 @@ class DBAdapter {
         //var index = 0
         var result = 0
         dispatch_async(self.queue1,{
-            var updatetime = Util.getCurDateString()
+            let updatetime = Util.getCurDateString()
             var sql = ""
             var updatesql = ""
             var sqlresult:CInt = 0
             
-            for (index, it) in enumerate(itemlist) {
-                var item = it as! InnerAddressDeptItem
+            for (index, it) in itemlist.enumerate() {
+                let item = it as! InnerAddressDeptItem
                 
                 sql = "REPLACE INTO \(Config.TableName.InnerAddressDeptList) (name, showindex , updatetime)"
                     + "VALUES ('\(item.name)','\(String(index))','\(updatetime)')"
@@ -247,15 +247,15 @@ class DBAdapter {
     
     
     func queryInnerAddressDeptList(query:String,paralist:[String]?) -> NSMutableArray?{
-        var userInfo = NSMutableArray()
+        let userInfo = NSMutableArray()
         let datalist = self.db.query("SELECT * FROM \(Config.TableName.InnerAddressDeptList) WHERE \(query)", parameters:paralist)
         
         if datalist.isEmpty {
             return nil
         } else{
-            for (index, elem ) in enumerate(datalist) {
+            for (index, elem ) in datalist.enumerate() {
                 
-                var innerAddressDeptItem:InnerAddressDeptItem = InnerAddressDeptItem()
+                let innerAddressDeptItem:InnerAddressDeptItem = InnerAddressDeptItem()
                 innerAddressDeptItem.name = elem["name"]?.asString() ?? ""
                 
                 userInfo.addObject(innerAddressDeptItem)
@@ -278,14 +278,14 @@ class DBAdapter {
         //queue1
         //dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
         dispatch_async(self.queue1,{
-            println(itemlist.count)
-            var updatetime = Util.getCurDateString()
+            print(itemlist.count)
+            let updatetime = Util.getCurDateString()
             var sql = ""
             var updatesql = ""
             var sqlresult:CInt = 0
             
-            for (index, it) in enumerate(itemlist) {
-                var item = it as! CustomerAddressItem
+            for (index, it) in itemlist.enumerate() {
+                let item = it as! CustomerAddressItem
                 sql = "REPLACE INTO \(Config.TableName.CustomerAddressList) (customerid , comp , groupname , name , mobile , linetel , comptel , email, important , importantid , level , managerlist , sex , jobtitle , custlevel , status ,  query ,showindex , updatetime)"
                     + "VALUES ('\(item.customerid)', '\(item.comp)', '\(item.group)', '\(item.name)', '\(item.mobile)', '\(item.linetel)', '\(item.comptel)', '\(item.email)','\(item.important)', '\(item.importantid)', '\(item.level)', '\(item.managerlist)', '\(item.sex)','\(item.jobtitle)', '\(item.custlevel)','\(item.status)', '\(item.query)', '\(String(index))','\(updatetime)')"
                 sqlresult = self.db.execute(sql, parameters: nil)
@@ -295,7 +295,7 @@ class DBAdapter {
             }
             sql = "DELETE FROM \(Config.TableName.CustomerAddressList) WHERE updatetime <> '\(updatetime)'"
             sqlresult = self.db.execute(sql, parameters: nil)
-            println("-- syncMainCustomerAddressList count = \(result)------------------")
+            print("-- syncMainCustomerAddressList count = \(result)------------------")
             
         })
         return result
@@ -312,9 +312,9 @@ class DBAdapter {
             userInfo = nil
             //return nil
         } else{
-            for (index, elem ) in enumerate(datalist) {
+            for (index, elem ) in datalist.enumerate() {
                 
-                var customerAddressItem:CustomerAddressItem = CustomerAddressItem()
+                let customerAddressItem:CustomerAddressItem = CustomerAddressItem()
                 customerAddressItem.customerid = elem["customerid"]?.asString() ?? ""
                 customerAddressItem.comp = elem["comp"]?.asString() ?? ""
                 customerAddressItem.group = elem["groupname"]?.asString() ?? ""
@@ -350,13 +350,13 @@ class DBAdapter {
         var result = 0
         //dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
         dispatch_async(self.queue1,{
-            var updatetime = Util.getCurDateString()
+            let updatetime = Util.getCurDateString()
             var sql = ""
             var updatesql = ""
             var sqlresult:CInt = 0
             
-            for (index, it) in enumerate(itemlist) {
-                var item = it as! CustomerAddressGroupItem
+            for (index, it) in itemlist.enumerate() {
+                let item = it as! CustomerAddressGroupItem
                 
                 sql = "REPLACE INTO \(Config.TableName.CustomerAddressGroupList) (name, level, showindex , updatetime)"
                     + "VALUES ('\(item.name)','\(item.level)','\(String(index))','\(updatetime)')"
@@ -387,9 +387,9 @@ class DBAdapter {
             userInfo = nil
             //return nil
         } else{
-            for (index, elem ) in enumerate(datalist) {
+            for (index, elem ) in datalist.enumerate() {
                 
-                var customerAddressGroupItem:CustomerAddressGroupItem = CustomerAddressGroupItem()
+                let customerAddressGroupItem:CustomerAddressGroupItem = CustomerAddressGroupItem()
                 customerAddressGroupItem.name = elem["name"]?.asString() ?? ""
                 customerAddressGroupItem.level = elem["level"]?.asString() ?? ""
                 userInfo!.addObject(customerAddressGroupItem)
@@ -419,15 +419,15 @@ class DBAdapter {
     }
     
     func queryAccessLogList(query:String,paralist:[String]?) -> NSMutableArray?{
-        var userInfo = NSMutableArray()
+        let userInfo = NSMutableArray()
         let datalist = self.db.query("SELECT * FROM \(Config.TableName.AccessLogList) WHERE \(query)", parameters:paralist)
         
         if datalist.isEmpty {
             return nil
         } else{
-            for (index, elem ) in enumerate(datalist) {
+            for (index, elem ) in datalist.enumerate() {
                 
-                var accessLogItem:AccessLogItem = AccessLogItem()
+                let accessLogItem:AccessLogItem = AccessLogItem()
                 accessLogItem.id = elem["id"]?.asInt() ?? 0
                 accessLogItem.userid = elem["userid"]?.asString() ?? ""
                 accessLogItem.type = elem["type"]?.asString() ?? ""
@@ -449,8 +449,8 @@ class DBAdapter {
         var sql = ""
         var sqlresult:CInt = 0
         var result = 0
-        for (index, it) in enumerate(itemlist) {
-            var item = it as! AccessLogItem
+        for (index, it) in itemlist.enumerate() {
+            let item = it as! AccessLogItem
             
             sql = "UPDATE \(Config.TableName.AccessLogList) SET SYNC = 'Y' WHERE id = \(item.id)"
             sqlresult = self.db.execute(sql, parameters: nil)
@@ -481,15 +481,15 @@ class DBAdapter {
     }
     
     func queryCustomerLogList(query:String,paralist:[String]?) -> NSMutableArray?{
-        var userInfo = NSMutableArray()
+        let userInfo = NSMutableArray()
         let datalist = self.db.query("SELECT * FROM \(Config.TableName.CustomerLogList) WHERE \(query)", parameters:paralist)
         
         if datalist.isEmpty {
             return nil
         } else{
-            for (index, elem ) in enumerate(datalist) {
+            for (index, elem ) in datalist.enumerate() {
                 
-                var customerLogItem:CustomerLogItem = CustomerLogItem()
+                let customerLogItem:CustomerLogItem = CustomerLogItem()
                 customerLogItem.id = elem["id"]?.asInt() ?? 0
                 customerLogItem.user = elem["user"]?.asString() ?? ""
                 customerLogItem.module = elem["module"]?.asString() ?? ""
@@ -513,8 +513,8 @@ class DBAdapter {
         var sql = ""
         var sqlresult:CInt = 0
         var result = 0
-        for (index, it) in enumerate(itemlist) {
-            var item = it as! CustomerLogItem
+        for (index, it) in itemlist.enumerate() {
+            let item = it as! CustomerLogItem
             
             sql = "UPDATE \(Config.TableName.CustomerLogList) SET SYNC = 'Y' WHERE id = \(item.id)"
             sqlresult = self.db.execute(sql, parameters: nil)

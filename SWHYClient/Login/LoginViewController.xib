@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="申万宏源" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="SWHYClient" customModuleProvider="target">
             <connections>
                 <outlet property="btnLogin" destination="8kN-Wv-BbZ" id="Fgv-hQ-1eb"/>
                 <outlet property="btntest" destination="8wE-bJ-DfP" id="AJH-2n-gW3"/>
@@ -14,7 +14,7 @@
                 <outlet property="imgBG" destination="6m5-f7-P5I" id="3Yf-om-jwA"/>
                 <outlet property="lblOffline" destination="6Qd-mn-GOh" id="Mlq-My-aUM"/>
                 <outlet property="lblPassword" destination="5g7-Jz-m3Q" id="aa2-Qp-VG9"/>
-                <outlet property="txtPassword" destination="WLK-R4-u5y" id="hbP-rD-xaa"/>
+                <outlet property="txtPassword" destination="WLK-R4-u5y" id="H9r-M9-A7J"/>
                 <outlet property="txtUserName" destination="MdB-gk-wda" id="n7q-H5-qTq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -40,41 +40,43 @@
                                         <constraint firstAttribute="height" constant="1" id="Oln-P6-7ic"/>
                                     </constraints>
                                 </view>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MdB-gk-wda">
-                                    <rect key="frame" x="10" y="17" width="240" height="20"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="wGM-Lg-Jth"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                                </textField>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WLK-R4-u5y">
-                                    <rect key="frame" x="10" y="61" width="240" height="20"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="20" id="VYR-7g-eJr"/>
-                                    </constraints>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WLK-R4-u5y" userLabel="Txt Password">
+                                    <rect key="frame" x="10" y="62" width="240" height="15"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                    <connections>
+                                        <action selector="doReturn:" destination="-1" eventType="editingDidEndOnExit" id="Wtd-2a-36N"/>
+                                    </connections>
+                                </textField>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MdB-gk-wda">
+                                    <rect key="frame" x="10" y="14" width="240" height="26"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                    <connections>
+                                        <action selector="doReturn2:" destination="-1" eventType="editingDidEndOnExit" id="I7d-pL-e8B"/>
+                                    </connections>
                                 </textField>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="sOc-VI-8MD" firstAttribute="leading" secondItem="A9b-Qi-HnZ" secondAttribute="leading" id="0bg-sK-mSr"/>
-                                <constraint firstAttribute="trailing" secondItem="MdB-gk-wda" secondAttribute="trailing" constant="10" id="EBu-Tx-tAr"/>
-                                <constraint firstAttribute="bottom" secondItem="WLK-R4-u5y" secondAttribute="bottom" constant="15" id="QIL-g2-PLm"/>
+                                <constraint firstItem="WLK-R4-u5y" firstAttribute="top" secondItem="sOc-VI-8MD" secondAttribute="bottom" constant="13" id="4Bb-fz-Rhz"/>
+                                <constraint firstItem="MdB-gk-wda" firstAttribute="leading" secondItem="A9b-Qi-HnZ" secondAttribute="leading" constant="10" id="9Ys-AQ-FN1"/>
+                                <constraint firstAttribute="bottom" secondItem="WLK-R4-u5y" secondAttribute="bottom" constant="19" id="FTa-Zz-FVn"/>
+                                <constraint firstItem="MdB-gk-wda" firstAttribute="top" secondItem="A9b-Qi-HnZ" secondAttribute="top" constant="14" id="K46-G5-3zK"/>
+                                <constraint firstItem="MdB-gk-wda" firstAttribute="centerX" secondItem="sOc-VI-8MD" secondAttribute="centerX" id="LWA-ZZ-Brd"/>
                                 <constraint firstAttribute="trailing" secondItem="sOc-VI-8MD" secondAttribute="trailing" id="Ri4-DK-UMJ"/>
-                                <constraint firstItem="WLK-R4-u5y" firstAttribute="leading" secondItem="A9b-Qi-HnZ" secondAttribute="leading" constant="10" id="SX1-gO-R5J"/>
+                                <constraint firstItem="sOc-VI-8MD" firstAttribute="top" secondItem="MdB-gk-wda" secondAttribute="bottom" constant="8" symbolic="YES" id="TnY-Ak-gVP"/>
+                                <constraint firstItem="MdB-gk-wda" firstAttribute="leading" secondItem="WLK-R4-u5y" secondAttribute="leading" id="X6I-yI-TGt"/>
                                 <constraint firstAttribute="height" constant="96" id="XFf-vN-dOi"/>
-                                <constraint firstAttribute="trailing" secondItem="WLK-R4-u5y" secondAttribute="trailing" constant="10" id="aQn-ab-iIg"/>
-                                <constraint firstItem="sOc-VI-8MD" firstAttribute="top" secondItem="MdB-gk-wda" secondAttribute="bottom" constant="11" id="dd3-CV-gVb"/>
                                 <constraint firstAttribute="centerY" secondItem="sOc-VI-8MD" secondAttribute="centerY" id="o6X-0g-qNb"/>
-                                <constraint firstItem="MdB-gk-wda" firstAttribute="leading" secondItem="A9b-Qi-HnZ" secondAttribute="leading" constant="10" id="rvW-nQ-Reh"/>
+                                <constraint firstItem="MdB-gk-wda" firstAttribute="trailing" secondItem="WLK-R4-u5y" secondAttribute="trailing" id="xzm-Ll-M3H"/>
                             </constraints>
                         </view>
                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="bng-FL-rwX">
                             <rect key="frame" x="-19" y="-110" width="20" height="20"/>
                         </activityIndicatorView>
-                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bEI-sf-Kvh" userLabel="chkoffline" customClass="AIFlatSwitch" customModule="申万宏源" customModuleProvider="target">
+                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bEI-sf-Kvh" userLabel="chkoffline" customClass="AIFlatSwitch" customModule="SWHYClient" customModuleProvider="target">
                             <rect key="frame" x="174" y="222" width="16" height="16"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -97,7 +99,7 @@
                                 <action selector="onSwitchValueChange:" destination="-1" eventType="valueChanged" id="0Jd-4p-vXH"/>
                             </connections>
                         </view>
-                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qce-Cx-hRW" userLabel="chkpassword" customClass="AIFlatSwitch" customModule="申万宏源" customModuleProvider="target">
+                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qce-Cx-hRW" userLabel="chkpassword" customClass="AIFlatSwitch" customModule="SWHYClient" customModuleProvider="target">
                             <rect key="frame" x="22" y="222" width="16" height="16"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>

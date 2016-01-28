@@ -15,7 +15,7 @@ import UIKit
     var request:NSURLRequest = NSURLRequest()
     var authenticated:Bool = false
     var failure_auth = 0
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,7 +25,11 @@ import UIKit
         webView.frame = self.view.frame
         webView.delegate = self
         self.view.addSubview(webView)
-        var url:NSURL = NSURL(string: Config.URL.ToDoList)!
+        let url:NSURL = NSURL(string: Config.URL.ToDoList)!
+        
+        
+        
+        print("did web load \(url)")
         request = NSURLRequest(URL: url)
         
         webView.loadRequest(request)
@@ -41,7 +45,7 @@ import UIKit
     }
     
     func returnNavView(){
-        println("click return button")
+        print("click return button")
         self.navigationController?.popViewControllerAnimated(true)
         
     }
@@ -50,13 +54,17 @@ import UIKit
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError){
-        println("didFailLoadWithError")
+  
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?){
+        print("didFailLoadWithError")
         //NetworkEngine.sharedInstance.addRequestWithUrlString(Config.URL.ToDoList, tag: "")
     }
     func webViewDidStartLoad(webView: UIWebView){
-        println("did start load")
+        print("did start load \(webView.request?.URL)")
+        
     }
+
+   
     
 }
 

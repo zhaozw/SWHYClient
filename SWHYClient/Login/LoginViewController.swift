@@ -16,6 +16,15 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var btnLogin: UIButton!
     
     
+    @IBAction func doReturn(sender: AnyObject) {
+        txtPassword.resignFirstResponder();
+    }
+   
+    @IBAction func doReturn2(sender: AnyObject) {
+        txtUserName.resignFirstResponder();
+    }
+    
+   
     
     @IBOutlet weak var chkPassword: AIFlatSwitch!
     @IBOutlet weak var chkOffline: AIFlatSwitch!
@@ -52,7 +61,7 @@ class LoginViewController: UIViewController {
     }
     
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         
         fatalError("init(coder:) has not been implemented")
         
@@ -79,13 +88,13 @@ class LoginViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         
         let bgindex:Int = NSUserDefaults.standardUserDefaults().integerForKey("UIBackgroundImage")
-        var bgimagename:String
+        //var _:String
         var image:UIImage
         
-        println(bgindex)
+        print(bgindex)
         
         if bgindex == 5{
-            var filePath = Util.applicationFilePath ("uibg_customize", directory: nil)
+            let filePath = Util.applicationFilePath ("uibg_customize", directory: nil)
             image = UIImage(contentsOfFile: filePath)!
 
         }else{
@@ -112,7 +121,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func onSwitchValueChange(sender: AnyObject) {
         if sender as? AIFlatSwitch == chkOffline {
-            println("chkoffline = \(chkOffline.selected)")
+            print("chkoffline = \(chkOffline.selected)")
         }
     }
     
@@ -144,7 +153,7 @@ class LoginViewController: UIViewController {
         let data = NSData(contentsOfFile: filepath)!
         
         
-        let base64data = data.base64EncodedStringWithOptions(.allZeros)
+        let base64data = data.base64EncodedStringWithOptions([])
         
         var data64 = base64data.stringByReplacingOccurrencesOfString("/", withString: "_")
         data64 = data64.stringByReplacingOccurrencesOfString("+", withString: "-")
@@ -161,8 +170,8 @@ class LoginViewController: UIViewController {
         //println (utf8datastr)
         //NSMutableDictionary *postDic = [NSMutableDictionary dictionary];
         
-        var subject = "标题"
-        var subjectutf8 = CFURLCreateStringByAddingPercentEscapes(
+        let subject = "标题"
+        let subjectutf8 = CFURLCreateStringByAddingPercentEscapes(
             nil,
             subject,
             nil,
@@ -170,7 +179,7 @@ class LoginViewController: UIViewController {
             CFStringBuiltInEncodings.UTF8.rawValue
         )
         
-        var builder:String = "&DoPostInfo=&AppCreator=admin&Subject=" + (subjectutf8 as! String) + "&SuggestDesc=ss&SuggestDate=2015-04-26&ApplyName=admin&AppDept=npz&AppTel=54656&FileName=aa.jpg&File1=" +  (utf8datastr! as String)
+        let builder:String = "&DoPostInfo=&AppCreator=admin&Subject=" + (subjectutf8 as String) + "&SuggestDesc=ss&SuggestDate=2015-04-26&ApplyName=admin&AppDept=npz&AppTel=54656&FileName=aa.jpg&File1=" +  (utf8datastr! as String)
         
         //builder = builder + "&File1=" + utf8str
         
@@ -217,39 +226,71 @@ class LoginViewController: UIViewController {
             return
         }
         
-        println(chkOffline.selected)
+        print(chkOffline.selected)
         
         self.txtUserName.resignFirstResponder()
         self.txtPassword.resignFirstResponder()
         
         if chkOffline.selected == true {
-            println("offline checkbox is true")
-            performOfflineLogin(self.txtUserName.text,password: self.txtPassword.text)
+            print("offline checkbox is true")
+            performOfflineLogin(self.txtUserName.text!,password: self.txtPassword.text!)
             return
         }
         
         if UIDevice.currentDevice().model == "iPhone Simulator" {
-            println("iphone simulator")
-            sim = UIDevice.currentDevice().identifierForVendor.UUIDString
+            print("iphone simulator")
+            sim = UIDevice.currentDevice().identifierForVendor!.UUIDString
             //sim = "89860064090506059492"   //36F75479-6635-410C-AA27-D3385726432D
             
-            println("iphone simulator  \(sim)")
+            print("iphone simulator  \(sim)")
         }else{
-            println(" iphone device ")
-            sim = UIDevice.currentDevice().identifierForVendor.UUIDString
+            print(" iphone device ")
+            
+            var simKey = GenericKey(keyName:"SIM")
+            let keychain = Keychain()
+            //keychain.accessGroup = "com.dy-info.swhyclient"
+            if let sim1 = keychain.get(simKey).item?.value {
+                sim = sim1 as String
+                print("get sim from keychain: \(sim)")
+            }else{
+                sim = UIDevice.currentDevice().identifierForVendor!.UUIDString
+                
+                
+                #if TARGET_IPHONE_SIMULATOR
+                    // Ignore the access group if running on the iPhone simulator.
+                    //
+                    // Apps that are built for the simulator aren't signed, so there's no keychain access group
+                    // for the simulator to check. This means that all apps can see all keychain items when run
+                    // on the simulator.
+                    //
+                    // If a SecItem contains an access group attribute, SecItemAdd and SecItemUpdate on the
+                    print("simulator will return -25243 (errSecNoAccessForItem)")
+                #else
+                    simKey = GenericKey(keyName: "SIM", value: sim)
+                    if let error = keychain.add(simKey) {
+                        
+                        // handle the error
+                        print("add sim to keychain Error: \(error)")
+                    }
+                    print("add sim to keychain\(sim)")
+                #endif
+                
+               
+            }
+            
             //sim = "89860064090506059492"
             
-            println(" iphone device  \(sim)")
+            print(" iphone device = \(sim)")
         }
         
-        username  = self.txtUserName.text
-        password = self.txtPassword.text
+        username  = self.txtUserName.text!
+        password = self.txtPassword.text!
         
         Message.shared.postUserName = username
         Message.shared.postPassword = password
         
-        println(username)
-        println(password)
+        print(username)
+        print(password)
         
         //username = "shenyd"
         //password = "east"
@@ -269,8 +310,8 @@ class LoginViewController: UIViewController {
     
     func performOfflineLogin(username:String,password:String){
         
-        var tmpusername = NSUserDefaults.standardUserDefaults().objectForKey("UserName") as? String
-        var tmppassword = NSUserDefaults.standardUserDefaults().objectForKey("Password") as? String
+        let tmpusername = NSUserDefaults.standardUserDefaults().objectForKey("UserName") as? String
+        let tmppassword = NSUserDefaults.standardUserDefaults().objectForKey("Password") as? String
         
         if (tmpusername == username && tmppassword == password) {
             PKNotification.toast("离线登陆成功")
@@ -283,7 +324,7 @@ class LoginViewController: UIViewController {
             
             //window
             Message.shared.loginType = "Offline"
-            println("-----Offline-------")
+            print("-----Offline-------")
             
             //记录模块访问日志
             let accessLogItem = AccessLogItem()
@@ -327,7 +368,9 @@ class LoginViewController: UIViewController {
                 
                 //window
                 Message.shared.loginType = "Online"
-                println("-----Online------")
+                Message.shared.version = result.userinfo.valueForKey("Version") as! String
+                Message.shared.upgradeURL = result.userinfo.valueForKey("UpgradeURL") as! String
+                print("-----Online------")
                 
                 
                 //记录模块访问日志
@@ -366,7 +409,7 @@ class LoginViewController: UIViewController {
         let mainViewController:MainViewController = MainViewController()
         let nvc=UINavigationController(rootViewController:mainViewController);
         
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let rightViewController = storyboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
         
         let slideMenuController = SlideMenuController(mainViewController: nvc, rightMenuViewController: rightViewController)

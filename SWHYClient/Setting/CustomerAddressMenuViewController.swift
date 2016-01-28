@@ -29,7 +29,7 @@ class CustomerAddressMenuViewController : UIViewController {
         super.viewWillAppear(animated)
         let infoDictionary = NSBundle.mainBundle().infoDictionary
         
-        let appDisplayName: AnyObject? = infoDictionary!["CFBundleDisplayName"]
+        //let appDisplayName: AnyObject? = infoDictionary!["CFBundleDisplayName"]
         
         let majorVersion : AnyObject? = infoDictionary! ["CFBundleShortVersionString"]
         
@@ -44,8 +44,8 @@ class CustomerAddressMenuViewController : UIViewController {
     }
     
     func onClickEvent_Setting(sender:UITapGestureRecognizer!){
-        println("click setting button")
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        print("click setting button")
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let settingController = storyboard.instantiateViewControllerWithIdentifier("SettingMenuController") as! SettingViewController
         self.settingViewController = UINavigationController(rootViewController: settingController)
         self.slideMenuController()?.changeMainViewController(self.settingViewController, close: true)
@@ -53,17 +53,17 @@ class CustomerAddressMenuViewController : UIViewController {
     
     
     func onClickEvent_Logout(sender:UITapGestureRecognizer!){
-        println("click Logout button")
+        print("click Logout button")
         
         self.slideMenuController()?.closeRight()
         let btn_OK:PKButton = PKButton(title: "登出",
             action: { (messageLabel, items) -> Bool in
-                println("=========click==========)")
+                print("=========click==========)")
                 //===code here
                 Message.shared.logout = true
                 exit(0)
                 //self.removeAddressFromSystemContact()
-                return true
+                //return true
             },
             fontColor: UIColor(red: 0, green: 0.55, blue: 0.9, alpha: 1.0),
             backgroundColor: nil)

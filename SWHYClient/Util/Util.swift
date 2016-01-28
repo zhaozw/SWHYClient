@@ -24,19 +24,28 @@ class Util{
     }
     
     class func getCurDateString() -> String{
-        var nowDate = NSDate()
-        var formatter = NSDateFormatter()
+        let nowDate = NSDate()
+        let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        var dateString = formatter.stringFromDate(nowDate)
+        let dateString = formatter.stringFromDate(nowDate)
         return dateString
     
     }
-    
+    class func getAppVersion() -> String{
+       
+        let infoDictionary = NSBundle.mainBundle().infoDictionary
+        let majorVersion : AnyObject? = infoDictionary! ["CFBundleShortVersionString"]
+        let minorVersion : AnyObject? = infoDictionary! ["CFBundleVersion"]
+        let strMajorVersion = majorVersion as! String
+        let strMinorVersion = minorVersion as! String
+        return strMajorVersion + "." + strMinorVersion
+        
+    }
     class func applicationDocumentPath() -> String {
             // 获取程序的 document
             let application = NSSearchPathForDirectoriesInDomains (.DocumentDirectory, .UserDomainMask, true )
             
-            let documentPathString = application[0] as! String
+            let documentPathString = application[0] 
             
             return documentPathString
             
@@ -45,16 +54,16 @@ class Util{
     // 拼接文件路径
     class func applicationFilePath(fileName: String ,directory: String? ) -> String  {
         
-        var docuPath = Util.applicationDocumentPath()
+        let docuPath = Util.applicationDocumentPath()
         
         if directory == nil {
             
-            return docuPath.stringByAppendingPathComponent(fileName)
-            
+            //return docuPath.stringByAppendingPathComponent(fileName)
+            return docuPath.stringByAppendingString("/"+fileName)
         } else {
             
-            return docuPath.stringByAppendingPathComponent("\(directory)/\(fileName)" )
-            
+            //return docuPath.stringByAppendingPathComponent("\(directory)/\(fileName)" )
+            return docuPath.stringByAppendingString("/"+"\(directory)/\(fileName)")
         }
         
     }
@@ -62,7 +71,7 @@ class Util{
     // 指定路径下是否存在 特定 “ 文件 ” 或 “ 文件夹 ”
     class func applicationFileExistAtPath(fileTypeDirectory: Bool ,fileName: String ,directory: String ) -> Bool  {
        
-        var filePath = Util.applicationFilePath(fileName, directory:directory)
+        let filePath = Util.applicationFilePath(fileName, directory:directory)
         
         if fileTypeDirectory { // 普通文件（图片、 plist 、 txt 等等）
             
@@ -81,12 +90,17 @@ class Util{
     }
     
     // 创建文件 或 文件夹在指定路径下
-    class func applicationCreatFileAtPath(#fileTypeDirectory: Bool ,fileName: String ,directory: String? ,content:NSData?) -> Bool {
-         println("  do save  ")
-        var filePath = Util.applicationFilePath (fileName, directory: directory)
-        println(filePath)
+    class func applicationCreatFileAtPath(fileTypeDirectory fileTypeDirectory: Bool ,fileName: String ,directory: String? ,content:NSData?) -> Bool {
+         print("  do save  ")
+        let filePath = Util.applicationFilePath (fileName, directory: directory)
+        print(filePath)
         if fileTypeDirectory { // 普通文件（图片、 plist 、 txt 等等）
-            return NSFileManager.defaultManager().createDirectoryAtPath(filePath, withIntermediateDirectories: true , attributes: nil , error: nil )
+            do {
+                try NSFileManager.defaultManager().createDirectoryAtPath(filePath, withIntermediateDirectories: true , attributes: nil )
+                return true
+            } catch _ {
+                return false
+            }
         } else { // 文件夹
             return NSFileManager.defaultManager().createFileAtPath (filePath, contents: content , attributes: nil )
             
@@ -98,17 +112,22 @@ class Util{
     
     class func applicationRemoveFileAtPath(fileName: String ,directory: String ) -> Bool {
         
-        var filePath = Util.applicationFilePath (fileName, directory: directory)
+        let filePath = Util.applicationFilePath (fileName, directory: directory)
         
-        return NSFileManager.defaultManager().removeItemAtPath(filePath, error: nil )
+        do {
+            try NSFileManager.defaultManager().removeItemAtPath(filePath)
+            return true
+        } catch _ {
+            return false
+        }
         
     }
     
     // 向指定路径下地文件中写入数据
     
-    class func applicationWriteDataToFileAtPath(#dataTypeArray: Bool ,content: AnyObject ,fileName: String ,directory: String ) -> Bool {
+    class func applicationWriteDataToFileAtPath(dataTypeArray dataTypeArray: Bool ,content: AnyObject ,fileName: String ,directory: String ) -> Bool {
        
-        var filePath = Util.applicationFilePath (fileName, directory: directory)
+        let filePath = Util.applicationFilePath (fileName, directory: directory)
         
         if dataTypeArray {
                         return (content as! NSArray ).writeToFile (filePath, atomically: true )
@@ -124,9 +143,9 @@ class Util{
     
     // 读取特定文件中数据（如： plist 、 text 等）
     
-    class func applicationReadDataToFileAtPath(#dataTypeArray: Bool ,fileName: String ,directory: String ) -> AnyObject {
+    class func applicationReadDataToFileAtPath(dataTypeArray dataTypeArray: Bool ,fileName: String ,directory: String ) -> AnyObject {
         
-        var filePath = Util.applicationFilePath (fileName, directory: directory)
+        let filePath = Util.applicationFilePath (fileName, directory: directory)
         
         if dataTypeArray {
             
@@ -144,9 +163,9 @@ class Util{
     
     class func applicationReadFileOfDirectoryAtPath(fileName: String ,directory: String ) -> AnyObject {
         
-        var filePath = Util.applicationFilePath (fileName, directory: directory)
+        let filePath = Util.applicationFilePath (fileName, directory: directory)
         
-        var content = NSFileManager.defaultManager().contentsOfDirectoryAtPath(filePath, error: nil )
+        let content = try? NSFileManager.defaultManager().contentsOfDirectoryAtPath(filePath)
         
         return content!
         

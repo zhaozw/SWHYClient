@@ -34,7 +34,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
     private var serverlist:Dictionary<String,Bool> = Dictionary()
     
     class var sharedInstance: NetworkEngine {
-        var configuration:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let configuration:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
         Inner.instance.session = NSURLSession(configuration: configuration,delegate: Inner.instance,delegateQueue:NSOperationQueue.mainQueue())
         
         return Inner.instance
@@ -65,19 +65,19 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             
             if let httpResponse = response as? NSHTTPURLResponse {
                 if httpResponse.statusCode != 200 {
-                    println("response was not 200: \(response)")
+                    print("response was not 200: \(response)")
                     return
                 }
             }
             if (error != nil) {
-                println("error submitting request: \(error)")
+                print("error submitting request: \(error)")
                 return
             }
             
             // handle the data of the successful response here
             // handle the data of the successful response here
             let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
-            let res:String = NSString(data: data, encoding: enc)! as String
+            let res:String = NSString(data: data!, encoding: enc)! as String
                       
 
         }
@@ -130,14 +130,14 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 
                 if let httpResponse = response as? NSHTTPURLResponse {
                     if httpResponse.statusCode != 200 {
-                        println("response was not 200: \(response)")
+                        print("response was not 200: \(response)")
                         result =  "Error: \(httpResponse.statusCode)"
                         self.dispatchResponse(result,tag: tag)
                         
                     }
                 }
                 if (error != nil) {
-                    println("error submitting request: \(error)")
+                    print("error submitting request: \(error)")
                     result = "Error: \(error)"
                     self.dispatchResponse(result,tag: tag)
                     
@@ -145,9 +145,9 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 
                 // handle the data of the successful response here
                 let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
-                let res:String = NSString(data: data, encoding: enc)! as String
+                let res:String = NSString(data: data!, encoding: enc)! as String
                 
-                println(res)
+                print(res)
                 if res.componentsSeparatedByString("OK").count > 1 {
                     
                     if (tag == Config.RequestTag.PostAccessLog){
@@ -181,7 +181,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
     //===========同步 客户通讯录日志===============================
     func postCustomerLogList(url:String,tag:String){
         
-        println("同步客户通讯录日志")
+        //print("同步客户通讯录日志")
         
         if let itemlist:NSArray = DBAdapter.shared.queryCustomerLogList("sync <> ?", paralist: ["Y"]) {
             /*
@@ -219,21 +219,21 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             request.HTTPMethod = "POST"
             
             //
-            print(request.HTTPBody)
+            //print(request.HTTPBody, terminator: "")
             
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
                 data, response, error in
                 
                 if let httpResponse = response as? NSHTTPURLResponse {
                     if httpResponse.statusCode != 200 {
-                        println("response was not 200: \(response)")
+                        //print("response was not 200: \(response)")
                         result =  "Error: \(httpResponse.statusCode)"
                         self.dispatchResponse(result,tag: tag)
                         
                     }
                 }
                 if (error != nil) {
-                    println("error submitting request: \(error)")
+                    print("error submitting request: \(error)")
                     result = "Error: \(error)"
                     self.dispatchResponse(result,tag: tag)
                     
@@ -241,9 +241,9 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 
                 // handle the data of the successful response here
                 let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
-                let res:String = NSString(data: data, encoding: enc)! as String
+                let res:String = NSString(data: data!, encoding: enc)! as String
                 
-                println(res)
+                //print(res)
                 if res.componentsSeparatedByString("OK").count > 1 {
                     
                     if (tag == Config.RequestTag.PostCustomerLog){
@@ -277,7 +277,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
     
     
     func addRequestWithUrlString(url:String,tag:String,useCache:Bool?){
-        var getcache = false
+        let getcache = false
         
         /*
         let cache = Haneke.Shared.dataCache
@@ -296,15 +296,15 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             
         }
 */
-        //println(url+"&client="+Config.Net.ClientType)
+        //let url1 = "https://github.com"
         let request = NSMutableURLRequest(URL: NSURL(string: url+"&client="+Config.Net.ClientType)!)
-        //let request = NSMutableURLRequest(URL: NSURL(string: url)!)
-        //println(url)
-        var task = self.session.dataTaskWithRequest(request){(data: NSData!, response: NSURLResponse!, error: NSError!) -> Void in
+        //let request = NSMutableURLRequest(URL: NSURL(string: url1)!)
+        //print("url =\(url1)")
+        let task = self.session.dataTaskWithRequest(request){(data: NSData?, response: NSURLResponse?, error: NSError?) -> Void in
             if error != nil {
-                println("Error ====\(error.localizedDescription) ==code=\(error.code)")
+                print("Error ====\(error!.localizedDescription) ==code=\(error!.code)")
                 var errmsg = ""
-                if error.code == -999{
+                if error!.code == -999{
                     //cancelled  用户名密码验证不通过时，取消请求
                     errmsg = "用户名或密码错误"
                 }else{
@@ -313,9 +313,9 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 
                 self.success_auth = 0
                 self.alive = false
-                println("request url host = false  \(request.URL?.host!)")
+                //print("request url host = false  \(request.URL?.host!)")
                 self.serverlist.updateValue(false, forKey: request.URL?.host!  ?? "AnyServer")
-                var result:Result = Result(status: "Error",message:errmsg,userinfo:error,tag:tag)
+                let result:Result = Result(status: "Error",message:errmsg,userinfo:error!,tag:tag)
                 NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
                 
             } else {
@@ -323,15 +323,15 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 //println("--------------set cache---------------")
                 
                 //cache.set(value: data, key: url)   //原hanekeswift的方法
-                println("request url host = true  \(request.URL?.host!)")
+                //print("request url host = true  \(request.URL?.host!)")
                 self.serverlist.updateValue(true, forKey: request.URL?.host! ?? "AnyServer")
                 self.alive = true
                 if getcache == false {
                     
                     //println("______________get ReS_____________")
                     let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
-                    let res:String = NSString(data: data, encoding: enc)! as String
-                    //println("______________get ReS_____________")
+                    let res:String = NSString(data: data!, encoding: enc)! as String
+                    //print("______________get ReS_____________\(res)")
                     
                     
                     self.dispatchResponse(res,tag: tag)
@@ -370,9 +370,9 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 
             case Config.RequestTag.GetMainMenu:
                 let xml = SWXMLHash.parse(res)
-                var userInfo = NSMutableArray()
+                let userInfo = NSMutableArray()
                 for elem in xml["entries"]["entry"]{
-                    var mainMenuItemBO:MainMenuItemBO = MainMenuItemBO()
+                    let mainMenuItemBO:MainMenuItemBO = MainMenuItemBO()
                     mainMenuItemBO.name = elem["itemtext"][0].element?.text ?? ""
                     mainMenuItemBO.itemimage = Config.URL.BaseURL + (elem["itemimage"][0].element?.text ?? "")
                     mainMenuItemBO.classname = elem["class"][0].element?.text ?? ""
@@ -397,11 +397,11 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)   
                 
             case Config.RequestTag.GetInnerAddressBook:
-                println("取得所内通讯录在线数据 网络解析 开始 ")
+                //print("取得所内通讯录在线数据 网络解析 开始 ")
                 let xml = SWXMLHash.parse(res)
-                var userInfo = NSMutableArray()
+                let userInfo = NSMutableArray()
                 for elem in xml["entries"]["entry"]{
-                    var item:InnerAddressItem = InnerAddressItem()
+                    let item:InnerAddressItem = InnerAddressItem()
                     item.name = elem["name"][0].element?.text ?? ""
                     item.dept = elem["dept"][0].element?.text ?? ""
                     item.mobile = elem["mobile"][0].element?.text ?? ""
@@ -437,9 +437,9 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 
             case Config.RequestTag.GetInnerAddressBook_Dept:
                 let xml = SWXMLHash.parse(res)
-                var userInfo = NSMutableArray()
+                let userInfo = NSMutableArray()
                 for elem in xml["entries"]["entry"]{
-                    var item:InnerAddressDeptItem = InnerAddressDeptItem()
+                    let item:InnerAddressDeptItem = InnerAddressDeptItem()
                     item.name = elem["dept"][0].element?.text ?? ""
                     if item.name != "" {
                         userInfo.addObject(item)
@@ -476,13 +476,13 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 }
             case Config.RequestTag.GetCustomerAddressBook:
                 //只能处理 xml encoding utf-8的
-                println("取得所内通讯录在线数据 网络解析 开始 ")
+                ////print("取得所内通讯录在线数据 网络解析 开始 ")
                 let xml = SWXMLHash.parse(res.stringByReplacingOccurrencesOfString("gb2312", withString: "utf-8"))
                 
-                var userInfo = NSMutableArray()
+                let userInfo = NSMutableArray()
                 for elem in xml["entries"]["entry"]{
                     
-                    var item:CustomerAddressItem = CustomerAddressItem()
+                    let item:CustomerAddressItem = CustomerAddressItem()
                     
                     item.name = elem["name"][0].element?.text ?? ""
                     item.comp = elem["comp"][0].element?.text ?? ""
@@ -525,9 +525,9 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 
                 //只能处理 xml encoding utf-8的
                 let xml = SWXMLHash.parse(res.stringByReplacingOccurrencesOfString("gb2312", withString: "utf-8"))
-                var userInfo = NSMutableArray()
+                let userInfo = NSMutableArray()
                 for elem in xml["entries"]["entry"]{
-                    var item:CustomerAddressGroupItem = CustomerAddressGroupItem()
+                    let item:CustomerAddressGroupItem = CustomerAddressGroupItem()
                     item.name = elem["group"][0].element?.text ?? ""
                     item.level = elem["custlevel"][0].element?.text ?? ""
                     if item.name != "" {
@@ -593,29 +593,29 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
     */
     
     func URLSession(session: NSURLSession,didReceiveChallenge challenge:NSURLAuthenticationChallenge,
-        completionHandler:(NSURLSessionAuthChallengeDisposition,NSURLCredential!) -> Void) {
+        completionHandler:(NSURLSessionAuthChallengeDisposition,NSURLCredential?) -> Void) {
             //let username = NSUserDefaults.standardUserDefaults().valueForKey("UserName") as String
             //let password = NSUserDefaults.standardUserDefaults().valueForKey("Password") as String
-             //println("host = \(challenge.protectionSpace.host)")
+            //print("host 55555 = \(challenge.protectionSpace.host)")
             let username = Message.shared.postUserName
             let password = Message.shared.postPassword
             
             if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust  {
-                println("send credential Server Trust \(String(success_auth))")
-                let credential:NSURLCredential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust)
+                print("send credential Server Trust \(String(success_auth))")
+                let credential:NSURLCredential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
                 completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,credential)
             }else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic{
-                println("send credential HTTP Basic \(String(success_auth))")
-                var defaultCredentials: NSURLCredential = NSURLCredential(user: Config.Net.Domain+"\\"+username, password: password, persistence:NSURLCredentialPersistence.ForSession)
+                print("send credential HTTP Basic \(String(success_auth))")
+                let defaultCredentials: NSURLCredential = NSURLCredential(user: Config.Net.Domain+"\\"+username, password: password, persistence:NSURLCredentialPersistence.ForSession)
                 completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,defaultCredentials)
                 
             }else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodNTLM{
-                println("challenge host= \(self.serverlist[challenge.protectionSpace.host])")
+                print("challenge host= \(self.serverlist[challenge.protectionSpace.host])")
                 //if self.alive == false {
                 if self.serverlist[challenge.protectionSpace.host] != true {
                     //if success_auth == 0 {
-                        println("send credential NTLM with user credential \(String(success_auth))")
-                        var defaultCredentials: NSURLCredential = NSURLCredential(user: Config.Net.Domain+"\\"+username, password: password, persistence:NSURLCredentialPersistence.ForSession)
+                        //print("send credential NTLM with user credential \(String(success_auth))")
+                        let defaultCredentials: NSURLCredential = NSURLCredential(user: Config.Net.Domain+"\\"+username, password: password, persistence:NSURLCredentialPersistence.ForSession)
                         completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,defaultCredentials)
                         success_auth = success_auth + 1  
                     //} else
@@ -624,20 +624,20 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                     //    completionHandler(NSURLSessionAuthChallengeDisposition.CancelAuthenticationChallenge,nil)
                     //}
                 }else{
-                   println("Challenge Credential Default alive \(String(success_auth))")
+                   print("Challenge Credential Default alive \(String(success_auth))")
                    completionHandler(NSURLSessionAuthChallengeDisposition.PerformDefaultHandling,nil)
                }
                 
                 
             } else{
-                challenge.sender.performDefaultHandlingForAuthenticationChallenge!(challenge)
+                challenge.sender!.performDefaultHandlingForAuthenticationChallenge!(challenge)
             }
     }
     
     func URLSession(session: NSURLSession,task: NSURLSessionTask,willPerformHTTPRedirection response:NSHTTPURLResponse,newRequest request: NSURLRequest,
         completionHandler: (NSURLRequest!) -> Void) {
-            var newRequest : NSURLRequest? = request
-            println("willPerformHTTPRedirection");
+            let newRequest : NSURLRequest? = request
+            //print("willPerformHTTPRedirection");
             completionHandler(newRequest)
     }
     

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+@objc(InnerAddressBook) class InnerAddressBook: UITableViewController,UISearchBarDelegate, UISearchDisplayDelegate,InnerAddressBookHeaderDelegate {
 
-@objc(InnerAddressBook) class InnerAddressBook: UITableViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, UISearchDisplayDelegate,InnerAddressBookHeaderDelegate {
+//@objc(InnerAddressBook) class InnerAddressBook: UITableViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, UISearchDisplayDelegate,InnerAddressBookHeaderDelegate {
     //@IBOutlet var tableView: UITableView!
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -86,12 +87,12 @@ import UIKit
         //self.tableView.backgroundColor = UIColor.redColor()
         
         //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-        var nib = UINib(nibName:"InnerAddressBookCell", bundle: nil)
+        let nib = UINib(nibName:"InnerAddressBookCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "Cell")
         self.searchDisplayController?.searchResultsTableView.registerNib(nib, forCellReuseIdentifier: "Cell")
         //self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        var nib2 = UINib(nibName:"InnerAddressBookHeader", bundle: nil)
+        let nib2 = UINib(nibName:"InnerAddressBookHeader", bundle: nil)
         self.tableView.registerNib(nib2, forHeaderFooterViewReuseIdentifier: "Header")
         
         
@@ -109,15 +110,15 @@ import UIKit
             self.getdept = true
             
         }
-        println("get SQL表信息 部门个数 \(self.deptlist.count) , SQL 人员个数 \(self.itemlist.count)")
+        print("get SQL表信息 部门个数 \(self.deptlist.count) , SQL 人员个数 \(self.itemlist.count)")
         if self.getaddress == true && self.getdept == true {
             //此处加载视图  已经获得所有通讯录和部门信息
-            println("======================load view from sql=================")
+            //print("======================load view from sql=================")
             self.fillViewFromSql = true
             ComputeAddressInfo()
         }else{
             if Message.shared.loginType != "Online" {
-                println("=====所内通讯录未初始化")
+                //print("=====所内通讯录未初始化")
                 PKNotification.toast("所内通讯录还未首次在线访问，无法提供离线数据！")
             }
         }
@@ -130,21 +131,21 @@ import UIKit
         let backitem = UIBarButtonItem(title: Config.UI.PreNavItem, style: UIBarButtonItemStyle.Plain, target: self, action: "returnNavView")
         self.navigationItem.leftBarButtonItem = backitem
         
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let innerAddressViewController = storyboard.instantiateViewControllerWithIdentifier("InnerAddresMenuViewController") as! InnerAddressMenuViewController
         self.slideMenuController()?.changeRightViewController(innerAddressViewController, closeRight: true)
         self.setNavigationBarItem()
     }
     
     func returnNavView(){
-        println("click return button")
+        //print("click return button")
         self.navigationController?.popViewControllerAnimated(true)
         
     }
     
     func HandleNetworkResult(notify:NSNotification)
     {
-        println("取得在线数据")
+        //print("取得在线数据")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notify.name, object: nil)
         
         let result:Result = notify.valueForKey("object") as! Result
@@ -157,11 +158,11 @@ import UIKit
                 self.getaddress = true
                 DBAdapter.shared.syncInnerAddressList(self.itemlist)
             }else if notify.name == Config.RequestTag.GetInnerAddressBook_Dept{
-                println("开始获取在线部门数")
+                //print("开始获取在线部门数")
                 self.deptlist = result.userinfo as! [InnerAddressDeptItem]
                 self.getdept = true
                 DBAdapter.shared.syncInnerAddressDeptList(self.deptlist)
-                println("get 在线表信息 部门个数 \(self.deptlist.count) ")
+                //print("get 在线表信息 部门个数 \(self.deptlist.count) ")
             }
             if self.fillViewFromSql == false {
                 if self.getaddress == true && self.getdept == true {
@@ -220,14 +221,14 @@ import UIKit
         
         
         // 检查SectionInfoArray是否已被创建，如果已被创建，则检查组的数量是否匹配当前实际组的数量。通常情况下，您需要保持SectionInfo与组、单元格信息保持同步。如果扩展功能以让用户能够在表视图中编辑信息，那么需要在编辑操作中适当更新SectionInfo
-        println("reload data=================")
+        //print("reload data=================")
         if self.sectionInfoArray == nil || self.sectionInfoArray.count != self.numberOfSectionsInTableView(self.tableView) {
             // 对于每个用户组来说，需要为每个单元格设立一个一致的SectionInfo对象
-            var infoArray: NSMutableArray = NSMutableArray()
+            let infoArray: NSMutableArray = NSMutableArray()
             
             for dept in self.deptlist {
-                var dictionary: NSArray = (dept as InnerAddressDeptItem).addresslist
-                var sectionInfo = SectionInfo()
+                //var dictionary: NSArray = (dept as InnerAddressDeptItem).addresslist
+                let sectionInfo = SectionInfo()
                 sectionInfo.dept = dept as InnerAddressDeptItem
                 sectionInfo.headerView.HeaderOpen = false
                 
@@ -270,9 +271,9 @@ import UIKit
         } else {
             //println("rows in section normal ")
             
-            var sectionInfo: SectionInfo = self.sectionInfoArray[section] as! SectionInfo
-            var numStoriesInSection = sectionInfo.dept.addresslist.count
-            var sectionOpen = sectionInfo.headerView.HeaderOpen
+            let sectionInfo: SectionInfo = self.sectionInfoArray[section] as! SectionInfo
+            let numStoriesInSection = sectionInfo.dept.addresslist.count
+            //var sectionOpen = sectionInfo.headerView.HeaderOpen
             
             //println("---numberOfRowsInSection isopen\(sectionOpen) section:\(section)---count:\(numStoriesInSection)-  openindex\(opensectionindex)")
             
@@ -312,14 +313,14 @@ import UIKit
             //item = self.itemlist[indexPath.row] as InnerAddressItem
             //println("---start cellForRowAtIndexPath section---\(indexPath.section)/\(sectionInfoArray.count)")
             
-            var dept: InnerAddressDeptItem = (self.sectionInfoArray[indexPath.section] as! SectionInfo).dept
+            let dept: InnerAddressDeptItem = (self.sectionInfoArray[indexPath.section] as! SectionInfo).dept
             //println("---\(indexPath.row)/\(dept.addresslist.count)---")
             item = dept.addresslist[indexPath.row] as InnerAddressItem
             //cell.setFriend(cell.friend)
             
             
         }
-        var cell:InnerAddressBookCell! = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as? InnerAddressBookCell
+        let cell:InnerAddressBookCell! = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as? InnerAddressBookCell
         
         //cell.textLabel?.text = item.name
         cell.dept.text = item.dept
@@ -347,13 +348,13 @@ import UIKit
         //println("---start tableview section----")
         //var tempcell:InnerAddressBookHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header")
         //println(tempcell)
-        var sectionHeaderView:InnerAddressBookHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header") as! InnerAddressBookHeader
+        let sectionHeaderView:InnerAddressBookHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header") as! InnerAddressBookHeader
         
         //var temp:CGRect = sectionHeaderView.contentView.frame
         //temp.size.width = CGFloat(450)
         //sectionHeaderView.contentView.frame = temp
         
-        var sectionInfo: SectionInfo = self.sectionInfoArray[section] as! SectionInfo
+        let sectionInfo: SectionInfo = self.sectionInfoArray[section] as! SectionInfo
         //sectionHeaderView.frame.height = CGFloat(45)
         
         sectionInfo.headerView = sectionHeaderView
@@ -374,8 +375,8 @@ import UIKit
             let btn_OK:PKButton = PKButton(title: "拨打",
                 action: { (messageLabel, items) -> Bool in
                     let urlstr = "tel://\(num!)"
-                    println("=========click==========\(urlstr)")
-                    var url1 = NSURL(string: urlstr)
+                    //print("=========click==========\(urlstr)")
+                    let url1 = NSURL(string: urlstr)
                     UIApplication.sharedApplication().openURL(url1!)
                     return true
                 },
@@ -396,7 +397,7 @@ import UIKit
     func filterContentForSearchText(searchText: String) {
         
         // 使用过滤方法过滤数组 陈陈
-        println("filter content \(searchText)")
+        //print("filter content \(searchText)")
         self.filteredItemList = self.itemlist.filter({( innerAddressItem: InnerAddressItem) -> Bool in
             
             //let categoryMatch = (scope == "All") || (innerAddressItem.dept == scope)
@@ -408,10 +409,10 @@ import UIKit
         })
         
     }
-    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchString searchString: String!) -> Bool {
+    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
         
-        println(searchString)
-        self.filterContentForSearchText(searchString)
+        print(searchString)
+        self.filterContentForSearchText(searchString!)
         
         return true
         
@@ -419,9 +420,9 @@ import UIKit
     
     
     
-    func searchDisplayController(controller: UISearchDisplayController!, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
+    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
         
-        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)
+        self.filterContentForSearchText(self.searchDisplayController!.searchBar.text!)
         
         return true
         
@@ -435,7 +436,7 @@ import UIKit
     }
     */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        println("did select row at index path =\(indexPath)")
+        //print("did select row at index path =\(indexPath)")
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let dept: InnerAddressDeptItem = (self.sectionInfoArray[indexPath.section] as! SectionInfo).dept
         //println("---\(indexPath.row)/\(dept.addresslist.count)---")
@@ -461,39 +462,42 @@ import UIKit
     
     func innerAddressBookHeader(innerAddressBookHeader: InnerAddressBookHeader, sectionOpened: Int) {
         //println("++++++section open+++++++++\(sectionOpened)")
-        var sectionInfo: SectionInfo = self.sectionInfoArray[sectionOpened] as! SectionInfo
+        let sectionInfo: SectionInfo = self.sectionInfoArray[sectionOpened] as! SectionInfo
         sectionInfo.headerView.HeaderOpen = true
         
         if self.preopenindex != NSNotFound{
-            var preSectionInfo: SectionInfo = self.sectionInfoArray[preopenindex] as! SectionInfo
+            let preSectionInfo: SectionInfo = self.sectionInfoArray[preopenindex] as! SectionInfo
             preSectionInfo.headerView.ImgNarrow.image = UIImage(named:"narrow_right")
         }
         sectionInfo.headerView.ImgNarrow.image = UIImage(named:"narrow_down")
         
         
         //创建一个包含单元格索引路径的数组来实现插入单元格的操作：这些路径对应当前节的每个单元格
-        var countOfRowsToInsert = sectionInfo.dept.addresslist.count
-        var indexPathsToInsert = NSMutableArray()
-        
+        let countOfRowsToInsert = sectionInfo.dept.addresslist.count
+        //var indexPathsToInsert = NSMutableArray()
+        var indexPathsToInsert:[NSIndexPath]=[]
         for (var i = 0; i < countOfRowsToInsert; i++) {
-            indexPathsToInsert.addObject(NSIndexPath(forRow: i, inSection: sectionOpened))
+            //indexPathsToInsert.addObject(NSIndexPath(forRow: i, inSection: sectionOpened))
+            indexPathsToInsert.append(NSIndexPath(forRow: i, inSection: sectionOpened))
         }
         
         // 创建一个包含单元格索引路径的数组来实现删除单元格的操作：这些路径对应之前打开的节的单元格
-        var indexPathsToDelete = NSMutableArray()
-        var previousOpenSectionIndex = opensectionindex
-        var perviousOpenSectionIndex = preopenindex
+        //var indexPathsToDelete = NSMutableArray()
+        var indexPathsToDelete:[NSIndexPath] = []
+        let previousOpenSectionIndex = opensectionindex
+        //var perviousOpenSectionIndex = preopenindex
         //println("本次打开的section\(sectionOpened)  上次打开的section\(opensectionindex)")
         if previousOpenSectionIndex != NSNotFound {
-            var previousOpenSection: SectionInfo = self.sectionInfoArray[previousOpenSectionIndex] as! SectionInfo
+            let previousOpenSection: SectionInfo = self.sectionInfoArray[previousOpenSectionIndex] as! SectionInfo
             //println("will close \(previousOpenSectionIndex)")
             previousOpenSection.headerView.HeaderOpen = false
             previousOpenSection.headerView.toggleOpen(false)
             //previousOpenSection.headerView.toggleOpen(true)
             
-            var countOfRowsToDelete = previousOpenSection.dept.addresslist.count
+            let countOfRowsToDelete = previousOpenSection.dept.addresslist.count
             for (var i = 0; i < countOfRowsToDelete; i++) {
-                indexPathsToDelete.addObject(NSIndexPath(forRow: i, inSection: previousOpenSectionIndex))
+                //indexPathsToDelete.addObject(NSIndexPath(forRow: i, inSection: previousOpenSectionIndex))
+                indexPathsToDelete.append(NSIndexPath(forRow: i, inSection: previousOpenSectionIndex))
             }
         }
         
@@ -512,8 +516,8 @@ import UIKit
         self.tableView.beginUpdates()
         
         //println("delete \(indexPathsToDelete) == insert\(indexPathsToInsert)")
-        self.tableView.deleteRowsAtIndexPaths(indexPathsToDelete as [AnyObject], withRowAnimation: deleteAnimation)
-        self.tableView.insertRowsAtIndexPaths(indexPathsToInsert as [AnyObject], withRowAnimation: insertAnimation)
+        self.tableView.deleteRowsAtIndexPaths(indexPathsToDelete, withRowAnimation: deleteAnimation)
+        self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: insertAnimation)
         opensectionindex = sectionOpened
         
         self.tableView.endUpdates()
@@ -524,20 +528,21 @@ import UIKit
     func innerAddressBookHeader(innerAddressBookHeader: InnerAddressBookHeader, sectionClosed: Int) {
         //println("-----------section close------------")
         // 在表格关闭的时候，创建一个包含单元格索引路径的数组，接下来从表格中删除这些行
-        var sectionInfo: SectionInfo = self.sectionInfoArray[sectionClosed] as! SectionInfo
+        let sectionInfo: SectionInfo = self.sectionInfoArray[sectionClosed] as! SectionInfo
         sectionInfo.headerView.HeaderOpen = false
         sectionInfo.headerView.ImgNarrow.image = UIImage(named:"narrow_right")
         opensectionindex = NSNotFound
         
-        var countOfRowsToDelete = self.tableView.numberOfRowsInSection(sectionClosed)
+        let countOfRowsToDelete = self.tableView.numberOfRowsInSection(sectionClosed)
         
         if countOfRowsToDelete > 0 {
-            var indexPathsToDelete = NSMutableArray()
+            //var indexPathsToDelete = NSMutableArray()
+            var indexPathsToDelete:[NSIndexPath] = []
             for (var i = 0; i < countOfRowsToDelete; i++) {
-                indexPathsToDelete.addObject(NSIndexPath(forRow: i, inSection: sectionClosed))
+                indexPathsToDelete.append(NSIndexPath(forRow: i, inSection: sectionClosed))
             }
             self.tableView.beginUpdates()
-            self.tableView.deleteRowsAtIndexPaths(indexPathsToDelete as [AnyObject], withRowAnimation: UITableViewRowAnimation.Fade)
+            self.tableView.deleteRowsAtIndexPaths(indexPathsToDelete, withRowAnimation: UITableViewRowAnimation.Fade)
             self.tableView.endUpdates()
         }
         //opensectionindex = NSNotFound

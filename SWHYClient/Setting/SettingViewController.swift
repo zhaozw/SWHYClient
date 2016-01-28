@@ -67,23 +67,23 @@ class SettingViewController: UIViewController {
         self.setNavigationBarItem()
         
         let tmpchkpassword: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("ChkPassword")
-        println("-----------!!!!!!!!!!!!!!!!!!!!!\(tmpchkpassword)")
+        print("-----------!!!!!!!!!!!!!!!!!!!!!\(tmpchkpassword)")
         //swh_password.selected = (tmpchkpassword as? Bool) ?? false
         swh_password.setOn((tmpchkpassword as? Bool) ?? false, animated: true)
         let tmpchkoffline: AnyObject? = NSUserDefaults.standardUserDefaults().objectForKey("ChkOffline")
-        println("====================+++++++++++++++\(tmpchkoffline)")
+        print("====================+++++++++++++++\(tmpchkoffline)")
         //swh_offline.selected = (tmpchkoffline as? Bool) ?? false
         swh_offline.setOn((tmpchkoffline as? Bool) ?? false, animated: true)
         
     }
     
     func returnNavView(){
-        println("click return button")
+        print("click return button")
         
         let mainViewController:MainViewController = MainViewController()
         let nvc=UINavigationController(rootViewController:mainViewController);
         
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let rightViewController = storyboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
         
         let slideMenuController = SlideMenuController(mainViewController: nvc, rightMenuViewController: rightViewController)

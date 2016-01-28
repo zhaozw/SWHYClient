@@ -30,13 +30,13 @@ class ContactsHelper {
     
     func getMyContacts() -> [Person] {
         var error:Unmanaged<CFErrorRef>?
-        var addressBook: ABAddressBookRef = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
+        let addressBook: ABAddressBookRef = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
         
         let authStatus = ABAddressBookGetAuthorizationStatus()
         
         if authStatus == ABAuthorizationStatus.Denied || authStatus == ABAuthorizationStatus.NotDetermined {
             // Ask for permission
-            var sema = dispatch_semaphore_create(0)
+            let sema = dispatch_semaphore_create(0)
             ABAddressBookRequestAccessWithCompletion(addressBook, { (success, error) in
                 if success {
                     ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue() as NSArray
@@ -56,8 +56,8 @@ class ContactsHelper {
         
         for record in contacts {
             var person = Person()
-            var fname = ABRecordCopyValue(record, kABPersonFirstNameProperty)?.takeRetainedValue() as? NSString
-            var lname = ABRecordCopyValue(record, kABPersonLastNameProperty)?.takeRetainedValue() as? NSString
+            let fname = ABRecordCopyValue(record, kABPersonFirstNameProperty)?.takeRetainedValue() as? NSString
+            let lname = ABRecordCopyValue(record, kABPersonLastNameProperty)?.takeRetainedValue() as? NSString
             
             // TODO: Compose the full name according to locale: call getCompositeName()
             person.name = (lname == nil ? "" : lname as! String) + (fname == nil ? "" : fname as! String)
@@ -87,7 +87,7 @@ class ContactsHelper {
         }
         
         // Sort it
-        retContacts.sort { (p1:Person, p2:Person) in
+        retContacts.sortInPlace { (p1:Person, p2:Person) in
             if p1.name < p2.name {
                 return true
             }
@@ -99,14 +99,14 @@ class ContactsHelper {
     
     // Internal helper method.
     func getMultiProperty(record:ABRecordRef, _ property:ABPropertyID, _ suffix:String) -> [String:String]? {
-        var values:ABMultiValueRef? = ABRecordCopyValue(record, property)?.takeRetainedValue()
+        let values:ABMultiValueRef? = ABRecordCopyValue(record, property)?.takeRetainedValue()
         if values != nil {
             var propertyDict:Dictionary = [String:String]()
             for i in 0 ..< ABMultiValueGetCount(values) {
                 // Convert to String as the returning value is a NSSting type
-                var label = ABMultiValueCopyLabelAtIndex(values, i)?.takeRetainedValue() as? String
+                let label = ABMultiValueCopyLabelAtIndex(values, i)?.takeRetainedValue() as? String
                 // Convert to NSString (which is an object) as the returning value is AnyObject
-                var value = ABMultiValueCopyValueAtIndex(values, i)?.takeRetainedValue() as? NSString
+                let value = ABMultiValueCopyValueAtIndex(values, i)?.takeRetainedValue() as? NSString
                 switch property {
                 case kABPersonAddressProperty:
                     var TODO = 1
@@ -126,7 +126,7 @@ class ContactsHelper {
     
     func getCompositeName(recordID: ABRecordID) -> String {
         var error:Unmanaged<CFErrorRef>?
-        var addressBook: ABAddressBookRef = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
+        let addressBook: ABAddressBookRef = ABAddressBookCreateWithOptions(nil, &error).takeRetainedValue()
         let record: ABRecord! = ABAddressBookGetPersonWithRecordID(addressBook, recordID)?.takeRetainedValue()
         ABPersonGetCompositeNameFormatForRecord(record)
         // TBD
@@ -137,7 +137,7 @@ class ContactsHelper {
     // e.g. [name] hasFaceTime: Y/N hasPicture: Y/N
     func getDetailedInfo(recordID: ABRecordID) -> String {
         var error:Unmanaged<CFErrorRef>?
-        var addressBook: ABAddressBookRef = ABAddressBookCreateWithOptions(nil, &error).takeUnretainedValue()
+        let addressBook: ABAddressBookRef = ABAddressBookCreateWithOptions(nil, &error).takeUnretainedValue()
         let record: ABRecord! = ABAddressBookGetPersonWithRecordID(addressBook, recordID)?.takeUnretainedValue()
         let hasPicture: String = ABPersonHasImageData(record) ? "Y" : "N"
         var hasURL: String = "N"
@@ -154,17 +154,17 @@ class ContactsHelper {
     // Delete an entry/record
     func deleteAddressBookEntry(recordID: ABRecordID) -> Bool {
         var error:Unmanaged<CFErrorRef>?
-        var addressBook: ABAddressBook = ABAddressBookCreateWithOptions(nil, &error).takeUnretainedValue()
+        let addressBook: ABAddressBook = ABAddressBookCreateWithOptions(nil, &error).takeUnretainedValue()
         let record: ABRecord! = ABAddressBookGetPersonWithRecordID(addressBook, recordID)?.takeUnretainedValue()
         var result = ABAddressBookRemoveRecord(addressBook, record, &error)
         if error != nil {
-            println("Failed to delete address book entry: \(recordID)")
+           // print("Failed to delete address book entry: \(recordID)")
             return false
         }
         // Don't forget to save the address book to persistent the state.
         result = ABAddressBookSave(addressBook, &error)
         if error != nil {
-            println("Failed to save address book: \(recordID)")
+            //print("Failed to save address book: \(recordID)")
             return false
         }
         return result
@@ -177,13 +177,13 @@ class ContactsHelper {
         var message:String = ""
         switch stat {
         case .Denied, .Restricted:
-            println("no access to addressbook")
+            //print("no access to addressbook")
             message = "没有权限访问手机通讯录"
         case .Authorized, .NotDetermined:
             var err : Unmanaged<CFError>? = nil
-            var adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
+            let adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
             if adbk == nil {
-                println(err)
+                print(err)
                 message = "无法访问手机通讯录"    
             }
             ABAddressBookRequestAccessWithCompletion(adbk) {
@@ -206,7 +206,7 @@ class ContactsHelper {
                                 var result = ABAddressBookRemoveRecord(adbk, person, &error)
                                 if error != nil {
                                    
-                                    println("Failed to delete address book entry: \(person)")
+                                    print("Failed to delete address book entry: \(person)")
                                 }
                                 
                                 
@@ -215,18 +215,18 @@ class ContactsHelper {
                             success = ABAddressBookSave(adbk, &error)
                             if error != nil {
                                 message = "删除所内通讯录拷贝失败"
-                                println("Failed to save address book")
+                                print("Failed to save address book")
                             }
                         }
                     }
                 } else {
-                    println(err)
+                    print(err)
                     message = "无法访问手机通讯录"
                 }
             }
         }     
         message = "删除所内通讯录拷贝成功"
-        var result:Result = Result(status: "Done",message:message,userinfo:NSObject(),tag:Config.NotifyTag.RevokeRemoveAddressbook)
+        let result:Result = Result(status: "Done",message:message,userinfo:NSObject(),tag:Config.NotifyTag.RevokeRemoveAddressbook)
         NSNotificationCenter.defaultCenter().postNotificationName(Config.NotifyTag.RevokeRemoveAddressbook, object: result)        
     }
     
@@ -242,13 +242,13 @@ class ContactsHelper {
         var message:String = ""
         switch stat {
         case .Denied, .Restricted:
-            println("no access to addressbook")
+            print("no access to addressbook")
             message = "没有权限访问手机通讯录"
         case .Authorized, .NotDetermined:
             var err : Unmanaged<CFError>? = nil
-            var adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
+            let adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
             if adbk == nil {
-                println(err)
+                print(err)
                 message = "无法访问手机通讯录"
                 return
             }
@@ -260,7 +260,7 @@ class ContactsHelper {
                     if groupid != nil {
                         let group:ABRecordRef = ABAddressBookGetGroupWithRecordID(adbk,groupid!).takeUnretainedValue()
                         
-                        println("groupid \(groupid) ")
+                        print("groupid \(groupid) ")
                         
                         //var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
                         var newContact:ABRecordRef
@@ -272,14 +272,14 @@ class ContactsHelper {
                         var error: Unmanaged<CFErrorRef>? = nil
                         //Updated to error to &error so the code builds in Xcode 6.1
                         for item in itemlist{
-                            println(item.name)
+                            print(item.name)
                             newContact = ABPersonCreate().takeRetainedValue()
                             
                             success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, item.name, &error)
                             success = ABRecordSetValue(newContact, kABPersonDepartmentProperty, item.dept, &error)
                             
                                                        
-                            var phoneNumbers: ABMutableMultiValueRef =  createMultiStringRef()
+                            let phoneNumbers: ABMutableMultiValueRef =  createMultiStringRef()
                             ABMultiValueAddValueAndLabel(phoneNumbers, item.linetel, "直线", nil)
                             ABMultiValueAddValueAndLabel(phoneNumbers, item.mobile, "移动手机", nil)
                             ABMultiValueAddValueAndLabel(phoneNumbers, item.mobile1, "移动短号", nil)
@@ -314,10 +314,10 @@ class ContactsHelper {
                     
                     //}
                 } else {
-                    println(err)
+                    print(err)
                     message = "没有权限访问手机通讯录"
                 }
-                var result:Result = Result(status: "Done",message:message,userinfo:NSObject(),tag:Config.NotifyTag.RevokeSyncAddressbook)
+                let result:Result = Result(status: "Done",message:message,userinfo:NSObject(),tag:Config.NotifyTag.RevokeSyncAddressbook)
                 NSNotificationCenter.defaultCenter().postNotificationName(Config.NotifyTag.RevokeSyncAddressbook, object: result)
                 
             }
@@ -328,14 +328,14 @@ class ContactsHelper {
         var success:Bool = false
         
         var err : Unmanaged<CFError>? = nil
-        var adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
+        let adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
         if adbk == nil {
-            println(err)
+            print(err)
             return nil
         }
         
         var groupCount:CFIndex = ABAddressBookGetGroupCount(adbk)
-        var groupLists:NSArray = ABAddressBookCopyArrayOfAllGroups(adbk).takeRetainedValue() as NSArray
+        let groupLists:NSArray = ABAddressBookCopyArrayOfAllGroups(adbk).takeRetainedValue() as NSArray
         var currentCheckedGroup:ABRecordRef
         var currentGroupName:String = ""
         
@@ -343,17 +343,17 @@ class ContactsHelper {
         for group in groupLists {
             currentGroupName = ABRecordCopyValue(group, kABGroupNameProperty)?.takeRetainedValue() as! String
             if (currentGroupName == groupName){
-                println("====get exixt groupname \(groupName)")
+                print("====get exixt groupname \(groupName)")
                 return ABRecordGetRecordID(group)
                 //return group
             }
         }
         
-        var newGroup:ABRecordRef! = ABGroupCreate().takeRetainedValue()
+        let newGroup:ABRecordRef! = ABGroupCreate().takeRetainedValue()
         success = ABRecordSetValue(newGroup, kABGroupNameProperty, groupName, &err)
         success = ABAddressBookAddRecord(adbk, newGroup, &err)
         success = ABAddressBookSave(adbk, &err)
-        println("----------create a new groupname \(groupName)")
+        print("----------create a new groupname \(groupName)")
         return ABRecordGetRecordID(newGroup)
         //return newGroup
     }

@@ -11,7 +11,7 @@ import UIKit
 public class MKLabel: UILabel {
     @IBInspectable public var maskEnabled: Bool = true {
         didSet {
-            mkLayer.enableMask(enable: maskEnabled)
+            mkLayer.enableMask(maskEnabled)
         }
     }
     @IBInspectable public var rippleLocation: MKRippleLocation = .TapLocation {
@@ -35,7 +35,7 @@ public class MKLabel: UILabel {
             mkLayer.ripplePercent = ripplePercent
         }
     }
-    
+
     @IBInspectable public var cornerRadius: CGFloat = 2.5 {
         didSet {
             layer.cornerRadius = cornerRadius
@@ -59,39 +59,39 @@ public class MKLabel: UILabel {
         }
     }
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
-    
+
     required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
         setup()
     }
-    
+
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
+
     private func setup() {
         mkLayer.setCircleLayerColor(rippleLayerColor)
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setMaskLayerCornerRadius(cornerRadius)
     }
-    
+
     public func animateRipple(location: CGPoint? = nil) {
         if let point = location {
             mkLayer.didChangeTapLocation(point)
         } else if rippleLocation == .TapLocation {
             rippleLocation = .Center
         }
-        
+
         mkLayer.animateScaleForCircleLayer(0.65, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
         mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
     }
-    
-    public override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        super.touchesBegan(touches, withEvent: event)
+
+    public func touchesBegan(touches touches: Set<NSObject>, withEvent event: UIEvent) {
+        super.touchesBegan(touches as! Set<UITouch>, withEvent: event)
         if let firstTouch = touches.first as? UITouch {
             let location = firstTouch.locationInView(self)
-            animateRipple(location: location)
+            animateRipple(location)
         }
     }
 }

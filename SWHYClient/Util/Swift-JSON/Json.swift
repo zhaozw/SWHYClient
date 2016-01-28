@@ -46,9 +46,14 @@ extension JSONClass {
     /// constructs JSON object from data
     public convenience init(data:NSData) {
         var err:NSError?
-        var obj:AnyObject? = NSJSONSerialization.JSONObjectWithData(
-            data, options:nil, error:&err
-        )
+        var obj:AnyObject?
+        do {
+            obj = try NSJSONSerialization.JSONObjectWithData(
+                data, options:[])
+        } catch let error as NSError {
+            err = error
+            obj = nil
+        }
         self.init(err != nil ? err! : obj!)
     }
     /// constructs JSON object from string
@@ -61,17 +66,20 @@ extension JSONClass {
     public class func parse(string:String)->JSONClass {
         return JSONClass(string:string)
     }
+    
     /// constructs JSON object from the content of NSURL
     public convenience init(nsurl:NSURL) {
         var enc:NSStringEncoding = NSUTF8StringEncoding
-        var err:NSError?
-        let str =
-        String(NSString(
-            contentsOfURL:nsurl, usedEncoding:&enc, error:&err
-            )!)
-        if err != nil { self.init(err!) }
-        else { self.init(string:str) }
+        do {
+            let str = try NSString(contentsOfURL:nsurl, usedEncoding:&enc)
+            self.init(string:str as String)
+        } catch let err as NSError {
+            self.init(err)
+        }
     }
+    
+    
+    
     /// fetch the JSON string from NSURL and parse it
     /// same as JSON(nsurl:NSURL)
     public class func fromNSURL(nsurl:NSURL) -> JSONClass {
@@ -105,7 +113,7 @@ extension JSONClass {
                 ))
             return nil
         }
-        return JSONClass(obj).toString(pretty:pretty)
+        return JSONClass(obj).toString(pretty)
     }
 }
 /// instance properties
@@ -317,7 +325,7 @@ extension JSONClass {
         switch _value {
         case let o as NSDictionary:
             var result = [String:JSONClass]()
-            for (ko:AnyObject, v:AnyObject) in o {
+            for (ko, v): (AnyObject, AnyObject) in o {
                 if let k = ko as? String {
                     result[k] = JSONClass(v)
                 }
@@ -360,17 +368,17 @@ extension JSONClass {
     }
 }
 extension JSONClass : SequenceType {
-    public func generate()->GeneratorOf<(AnyObject,JSONClass)> {
+    public func generate()->AnyGenerator<(AnyObject,JSONClass)> {
         switch _value {
         case let o as NSArray:
             var i = -1
-            return GeneratorOf<(AnyObject, JSONClass)> {
+            return anyGenerator {
                 if ++i == o.count { return nil }
                 return (i, JSONClass(o[i]))
             }
         case let o as NSDictionary:
-            var ks = o.allKeys.reverse()
-            return GeneratorOf<(AnyObject, JSONClass)> {
+            var ks = Array(o.allKeys.reverse())
+            return anyGenerator {
                 if ks.isEmpty { return nil }
                 if let k = ks.removeLast() as? String {
                     return (k, JSONClass(o.valueForKey(k)!))
@@ -379,14 +387,14 @@ extension JSONClass : SequenceType {
                 }
             }
         default:
-            return GeneratorOf<(AnyObject, JSONClass)>{ nil }
+            return anyGenerator{ nil }
         }
     }
     public func mutableCopyOfTheObject() -> AnyObject {
         return _value.mutableCopy()
     }
 }
-extension JSONClass : Printable {
+extension JSONClass : CustomStringConvertible {
     /// stringifies self.
     /// if pretty:true it pretty prints
     public func toString(pretty:Bool=false)->String {
@@ -413,11 +421,10 @@ extension JSONClass : Printable {
         case let o as NSString:
             return o.debugDescription
         default:
-            let opts = pretty
-                ? NSJSONWritingOptions.PrettyPrinted : nil
-            if let data = NSJSONSerialization.dataWithJSONObject(
-                _value, options:opts, error:nil
-                ) as NSData? {
+            //let opts = pretty ? NSJSONWritingOptions.PrettyPrinted : nil
+            let opts = pretty ? NSJSONWritingOptions.PrettyPrinted : NSJSONWritingOptions()
+            if let data = (try? NSJSONSerialization.dataWithJSONObject(
+                _value, options:opts)) as NSData? {
                     if let result = NSString(
                         data:data, encoding:NSUTF8StringEncoding
                         ) as? String {

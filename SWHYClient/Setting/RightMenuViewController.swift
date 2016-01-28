@@ -36,7 +36,7 @@ class RightMenuViewController : UIViewController, RightMenuProtocol {
     //    super.init()
     //}
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -49,7 +49,7 @@ class RightMenuViewController : UIViewController, RightMenuProtocol {
         super.viewDidLoad()
         //self.tableView.separatorColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1.0)
         
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let swiftViewController = storyboard.instantiateViewControllerWithIdentifier("UIImageViewController") as! UIImageViewController
         self.swiftViewController = UINavigationController(rootViewController: swiftViewController)
         
@@ -108,8 +108,8 @@ class RightMenuViewController : UIViewController, RightMenuProtocol {
         case .NonMenu:
             self.slideMenuController()?.changeMainViewController(self.nonMenuViewController, close: true)
             break
-        default:
-            break
+        //default:
+            //break
         }
     }
     

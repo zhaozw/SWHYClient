@@ -14,7 +14,7 @@ public class MKButton : UIButton
     public var customerproperty1:String = ""
     @IBInspectable public var maskEnabled: Bool = true {
         didSet {
-            mkLayer.enableMask(enable: maskEnabled)
+            mkLayer.enableMask(maskEnabled)
         }
     }
     @IBInspectable public var rippleLocation: MKRippleLocation = .TapLocation {
@@ -48,7 +48,7 @@ public class MKButton : UIButton
     @IBInspectable public var rippleAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var backgroundAniTimingFunction: MKTimingFunction = .Linear
     @IBInspectable public var shadowAniTimingFunction: MKTimingFunction = .EaseOut
-    
+
     @IBInspectable public var cornerRadius: CGFloat = 2.5 {
         didSet {
             layer.cornerRadius = cornerRadius
@@ -71,20 +71,20 @@ public class MKButton : UIButton
             mkLayer.superLayerDidResize()
         }
     }
-    
+
     private lazy var mkLayer: MKLayer = MKLayer(superLayer: self.layer)
-    
+
     // MARK - initilization
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setupLayer()
     }
-    
+
     required public init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
         setupLayer()
     }
-    
+
     // MARK - setup methods
     private func setupLayer() {
         adjustsImageWhenHighlighted = false
@@ -92,21 +92,21 @@ public class MKButton : UIButton
         mkLayer.setBackgroundLayerColor(backgroundLayerColor)
         mkLayer.setCircleLayerColor(rippleLayerColor)
     }
-    
+
     // MARK - location tracking methods
-    override public func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
+    public func beginTrackingWithTouch(touch touch: UITouch, withEvent event: UIEvent) -> Bool {
         if rippleLocation == .TapLocation {
             mkLayer.didChangeTapLocation(touch.locationInView(self))
         }
-        
+
         // rippleLayer animation
         mkLayer.animateScaleForCircleLayer(0.45, toScale: 1.0, timingFunction: rippleAniTimingFunction, duration: CFTimeInterval(self.rippleAniDuration))
-        
+
         // backgroundLayer animation
         if backgroundAniEnabled {
             mkLayer.animateAlphaForBackgroundLayer(backgroundAniTimingFunction, duration: CFTimeInterval(self.backgroundAniDuration))
         }
-        
+
         // shadow animation for self
         if shadowAniEnabled {
             let shadowRadius = layer.shadowRadius
@@ -114,7 +114,7 @@ public class MKButton : UIButton
             let duration = CFTimeInterval(shadowAniDuration)
             mkLayer.animateSuperLayerShadow(10, toRadius: shadowRadius, fromOpacity: 0, toOpacity: shadowOpacity, timingFunction: shadowAniTimingFunction, duration: duration)
         }
-        
+
         return super.beginTrackingWithTouch(touch, withEvent: event)
     }
 }

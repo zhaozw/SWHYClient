@@ -14,10 +14,10 @@ class CustomerAddressBookCell: UITableViewCell {
     @IBOutlet weak var lblName: UILabel!
 
     @IBOutlet weak var lblComp: UILabel!
-    @IBOutlet weak var btnMobile: MKButton!
-    @IBOutlet weak var btnLinetel: MKButton!
+    @IBOutlet var btnMobile: MKButton!
+    @IBOutlet var btnLinetel: MKButton!
        
-    
+    //var btn:MKButton
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

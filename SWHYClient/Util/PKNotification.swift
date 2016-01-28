@@ -97,7 +97,7 @@ class PKNotificationClass: UIViewController {
     //    super.init()
     //}
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -143,7 +143,7 @@ class PKNotificationClass: UIViewController {
         UIApplication.sharedApplication().windows[0].addSubview(toastVC.view)
         //UIApplication.sharedApplication().windows[0].bringSubviewToFront(toastVC.view)
         
-        println("toast \(message)")
+        print("toast \(message)")
         //println(toastVC.view.indexOfAccessibilityElement(UIApplication.sharedApplication().windows[0]))
         
         UIView.animateWithDuration(0.3,
@@ -176,7 +176,7 @@ class PKNotificationClass: UIViewController {
             UIApplication.sharedApplication().windows[0].addSubview(progressVC.view)
             _PKNotificationSingleton.isLoading = true
         } else if(!flag && _PKNotificationSingleton.isLoading) {
-            var cnt:Int = 0
+            let cnt:Int = 0
             for anyObject in _PKNotificationSingleton.vcCollection {
                 if (anyObject.isKindOfClass(PKProgress)) {
                     if (anyObject as! PKProgress).type == PKProgressType.Loading {
@@ -248,8 +248,8 @@ class PKNotificationClass: UIViewController {
     }
     
     // MARK: - Common methods
-    private func generateBackground(#color:UIColor, uiEnabled:Bool) -> UIView {
-        var backgroundView = UIView()
+    private func generateBackground(color color:UIColor, uiEnabled:Bool) -> UIView {
+        let backgroundView = UIView()
         let mainScreenFrame:CGRect = UIScreen.mainScreen().bounds
         let length:CGFloat = (mainScreenFrame.width < mainScreenFrame.height) ? mainScreenFrame.height : mainScreenFrame.width
         let diff:CGFloat = abs(mainScreenFrame.height - mainScreenFrame.width)
@@ -280,7 +280,7 @@ class PKNotificationClass: UIViewController {
     }
     
     private func removeVCCollectionByObject(target:UIViewController) -> Void {
-        var cnt:Int = 0;
+        let cnt:Int = 0;
         for vc:UIViewController in _PKNotificationSingleton.vcCollection {
             if (vc == target){
                 _PKNotificationSingleton.vcCollection.removeAtIndex(cnt)
@@ -358,7 +358,7 @@ class PKNotificationClass: UIViewController {
             assembleDefaultStyle(titleLabel, cancelButton)
         }
         
-        required init(coder aDecoder: NSCoder) {
+        required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
         }
         
@@ -390,8 +390,8 @@ class PKNotificationClass: UIViewController {
             let titlePosY:CGFloat = margin
             let messagePosY:CGFloat = (titleLabel == nil) ? titlePosY + margin*2 : titlePosY + titleLabel!.frame.height + margin
             var buttonPosY:CGFloat = (messageLabel == nil) ? messagePosY + margin*2 : messagePosY + messageLabel!.frame.height + margin*2
-            titleLabel?.frame.offset(dx:margin , dy: titlePosY)
-            messageLabel?.frame.offset(dx:margin , dy: messagePosY)
+            titleLabel?.frame.offsetInPlace(dx:margin , dy: titlePosY)
+            messageLabel?.frame.offsetInPlace(dx:margin , dy: messagePosY)
             
             var k=0
             for ; k < items.count; k++ {
@@ -400,7 +400,7 @@ class PKNotificationClass: UIViewController {
                     break
                 }
                 let textField:UITextField = (o as! UITextField)
-                textField.frame.offset(dx: 0, dy: buttonPosY)
+                textField.frame.offsetInPlace(dx: 0, dy: buttonPosY)
                 buttonPosY += textField.frame.height + margin
                 alertView.addSubview(textField)
             }
@@ -446,7 +446,7 @@ class PKNotificationClass: UIViewController {
                         continue
                     }
                     let button:PKButton = (o as! PKButton)
-                    button.frame.offset(dx: 0, dy: buttonPosY)
+                    button.frame.offsetInPlace(dx: 0, dy: buttonPosY)
                     let rectButton:CGRect = button.bounds
                     let rectButtonMask:CGRect = CGRectMake(1, 0, rectButton.width-2, rectButton.height-1)
                     
@@ -465,7 +465,7 @@ class PKNotificationClass: UIViewController {
                 let rectCancelButton:CGRect = cancelButton.bounds
                 let rectCancelButtonMask:CGRect = CGRectMake(1, 0, rectCancelButton.width-2, rectCancelButton.height-1)
                 
-                let maskPath:UIBezierPath = UIBezierPath(roundedRect: rectCancelButtonMask, byRoundingCorners: UIRectCorner.BottomLeft | UIRectCorner.BottomRight, cornerRadii: CGSizeMake(parent.alertCornerRadius, parent.alertCornerRadius))
+                let maskPath:UIBezierPath = UIBezierPath(roundedRect: rectCancelButtonMask, byRoundingCorners: [UIRectCorner.BottomLeft, UIRectCorner.BottomRight], cornerRadii: CGSizeMake(parent.alertCornerRadius, parent.alertCornerRadius))
                 let maskLayer:CAShapeLayer = CAShapeLayer()
                 maskLayer.frame = cancelButton.bounds
                 maskLayer.path = maskPath.CGPath
@@ -475,7 +475,7 @@ class PKNotificationClass: UIViewController {
                 cancelButton.layer.borderColor = lineColor.CGColor
             }
             
-            cancelButton.frame.offset(dx: 0, dy: buttonPosY)
+            cancelButton.frame.offsetInPlace(dx: 0, dy: buttonPosY)
             
             let alertBackgroundView = parent.generateBackground(color: UIColor.blackColor(), uiEnabled: true)
             alertBackgroundView.alpha = 0.3
@@ -511,7 +511,7 @@ class PKNotificationClass: UIViewController {
                     },
                     completion: { (finished:Bool) -> Void in
                         self.view.removeFromSuperview()
-                        var cnt:Int = 0;
+                        let cnt:Int = 0;
                         for vc:UIViewController in _PKNotificationSingleton.vcCollection {
                             if (vc == self){
                                 _PKNotificationSingleton.vcCollection.removeAtIndex(cnt)
@@ -585,7 +585,7 @@ class PKNotificationClass: UIViewController {
          //   super.init()
         //}
         
-        required init(coder aDecoder: NSCoder) {
+        required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
         }
         
@@ -722,7 +722,7 @@ class PKNotificationClass: UIViewController {
         //    super.init()
         //}
         
-        required init(coder aDecoder: NSCoder) {
+        required init?(coder aDecoder: NSCoder) {
             super.init(coder: aDecoder)
         }
         
@@ -886,7 +886,7 @@ class PKButton: UIButton {
         self.titleLabel?.textAlignment = NSTextAlignment.Center
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

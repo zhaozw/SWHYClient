@@ -27,10 +27,11 @@ import UIKit
         webView.delegate = self
         self.view.addSubview(webView)
         urlstr = Message.shared.curMenuItem.uri
-        println("url = \(urlstr)")
+        print("url = \(urlstr)")
         let url:NSURL = NSURL(string: urlstr)!
         request = NSURLRequest(URL: url)
         webView.loadRequest(request)
+        //print("url = \(webView.request?.URL)")
        
     }
   
@@ -43,7 +44,7 @@ import UIKit
     }
     
     func returnNavView(){
-        println("click return button")
+        print("click return button")
         self.navigationController?.popViewControllerAnimated(true)
         
     }
@@ -52,14 +53,15 @@ import UIKit
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError){
-        println("didFailLoadWithError")
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?){
+        print("didFailLoadWithError")
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.WebViewPreGet, object: nil)
-        println(self.urlstr)
+        print(self.urlstr)
         NetworkEngine.sharedInstance.addRequestWithUrlString(self.urlstr, tag: Config.RequestTag.WebViewPreGet,useCache:false)
     }
     func webViewDidStartLoad(webView: UIWebView){
-        println("did start load")
+        print("did start load \(webView.request)")
+       
     }
     
     func HandleNetworkResult(notify:NSNotification)
@@ -67,15 +69,15 @@ import UIKit
         NSNotificationCenter.defaultCenter().removeObserver(self, name: Config.RequestTag.WebViewPreGet, object: nil)
         
         let result:Result = notify.valueForKey("object") as! Result
-        println(result.status)
+        print(result.status)
         if result.status == "Error" {
             PKNotification.toast(result.message)
         }else if result.status=="OK"{
             let url:NSURL = NSURL(string: urlstr)!
             request = NSURLRequest(URL: url)
-            println(request.URL)
+            print(request.URL)
             webView.loadRequest(request)
-            println("---load again------")
+            print("---load again------")
         }    
     }
     

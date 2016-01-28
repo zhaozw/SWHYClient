@@ -8,7 +8,8 @@
 //
 
 import Foundation
-@objc(CustomerAddressBook) class CustomerAddressBook: UITableViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, UISearchDisplayDelegate,CustomerAddressBookHeaderDelegate {
+//@objc(CustomerAddressBook) class CustomerAddressBook: UITableViewController,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate, UISearchDisplayDelegate,CustomerAddressBookHeaderDelegate {
+@objc(CustomerAddressBook) class CustomerAddressBook: UITableViewController,UISearchBarDelegate, UISearchDisplayDelegate,CustomerAddressBookHeaderDelegate {
     //@IBOutlet var tableView: UITableView!
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -70,11 +71,11 @@ import Foundation
         getaddress = false
         getdept = false
         
-        var username:String = NSUserDefaults.standardUserDefaults().stringForKey("UserName")!
+        let username:String = NSUserDefaults.standardUserDefaults().stringForKey("UserName")!
         
         
         if Message.shared.loginType == "Online" {
-            println("customer address start online data")
+            //print("customer address start online data")
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.GetCustomerAddressBook, object: nil)
             NetworkEngine.sharedInstance.addRequestWithUrlString(Config.URL.CustomerAddressBook+"&user=\(username)", tag: Config.RequestTag.GetCustomerAddressBook,useCache:false)
             
@@ -85,12 +86,12 @@ import Foundation
         
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         
-        var nib = UINib(nibName:"CustomerAddressBookCell", bundle: nil)
+        let nib = UINib(nibName:"CustomerAddressBookCell", bundle: nil)
         self.tableView.registerNib(nib, forCellReuseIdentifier: "Cell")
         self.searchDisplayController?.searchResultsTableView.registerNib(nib, forCellReuseIdentifier: "Cell")
         //self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        var nib2 = UINib(nibName:"CustomerAddressBookHeader", bundle: nil)
+        let nib2 = UINib(nibName:"CustomerAddressBookHeader", bundle: nil)
         self.tableView.registerNib(nib2, forHeaderFooterViewReuseIdentifier: "Header")
         
         
@@ -100,7 +101,7 @@ import Foundation
         if let data:AnyObject = DBAdapter.shared.queryCustomerAddressList("'1'=?", paralist: ["1"]) {
             //self.fillViewFromSql = true
             self.itemlist = data as! [CustomerAddressItem]
-            println("从sql里取客户通讯录\(self.itemlist.count)")
+            //print("从sql里取客户通讯录\(self.itemlist.count)")
             self.getaddress = true
         }
         if let deptdata:AnyObject = DBAdapter.shared.queryCustomerAddressGroupList("'1'=?", paralist: ["1"]) {
@@ -131,7 +132,7 @@ import Foundation
         let backitem = UIBarButtonItem(title: Config.UI.PreNavItem, style: UIBarButtonItemStyle.Plain, target: self, action: "returnNavView")
         self.navigationItem.leftBarButtonItem = backitem
         
-        var storyboard = UIStoryboard(name: "Setting", bundle: nil)
+        let storyboard = UIStoryboard(name: "Setting", bundle: nil)
         let customerAddressViewController = storyboard.instantiateViewControllerWithIdentifier("CustomerAddresMenuViewController") as! CustomerAddressMenuViewController
         self.slideMenuController()?.changeRightViewController(customerAddressViewController, closeRight: true)
         self.setNavigationBarItem()
@@ -143,14 +144,14 @@ import Foundation
   
     
     func returnNavView(){
-        println("click return button")
+        print("click return button")
         self.navigationController?.popViewControllerAnimated(true)
         
     }
     
     func HandleNetworkResult(notify:NSNotification)
     {
-        println("取得在线数据\(notify.name)")
+        //print("取得在线数据\(notify.name)")
         NSNotificationCenter.defaultCenter().removeObserver(self, name: notify.name, object: nil)
         
         let result:Result = notify.valueForKey("object") as! Result
@@ -175,7 +176,7 @@ import Foundation
             if self.fillViewFromSql == false {
                 if self.getaddress == true && self.getdept == true {
                     //此处加载视图  已经获得所有通讯录和部门信息
-                    println("没有从SQL中取得数据，通过在线数据显示客户通讯录")
+                    //print("没有从SQL中取得数据，通过在线数据显示客户通讯录")
                     ComputeAddressInfo()
                 }
             }
@@ -185,19 +186,19 @@ import Foundation
     
     
     func ComputeAddressInfo() {
-        println("Start Compute -------------------\(self.custlevel)------------->>")
+        //print("Start Compute -------------------\(self.custlevel)------------->>")
         /*
         for group in self.grouplist{
             group.addresslist = [CustomerAddressItem]() 
         }
         */
-        var infoArray: NSMutableArray = NSMutableArray()
+        let infoArray: NSMutableArray = NSMutableArray()
         
         for group in self.grouplist {
             group.addresslist = [CustomerAddressItem]() 
             if self.custlevel == "" || self.custlevel == group.level {
                 var dictionary: NSArray = (group as CustomerAddressGroupItem).addresslist
-                var sectionInfo = CustomerSectionInfo()
+                let sectionInfo = CustomerSectionInfo()
                 sectionInfo.group = group as CustomerAddressGroupItem
                 sectionInfo.headerView.HeaderOpen = false
                 
@@ -217,13 +218,13 @@ import Foundation
         for arr in infoArray{
             let obj = arr as! CustomerSectionInfo
             if obj.group.name == "基金公司投资总监（潜在）" {
-                println("qqqqqqqqqqqqqqqqq\(obj.group.addresslist.count)")
+                //print("qqqqqqqqqqqqqqqqq\(obj.group.addresslist.count)")
             }
         
         }
         
         self.sectionInfoArray = infoArray
-        println("============================>> End Compute")
+        //print("============================>> End Compute")
         self.tableView.reloadData()
         /*
         for group in self.grouplist{
@@ -307,8 +308,8 @@ import Foundation
         } else {
             //println("rows in section normal ")
             
-            var sectionInfo: CustomerSectionInfo = self.sectionInfoArray[section] as! CustomerSectionInfo
-            var numStoriesInSection = sectionInfo.group.addresslist.count
+            let sectionInfo: CustomerSectionInfo = self.sectionInfoArray[section] as! CustomerSectionInfo
+            let numStoriesInSection = sectionInfo.group.addresslist.count
             var sectionOpen = sectionInfo.headerView.HeaderOpen
             
             //println("---numberOfRowsInSection isopen\(sectionOpen) section:\(section)---count:\(numStoriesInSection)-  openindex\(opensectionindex)")
@@ -349,14 +350,14 @@ import Foundation
             //item = self.itemlist[indexPath.row] as InnerAddressItem
             //println("---start cellForRowAtIndexPath section---\(indexPath.section)/\(sectionInfoArray.count)")
             
-            var dept: CustomerAddressGroupItem = (self.sectionInfoArray[indexPath.section] as! CustomerSectionInfo).group
+            let dept: CustomerAddressGroupItem = (self.sectionInfoArray[indexPath.section] as! CustomerSectionInfo).group
             //println("---\(indexPath.row)/\(dept.addresslist.count)---")
             item = dept.addresslist[indexPath.row] as CustomerAddressItem
             //cell.setFriend(cell.friend)
             
             
         }
-        var cell:CustomerAddressBookCell! = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as? CustomerAddressBookCell
+        let cell:CustomerAddressBookCell! = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as? CustomerAddressBookCell
         
         
         cell.lblComp.text = item.comp
@@ -385,13 +386,13 @@ import Foundation
         //println("---start tableview section----")
         //var tempcell:InnerAddressBookHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header")
         //println(tempcell)
-        var sectionHeaderView:CustomerAddressBookHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header") as! CustomerAddressBookHeader
+        let sectionHeaderView:CustomerAddressBookHeader = tableView.dequeueReusableHeaderFooterViewWithIdentifier("Header") as! CustomerAddressBookHeader
         
         //var temp:CGRect = sectionHeaderView.contentView.frame
         //temp.size.width = CGFloat(450)
         //sectionHeaderView.contentView.frame = temp
         
-        var sectionInfo: CustomerSectionInfo = self.sectionInfoArray[section] as! CustomerSectionInfo
+        let sectionInfo: CustomerSectionInfo = self.sectionInfoArray[section] as! CustomerSectionInfo
         //sectionHeaderView.frame.height = CGFloat(45)
         
         sectionInfo.headerView = sectionHeaderView
@@ -410,8 +411,8 @@ import Foundation
             let btn_OK:PKButton = PKButton(title: "拨打",
                 action: { (messageLabel, items) -> Bool in
                     let urlstr = "tel://\(num!)"
-                    println("=========click==========\(urlstr)")
-                    var url1 = NSURL(string: urlstr)
+                    //print("=========click==========\(urlstr)")
+                    let url1 = NSURL(string: urlstr)
                     UIApplication.sharedApplication().openURL(url1!)
                     
                     //记录客户拨打日志
@@ -446,7 +447,7 @@ import Foundation
     }
     
     func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int){
-        println("selectedScopeButtonIndexDidChange scope = \(selectedScope)")
+        //print("selectedScopeButtonIndexDidChange scope = \(selectedScope)")
         /*
         if selectedScope == 1 {
         self.custlevel =  "重点人脉"
@@ -489,10 +490,10 @@ import Foundation
         //self.tableView.reloadData()
         
     }
-    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String!) -> Bool {
+    func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchString searchString: String?) -> Bool {
         
-        println("shouldReloadTableForSearchString")
-        self.filterContentForSearchText(searchString)
+        //print("shouldReloadTableForSearchString")
+        self.filterContentForSearchText(searchString!)
         return true
         
     }
@@ -500,7 +501,7 @@ import Foundation
     
     
     func searchDisplayController(controller: UISearchDisplayController, shouldReloadTableForSearchScope searchOption: Int) -> Bool {
-        println("selectedScopeButtonIndexShouldChange scope = \(searchOption)")
+        //print("selectedScopeButtonIndexShouldChange scope = \(searchOption)")
         
         if searchOption == 1 {
             self.custlevel =  "重点人脉"
@@ -512,10 +513,10 @@ import Foundation
         
         self.searchDisplayController!.searchBar.placeholder = self.custlevel == "" ? "全部" : self.custlevel
         
-        println(self.searchDisplayController!.searchBar.placeholder)
+        //print(self.searchDisplayController!.searchBar.placeholder)
         
         if self.searchDisplayController!.searchBar.text != ""{
-            self.filterContentForSearchText(self.searchDisplayController!.searchBar.text)
+            self.filterContentForSearchText(self.searchDisplayController!.searchBar.text!)
             return true
         }else{
             self.opensectionindex = NSNotFound
@@ -534,7 +535,7 @@ import Foundation
     }
     */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        println("did select row at index path =\(indexPath)")
+        //print("did select row at index path =\(indexPath)")
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let dept: CustomerAddressGroupItem = (self.sectionInfoArray[indexPath.section] as! CustomerSectionInfo).group
         //println("---\(indexPath.row)/\(dept.addresslist.count)---")
@@ -572,14 +573,16 @@ import Foundation
         
         //创建一个包含单元格索引路径的数组来实现插入单元格的操作：这些路径对应当前节的每个单元格
         var countOfRowsToInsert = sectionInfo.group.addresslist.count
-        var indexPathsToInsert = NSMutableArray()
-        
+        //var indexPathsToInsert = NSMutableArray()
+        var indexPathsToInsert:[NSIndexPath] = []
+
         for (var i = 0; i < countOfRowsToInsert; i++) {
-            indexPathsToInsert.addObject(NSIndexPath(forRow: i, inSection: sectionOpened))
+            indexPathsToInsert.append(NSIndexPath(forRow: i, inSection: sectionOpened))
         }
         
         // 创建一个包含单元格索引路径的数组来实现删除单元格的操作：这些路径对应之前打开的节的单元格
-        var indexPathsToDelete = NSMutableArray()
+        //var indexPathsToDelete = NSMutableArray()
+        var indexPathsToDelete:[NSIndexPath] = []
         var previousOpenSectionIndex = opensectionindex
         //var perviousOpenSectionIndex = preopenindex
         //println("本次打开的section\(sectionOpened)  上次打开的section\(opensectionindex)")
@@ -592,7 +595,7 @@ import Foundation
             
             var countOfRowsToDelete = previousOpenSection.group.addresslist.count
             for (var i = 0; i < countOfRowsToDelete; i++) {
-                indexPathsToDelete.addObject(NSIndexPath(forRow: i, inSection: previousOpenSectionIndex))
+                indexPathsToDelete.append(NSIndexPath(forRow: i, inSection: previousOpenSectionIndex))
             }
         }
         
@@ -611,8 +614,8 @@ import Foundation
         self.tableView.beginUpdates()
         
         //println("delete \(indexPathsToDelete) == insert\(indexPathsToInsert)")
-        self.tableView.deleteRowsAtIndexPaths(indexPathsToDelete as [AnyObject], withRowAnimation: deleteAnimation)
-        self.tableView.insertRowsAtIndexPaths(indexPathsToInsert as [AnyObject], withRowAnimation: insertAnimation)
+        self.tableView.deleteRowsAtIndexPaths(indexPathsToDelete, withRowAnimation: deleteAnimation)
+        self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: insertAnimation)
         opensectionindex = sectionOpened
         
         self.tableView.endUpdates()
@@ -631,12 +634,13 @@ import Foundation
         var countOfRowsToDelete = self.tableView.numberOfRowsInSection(sectionClosed)
         
         if countOfRowsToDelete > 0 {
-            var indexPathsToDelete = NSMutableArray()
+            //var indexPathsToDelete = NSMutableArray()
+            var indexPathsToDelete:[NSIndexPath] = []
             for (var i = 0; i < countOfRowsToDelete; i++) {
-                indexPathsToDelete.addObject(NSIndexPath(forRow: i, inSection: sectionClosed))
+                indexPathsToDelete.append(NSIndexPath(forRow: i, inSection: sectionClosed))
             }
             self.tableView.beginUpdates()
-            self.tableView.deleteRowsAtIndexPaths(indexPathsToDelete as [AnyObject], withRowAnimation: UITableViewRowAnimation.Fade)
+            self.tableView.deleteRowsAtIndexPaths(indexPathsToDelete, withRowAnimation: UITableViewRowAnimation.Fade)
             self.tableView.endUpdates()
         }
         //opensectionindex = NSNotFound
