@@ -35,20 +35,20 @@ class Config{
     }
     
     struct URL {
-        static let BaseURL = "http://swinbak.swsresearch.net"
-        static let Login = "http://swinbak.swsresearch.net/Mobile/mobileInterface.nsf/ag_checkMobile?Openagent"
-        static let ToDoList = "http://swinbak.swsresearch.net/Mobile/MobileFlow.nsf/fm_workflowplatform?openform"
-        static let MainMenuList = "http://swinbak.swsresearch.net/Mobile/mobileInterface.nsf/fm_showMobileHP_ios?readForm"
-        static let InnerAddressBook = "http://swinbak.swsresearch.net/Portal/SysBase/SysUserInfo.nsf/fm_allPersonXML?readform"
-        static let InnerAddressBook_Dept = "http://swinbak.swsresearch.net/portal/SysBase/SysAppReg.nsf/fm_allDeptXML?readform"
+        static let BaseURL = "http://swin.swsresearch.mobi"
+        static let Login = "http://swin.swsresearch.mobi/Mobile/mobileInterface.nsf/ag_checkMobile?Openagent"
+        //static let ToDoList = "http://swinbak.swsresearch.net/Mobile/MobileFlow.nsf/fm_workflowplatform?openform"
+        static let MainMenuList = "http://swin.swsresearch.mobi/Mobile/mobileInterface.nsf/fm_showMobileHP_ios?readForm"
+        static let InnerAddressBook = "http://swin.swsresearch.mobi/Portal/SysBase/SysUserInfo.nsf/fm_allPersonXML?readform"
+        static let InnerAddressBook_Dept = "http://swin.swsresearch.mobi/portal/SysBase/SysAppReg.nsf/fm_allDeptXML?readform"
         
-        static let CustomerAddressBook = "http://swinbak.swsresearch.net/mobile/customerinfo.nsf/GetCustomerInfoByUserName?openagent"
-        static let CustomerAddressBook_Group = "http://swinbak.swsresearch.net/mobile/customerinfo.nsf/GetGroupInfoByUserName?openagent"
+        static let CustomerAddressBook = "http://swin.swsresearch.mobi/mobile/customerinfo.nsf/GetCustomerInfoByUserName?openagent"
+        static let CustomerAddressBook_Group = "http://swin.swsresearch.mobi/mobile/customerinfo.nsf/GetGroupInfoByUserName?openagent"
         
-        static let PostAccessLog = "http://swinbak.swsresearch.net/mobile/Log.nsf/DoPostAccessLog?openagent"
-        static let PostCustomerLog = "http://swinbak.swsresearch.net/mobile/Log.nsf/DoPostCustomerLog?openagent"
+        static let PostAccessLog = "http://swin.swsresearch.mobi/mobile/Log.nsf/DoPostAccessLog?openagent"
+        static let PostCustomerLog = "http://swin.swsresearch.mobi/mobile/Log.nsf/DoPostCustomerLog?openagent"
         
-        static let GetParameter_CallDuration = "http://swinbak.swsresearch.net/Mobile/mobileInterface.nsf/ag_getparameter?Openagent&key=IOS-Call-Duration-Default"
+        static let GetParameter_CallDuration = "http://swin.swsresearch.mobi/Mobile/mobileInterface.nsf/ag_getparameter?Openagent&key=IOS-Call-Duration-Default"
     }
     struct Net {
         static let Domain = "swsresearch"

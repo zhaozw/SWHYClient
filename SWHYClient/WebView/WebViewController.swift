@@ -64,6 +64,22 @@ import UIKit
        
     }
     
+    
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        
+        if self.authenticated == false { 
+            print("webview asking for permission to start loading  false")
+            authenticated = false
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.WebViewPreGet, object: nil)
+            NetworkEngine.sharedInstance.addRequestWithUrlString(self.urlstr, tag: Config.RequestTag.WebViewPreGet,useCache:false)
+            return false
+        }
+        print("webview asking for permission to start loading   true")
+        
+        return true
+    }
+
+    
     func HandleNetworkResult(notify:NSNotification)
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: Config.RequestTag.WebViewPreGet, object: nil)
@@ -76,6 +92,7 @@ import UIKit
             let url:NSURL = NSURL(string: urlstr)!
             request = NSURLRequest(URL: url)
             print(request.URL)
+            self.authenticated = true
             webView.loadRequest(request)
             print("---load again------")
         }    

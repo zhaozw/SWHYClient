@@ -112,6 +112,7 @@
 		A3D2D8AE1BB827FB002491ED /* data.db in Resources */ = {isa = PBXBuildFile; fileRef = A3D2D8AD1BB827FB002491ED /* data.db */; settings = {ASSET_TAGS = (); }; };
 		A3D2D8AF1BB830E6002491ED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A30C24C31AC53C8B003FBBB7 /* Images.xcassets */; };
 		A3E73D2C1BDBC13B00E10C29 /* KeychainAccessGroups.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3E73D2B1BDBC13B00E10C29 /* KeychainAccessGroups.plist */; settings = {ASSET_TAGS = (); }; };
+		A3E8BA3C1CC2D63800B79E27 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3E8BA3A1CC2D63800B79E27 /* CoreDataModel.xcdatamodeld */; settings = {ASSET_TAGS = (); }; };
 		A3F7A9971BDB9EC500923D23 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3F7A9961BDB9EC500923D23 /* Security.framework */; };
 		A3F7A9D31BDBA61100923D23 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F7A9D21BDBA61100923D23 /* KeychainService.swift */; settings = {ASSET_TAGS = (); }; };
 		A3F7A9D51BDBA66100923D23 /* KeychainQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F7A9D41BDBA66100923D23 /* KeychainQuery.swift */; settings = {ASSET_TAGS = (); }; };
@@ -268,6 +269,7 @@
 		A3D2D88E1BB80BB3002491ED /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A3D2D8AD1BB827FB002491ED /* data.db */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = data.db; path = SWHYClient/data.db; sourceTree = "<group>"; };
 		A3E73D2B1BDBC13B00E10C29 /* KeychainAccessGroups.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = KeychainAccessGroups.plist; sourceTree = "<group>"; };
+		A3E8BA3B1CC2D63800B79E27 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		A3F7A9961BDB9EC500923D23 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A3F7A9D21BDBA61100923D23 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		A3F7A9D41BDBA66100923D23 /* KeychainQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainQuery.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 		A3C73AF71ABDEF96002C299D = {
 			isa = PBXGroup;
 			children = (
+				A3E8BA3A1CC2D63800B79E27 /* CoreDataModel.xcdatamodeld */,
 				A3E73D2B1BDBC13B00E10C29 /* KeychainAccessGroups.plist */,
 				A3F7A9961BDB9EC500923D23 /* Security.framework */,
 				A3A082801BB92CE6009E5A04 /* Info.plist */,
@@ -796,6 +799,7 @@
 				A3BE90791AD4FD5300D3630B /* Util.swift in Sources */,
 				A3D2D8301BB7D5F7002491ED /* Data.swift in Sources */,
 				A3BDBDC91B0461980085DFF1 /* UIImageViewController.swift in Sources */,
+				A3E8BA3C1CC2D63800B79E27 /* CoreDataModel.xcdatamodeld in Sources */,
 				A3D2D83F1BB7D5F7002491ED /* UIImageView+Haneke.swift in Sources */,
 				A3BA73CE1AFB3A4C002B5C2F /* AccessLogItem.swift in Sources */,
 				A3C73B3F1ABDF00D002C299D /* WebViewController.swift in Sources */,
@@ -1103,6 +1107,16 @@
 			);
 			currentVersion = A3C73B081ABDEF96002C299D /* SWHYClient.xcdatamodel */;
 			path = SWHYClient.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		A3E8BA3A1CC2D63800B79E27 /* CoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A3E8BA3B1CC2D63800B79E27 /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = A3E8BA3B1CC2D63800B79E27 /* CoreDataModel.xcdatamodel */;
+			path = CoreDataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
