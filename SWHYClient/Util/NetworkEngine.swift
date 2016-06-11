@@ -348,7 +348,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             
             //这里写需要大量时间的代码
-            //println("这里写需要大量时间的代码----Dispatch")
+            print("dispatch \(res)")
                         
             var result:Result
             switch tag{

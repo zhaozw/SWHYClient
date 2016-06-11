@@ -280,12 +280,13 @@ class PKNotificationClass: UIViewController {
     }
     
     private func removeVCCollectionByObject(target:UIViewController) -> Void {
-        let cnt:Int = 0;
+        var cnt:Int = 0;
         for vc:UIViewController in _PKNotificationSingleton.vcCollection {
             if (vc == target){
                 _PKNotificationSingleton.vcCollection.removeAtIndex(cnt)
                 break;
             }
+            cnt = cnt+1
         }
     }
     
