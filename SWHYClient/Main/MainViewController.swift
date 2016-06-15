@@ -16,10 +16,10 @@ class MainViewController: UIViewController{
     
     let col:CGFloat = 3
     let viewW:CGFloat = 85
-    let viewH:CGFloat = 110
+    let viewH:CGFloat = 80
     var margin:CGFloat = 0  //margin 在viewDidLoad 中计算
     let marginH:CGFloat = 20
-    let marginTop:CGFloat = 30
+    let marginTop:CGFloat = 10
     
     var fillViewFromSql = false
     

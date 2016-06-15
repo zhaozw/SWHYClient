@@ -48,6 +48,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                 <constraints>
                     <constraint firstAttribute="centerY" secondItem="dQN-XM-BcI" secondAttribute="centerY" id="2KG-Q5-Oza"/>
