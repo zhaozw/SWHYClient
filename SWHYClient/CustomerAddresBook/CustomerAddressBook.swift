@@ -537,18 +537,26 @@ import Foundation
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         //print("did select row at index path =\(indexPath)")
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let dept: CustomerAddressGroupItem = (self.sectionInfoArray[indexPath.section] as! CustomerSectionInfo).group
-        //println("---\(indexPath.row)/\(dept.addresslist.count)---")
-        let item = dept.addresslist[indexPath.row] as CustomerAddressItem
+        
+        
+        var item:CustomerAddressItem
+        
+        if tableView == self.searchDisplayController?.searchResultsTableView {
+            item = self.filteredItemList[indexPath.row] as CustomerAddressItem
+            
+            
+        } else {
+            
+            let dept: CustomerAddressGroupItem = (self.sectionInfoArray[indexPath.section] as! CustomerSectionInfo).group
+            //println("---\(indexPath.row)/\(dept.addresslist.count)---")
+            item = dept.addresslist[indexPath.row] as CustomerAddressItem
+        }
+        
         
         let nextController:CustomerAddressDetail = CustomerAddressDetail()
         Message.shared.curCustomerAddressItem = item
         self.navigationController?.pushViewController(nextController,animated:false);
-        
-        
-        
-        //println("performSegueWithIdentifier")
-        //self.performSegueWithIdentifier("Detail", sender: tableView)
+
         
     } 
     /*

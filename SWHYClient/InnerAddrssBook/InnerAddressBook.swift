@@ -436,11 +436,22 @@ import UIKit
     }
     */
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        //print("did select row at index path =\(indexPath)")
+        print("did select row at index path =\(indexPath)")
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let dept: InnerAddressDeptItem = (self.sectionInfoArray[indexPath.section] as! SectionInfo).dept
-        //println("---\(indexPath.row)/\(dept.addresslist.count)---")
-        let item = dept.addresslist[indexPath.row] as InnerAddressItem
+        var item:InnerAddressItem
+        
+        if tableView == self.searchDisplayController?.searchResultsTableView {
+            item = self.filteredItemList[indexPath.row] as InnerAddressItem
+            
+            
+        } else {
+            
+            let dept: InnerAddressDeptItem = (self.sectionInfoArray[indexPath.section] as! SectionInfo).dept
+            //println("---\(indexPath.row)/\(dept.addresslist.count)---")
+            item = dept.addresslist[indexPath.row] as InnerAddressItem
+            
+        }
+        
         
         let nextController:InnerAddressDetail = InnerAddressDetail()
         Message.shared.curInnerAddressItem = item
