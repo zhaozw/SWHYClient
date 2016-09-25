@@ -172,67 +172,95 @@ class ContactsHelper {
     
     //-------
     
-    func removeAllFromAddressBookByGroupName(groupName:String){
+    func removeAllFromAddressBookByGroupName(groupName:String,tag:String){
         let stat = ABAddressBookGetAuthorizationStatus()
         var message:String = ""
+        var status:String = ""
         switch stat {
         case .Denied, .Restricted:
             //print("no access to addressbook")
             message = "没有权限访问手机通讯录"
+            status = "Error"
+            let result:Result = Result(status: status,message:message,userinfo:NSObject(),tag:tag)
+            NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
         case .Authorized, .NotDetermined:
             var err : Unmanaged<CFError>? = nil
+            //print("do not detemined")
             let adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
             if adbk == nil {
                 print(err)
-                message = "无法访问手机通讯录"    
-            }
-            ABAddressBookRequestAccessWithCompletion(adbk) {
-                (granted:Bool, err:CFError!) in
-                if granted {
-                    var success:Bool = false
-                    //创建或者取得地址本内置分组
-                    let groupid:ABRecordID? = self.getOrCreateGroup(Config.AddressBook.SyncAddressBookGroupName)
-                    if groupid != nil {
-                        let group:ABRecordRef = ABAddressBookGetGroupWithRecordID(adbk,groupid!).takeUnretainedValue()
-                        //ABGroup
-                        let tmparray = ABGroupCopyArrayOfAllMembers(group)
-                        if tmparray != nil{
-                            let personlist:NSArray? = tmparray.takeRetainedValue() as NSArray
-                            
-                            //let personlist:NSArray? = ABGroupCopyArrayOfAllMembers(group).takeRetainedValue() as NSArray
-                            var error: Unmanaged<CFErrorRef>? = nil
-                            
-                            for person in personlist!{
-                                var result = ABAddressBookRemoveRecord(adbk, person, &error)
-                                if error != nil {
-                                   
-                                    print("Failed to delete address book entry: \(person)")
+                message = "无法访问手机通讯录"
+                status = "Error"
+                print(message)
+                
+                let result:Result = Result(status: status,message:message,userinfo:NSObject(),tag:tag)
+                NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+            }else{
+                ABAddressBookRequestAccessWithCompletion(adbk) {
+                    (granted:Bool, err:CFError!) in
+                    if granted {
+                        message = "granted"
+                        var success:Bool = false
+                        //创建或者取得地址本内置分组
+                        let groupid:ABRecordID? = self.getOrCreateGroup(Config.AddressBook.SyncAddressBookGroupName)
+                        if groupid != nil {
+                            let group:ABRecordRef = ABAddressBookGetGroupWithRecordID(adbk,groupid!).takeUnretainedValue()
+                            //ABGroup
+                            let tmparray = ABGroupCopyArrayOfAllMembers(group)
+                            if tmparray != nil{
+                                let personlist:NSArray? = tmparray.takeRetainedValue() as NSArray
+                                
+                                //let personlist:NSArray? = ABGroupCopyArrayOfAllMembers(group).takeRetainedValue() as NSArray
+                                var error: Unmanaged<CFErrorRef>? = nil
+                                
+                                for person in personlist!{
+                                    var result = ABAddressBookRemoveRecord(adbk, person, &error)
+                                    if error != nil {
+                                        status = "Error"
+                                        print("Failed to delete address book entry: \(person)")
+                                    }
+                                    
+                                    
                                 }
-                                
-                                
+                                // Don't forget to save the address book to persistent the state.
+                                success = ABAddressBookSave(adbk, &error)
+                                if error != nil {
+                                    message = "删除所内通讯录拷贝失败"
+                                    status = "Error"
+                                    print("Failed to save address book")
+                                }else{
+                                    status = "OK"
+                                    message = "删除所内通讯录拷贝成功"
+                                }
+                            }else{
+                                status = "OK"
+                                message = "本地没有所内通讯录拷贝成员"
                             }
-                            // Don't forget to save the address book to persistent the state.
-                            success = ABAddressBookSave(adbk, &error)
-                            if error != nil {
-                                message = "删除所内通讯录拷贝失败"
-                                print("Failed to save address book")
-                            }
+                        }else{
+                            status = "OK"
+                            message = "本地没有所内通讯录拷贝"
                         }
+                    } else {
+                        print(err)
+                        status = "Error"
+                        message = "无法访问手机通讯录"
                     }
-                } else {
-                    print(err)
-                    message = "无法访问手机通讯录"
+                    dispatch_async(dispatch_get_main_queue(), {
+                        //这里返回主线程，写需要主线程执行的代码
+                        print("main queue remove \(message)")
+                        let result:Result = Result(status: status,message:message,userinfo:NSObject(),tag:tag)
+                        NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                        
+                    })
                 }
             }
-        }     
-        message = "删除所内通讯录拷贝成功"
-        let result:Result = Result(status: "Done",message:message,userinfo:NSObject(),tag:Config.NotifyTag.RevokeRemoveAddressbook)
-        NSNotificationCenter.defaultCenter().postNotificationName(Config.NotifyTag.RevokeRemoveAddressbook, object: result)        
+        }
+        
     }
     
     
     // Adds a contact to the AddressBook
-    func syncToAddressBook(itemlist: [InnerAddressItem]){
+    func syncToAddressBook(itemlist: [InnerAddressItem],tag:String){
         func createMultiStringRef() -> ABMutableMultiValueRef {
             let propertyType: NSNumber = kABMultiStringPropertyType
             return Unmanaged.fromOpaque(ABMultiValueCreateMutable(propertyType.unsignedIntValue).toOpaque()).takeUnretainedValue() as NSObject as ABMultiValueRef
@@ -242,86 +270,92 @@ class ContactsHelper {
         var message:String = ""
         switch stat {
         case .Denied, .Restricted:
-            print("no access to addressbook")
+            print("sync no access to addressbook")
             message = "没有权限访问手机通讯录"
         case .Authorized, .NotDetermined:
+            print("sync access to addressbook")
             var err : Unmanaged<CFError>? = nil
             let adbk : ABAddressBook? = ABAddressBookCreateWithOptions(nil, &err).takeRetainedValue()
             if adbk == nil {
                 print(err)
                 message = "无法访问手机通讯录"
-                return
-            }
-            ABAddressBookRequestAccessWithCompletion(adbk) {
-                (granted:Bool, err:CFError!) in
-                if granted {
-                    //创建或者取得地址本内置分组
-                    let groupid:ABRecordID? = self.getOrCreateGroup(Config.AddressBook.SyncAddressBookGroupName)
-                    if groupid != nil {
-                        let group:ABRecordRef = ABAddressBookGetGroupWithRecordID(adbk,groupid!).takeUnretainedValue()
-                        
-                        print("groupid \(groupid) ")
-                        
-                        //var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
-                        var newContact:ABRecordRef
-                        var phoneNumbers: ABMutableMultiValueRef
-                        
-                        var success:Bool = false
-                        
-                        //Updated to work in Xcode 6.1
-                        var error: Unmanaged<CFErrorRef>? = nil
-                        //Updated to error to &error so the code builds in Xcode 6.1
-                        for item in itemlist{
-                            print(item.name)
-                            newContact = ABPersonCreate().takeRetainedValue()
+                print(message)
+                //return
+            }else{
+                ABAddressBookRequestAccessWithCompletion(adbk) {
+                    (granted:Bool, err:CFError!) in
+                    if granted {
+                        //创建或者取得地址本内置分组
+                        let groupid:ABRecordID? = self.getOrCreateGroup(Config.AddressBook.SyncAddressBookGroupName)
+                        if groupid != nil {
+                            let group:ABRecordRef = ABAddressBookGetGroupWithRecordID(adbk,groupid!).takeUnretainedValue()
                             
-                            success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, item.name, &error)
-                            success = ABRecordSetValue(newContact, kABPersonDepartmentProperty, item.dept, &error)
+                            print("groupid \(groupid) ")
                             
-                                                       
-                            let phoneNumbers: ABMutableMultiValueRef =  createMultiStringRef()
-                            ABMultiValueAddValueAndLabel(phoneNumbers, item.linetel, "直线", nil)
-                            ABMultiValueAddValueAndLabel(phoneNumbers, item.mobile, "移动手机", nil)
-                            ABMultiValueAddValueAndLabel(phoneNumbers, item.mobile1, "移动短号", nil)
-                            ABMultiValueAddValueAndLabel(phoneNumbers, item.mobiletelecom, "电信手机", nil)
-                            ABMultiValueAddValueAndLabel(phoneNumbers, item.mobiletelecom1, "电信短号", nil)
-                            ABMultiValueAddValueAndLabel(phoneNumbers, item.homephone, "家庭电话", nil)
-                            ABMultiValueAddValueAndLabel(phoneNumbers, item.othertel, "其他电话", nil)
-                            success = ABRecordSetValue(newContact, kABPersonPhoneProperty, phoneNumbers, &error)
+                            //var newContact:ABRecordRef! = ABPersonCreate().takeRetainedValue()
+                            var newContact:ABRecordRef
+                            var phoneNumbers: ABMutableMultiValueRef
                             
+                            var success:Bool = false
                             
-                            success = ABRecordSetValue(newContact, kABPersonNoteProperty, item.researchteam, &error)
-                            
-                            success = ABAddressBookAddRecord(adbk, newContact, &error)
-                            //success = ABAddressBookSave(adbk, &error)
-                            //println("Saving addressbook successful? \(success) \(error)")
-                            
-                            success = ABGroupAddMember(group, newContact, &error)
-                            //success = ABAddressBookSave(adbk, &error)
-                            
-                            //println("Saving addressbook successful? \(success) \(group.name) \(error)")
+                            //Updated to work in Xcode 6.1
+                            var error: Unmanaged<CFErrorRef>? = nil
+                            //Updated to error to &error so the code builds in Xcode 6.1
+                            print("sync itemlist =\(itemlist.count)")
+                            for item in itemlist{
+                                //print(item.name)
+                                newContact = ABPersonCreate().takeRetainedValue()
+                                
+                                success = ABRecordSetValue(newContact, kABPersonFirstNameProperty, item.name, &error)
+                                success = ABRecordSetValue(newContact, kABPersonDepartmentProperty, item.dept, &error)
+                                
+                                
+                                let phoneNumbers: ABMutableMultiValueRef =  createMultiStringRef()
+                                ABMultiValueAddValueAndLabel(phoneNumbers, item.linetel, "直线", nil)
+                                ABMultiValueAddValueAndLabel(phoneNumbers, item.mobile, "移动手机", nil)
+                                ABMultiValueAddValueAndLabel(phoneNumbers, item.mobile1, "移动短号", nil)
+                                ABMultiValueAddValueAndLabel(phoneNumbers, item.mobiletelecom, "电信手机", nil)
+                                ABMultiValueAddValueAndLabel(phoneNumbers, item.mobiletelecom1, "电信短号", nil)
+                                ABMultiValueAddValueAndLabel(phoneNumbers, item.homephone, "家庭电话", nil)
+                                ABMultiValueAddValueAndLabel(phoneNumbers, item.othertel, "其他电话", nil)
+                                success = ABRecordSetValue(newContact, kABPersonPhoneProperty, phoneNumbers, &error)
+                                
+                                
+                                success = ABRecordSetValue(newContact, kABPersonNoteProperty, item.researchteam, &error)
+                                
+                                success = ABAddressBookAddRecord(adbk, newContact, &error)
+                                //success = ABAddressBookSave(adbk, &error)
+                                //println("Saving addressbook successful? \(success) \(error)")
+                                
+                                success = ABGroupAddMember(group, newContact, &error)
+                                //success = ABAddressBookSave(adbk, &error)
+                                
+                                //println("Saving addressbook successful? \(success) \(group.name) \(error)")
+                            }
+                            success = ABAddressBookSave(adbk, &error)
+                            if success == true{
+                                message = "所内通讯录拷贝至手机通讯录成功"
+                            }else{
+                                message = "所内通讯录拷贝至手机通讯录失败"
+                            }
                         }
-                        success = ABAddressBookSave(adbk, &error)
-                        if success == true{
-                            message = "所内通讯录拷贝至手机通讯录成功"
-                        }else{
-                            message = "所内通讯录拷贝至手机通讯录失败"
-                        }
+                        
+                    } else {
+                        print(err)
+                        message = "没有权限访问手机通讯录"
                     }
                     
-                    
-                    
-                    
-                    //}
-                } else {
-                    print(err)
-                    message = "没有权限访问手机通讯录"
+                    dispatch_async(dispatch_get_main_queue(), {
+                        //这里返回主线程，写需要主线程执行的代码
+                        print("sync \(message)")
+                        let result:Result = Result(status: "Done",message:message,userinfo:NSObject(),tag:tag)
+                        NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                        
+                    })
                 }
-                let result:Result = Result(status: "Done",message:message,userinfo:NSObject(),tag:Config.NotifyTag.RevokeSyncAddressbook)
-                NSNotificationCenter.defaultCenter().postNotificationName(Config.NotifyTag.RevokeSyncAddressbook, object: result)
-                
             }
         }     
+        
     }   
     
     func getOrCreateGroup(groupName:String) -> ABRecordID? {
