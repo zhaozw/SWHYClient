@@ -66,7 +66,7 @@ class InnerAddressMenuViewController : UIViewController {
         // call alert
         PKNotification.alert(
             title: "操作确认",
-            message: "确认将所内通讯录同步至手机通讯录中?",
+            message: "确认将所内通讯录同步至手机通讯录中?\n \n 请确认 \n1. 设置 - 隐私 - 通讯录 - 允许申万宏源 \n 2. 设置 - 邮件、通讯录、日历 - \n 通讯录的默认账号 设置为 iCloud",
             items: [btn_OK],
             cancelButtonTitle: "取消",
             tintColor: nil)
@@ -92,7 +92,7 @@ class InnerAddressMenuViewController : UIViewController {
         // call alert
         PKNotification.alert(
             title: "操作确认",
-            message: "确认删除系统通讯录中的同步拷贝?",
+            message: "确认删除系统通讯录中的同步拷贝?\n \n 请确认 \n1. 设置 - 隐私 - 通讯录 - 允许申万宏源 \n 2. 设置 - 邮件、通讯录、日历 - \n 通讯录的默认账号 设置为 iCloud",
             items: [btn_OK],
             cancelButtonTitle: "取消",
             tintColor: nil)
