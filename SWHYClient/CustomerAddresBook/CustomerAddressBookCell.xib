@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment version="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,25 +11,16 @@
             <rect key="frame" x="0.0" y="0.0" width="358" height="45"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="358" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vQ-30-AMd">
-                        <rect key="frame" x="236" y="3" width="122" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vQ-30-AMd">
+                        <rect key="frame" x="258" y="3" width="100" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="122" id="1y1-9p-Qe7"/>
                             <constraint firstAttribute="height" constant="21" id="h27-Js-eOI"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKz-UI-uFG" userLabel="name">
-                        <rect key="frame" x="58" y="4" width="100" height="20"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="100" id="tFe-jj-Xl2"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -40,18 +31,6 @@
                             <constraint firstAttribute="width" constant="44" id="g7W-pF-Rok"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pm9-l2-ZPt" customClass="MKButton" customModule="SWHYClient" customModuleProvider="target">
-                        <rect key="frame" x="60" y="22" width="80" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="80" id="Fb3-Us-cYH"/>
-                            <constraint firstAttribute="height" constant="22" id="wX7-Sf-pcO"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                        <state key="normal" title="Button">
-                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cn0-TP-jbu" customClass="MKButton" customModule="SWHYClient" customModuleProvider="target">
                         <rect key="frame" x="228" y="22" width="100" height="22"/>
                         <constraints>
@@ -64,12 +43,39 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pm9-l2-ZPt" customClass="MKButton" customModule="SWHYClient" customModuleProvider="target">
+                        <rect key="frame" x="60" y="22" width="150" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="80" id="Fb3-Us-cYH"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="b1h-fU-5tw"/>
+                            <constraint firstAttribute="height" constant="22" id="wX7-Sf-pcO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
+                        <state key="normal" title="Button">
+                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Fb3-Us-cYH"/>
+                            </mask>
+                        </variation>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKz-UI-uFG" userLabel="name">
+                        <rect key="frame" x="60" y="4" width="200" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="tFe-jj-Xl2"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="cn0-TP-jbu" secondAttribute="bottom" id="4SK-Iv-bPu"/>
                     <constraint firstItem="7vQ-30-AMd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="CvT-qT-Etg"/>
                     <constraint firstItem="nuN-Zy-d3E" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="Cw7-sT-0gj"/>
-                    <constraint firstItem="XKz-UI-uFG" firstAttribute="leading" secondItem="nuN-Zy-d3E" secondAttribute="trailing" constant="6" id="DHW-r0-6Z1"/>
+                    <constraint firstItem="XKz-UI-uFG" firstAttribute="leading" secondItem="nuN-Zy-d3E" secondAttribute="trailing" constant="8" id="DHW-r0-6Z1"/>
                     <constraint firstItem="XKz-UI-uFG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="G94-Xz-aQJ"/>
                     <constraint firstAttribute="bottom" secondItem="pm9-l2-ZPt" secondAttribute="bottom" id="Xbk-0S-gCE"/>
                     <constraint firstAttribute="trailing" secondItem="cn0-TP-jbu" secondAttribute="trailing" constant="30" id="bAJ-fc-O6t"/>

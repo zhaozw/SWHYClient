@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -95,7 +95,7 @@
                                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="拷贝至通讯录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xuf-4f-fZz">
-                                        <rect key="frame" x="13" y="14" width="90" height="21"/>
+                                        <rect key="frame" x="13" y="14" width="167" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -308,17 +308,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pkI-CJ-n55" userLabel="View 1">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pkI-CJ-n55" userLabel="View 1">
                                 <rect key="frame" x="16" y="70" width="179" height="170"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="xMz-BT-5FQ" userLabel="chk1">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="xMz-BT-5FQ" userLabel="chk1">
                                         <rect key="frame" x="139" y="10" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="8aH-Gx-npN"/>
                                             <constraint firstAttribute="height" constant="30" id="sJ3-tb-FUe"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uibg_0" translatesAutoresizingMaskIntoConstraints="NO" id="dne-nK-Hr5">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="uibg_0" translatesAutoresizingMaskIntoConstraints="NO" id="dne-nK-Hr5">
                                         <rect key="frame" x="0.0" y="0.0" width="179" height="170"/>
                                     </imageView>
                                 </subviews>
@@ -333,17 +333,17 @@
                                     <constraint firstItem="dne-nK-Hr5" firstAttribute="leading" secondItem="pkI-CJ-n55" secondAttribute="leading" id="rCB-pd-U4B"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XwQ-E6-xJ0" userLabel="View 2">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XwQ-E6-xJ0" userLabel="View 2">
                                 <rect key="frame" x="210" y="70" width="180" height="170"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="5oO-df-7EI" userLabel="chk2">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="5oO-df-7EI" userLabel="chk2">
                                         <rect key="frame" x="142" y="8" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="3T9-Pg-HIy"/>
                                             <constraint firstAttribute="width" constant="30" id="LV0-KN-T1Y"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uibg_1" translatesAutoresizingMaskIntoConstraints="NO" id="6Vz-5J-6pJ">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="uibg_1" translatesAutoresizingMaskIntoConstraints="NO" id="6Vz-5J-6pJ">
                                         <rect key="frame" x="0.0" y="0.0" width="180" height="170"/>
                                     </imageView>
                                 </subviews>
@@ -357,17 +357,17 @@
                                     <constraint firstAttribute="trailing" secondItem="6Vz-5J-6pJ" secondAttribute="trailing" id="unN-cm-gHz"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QOk-5f-4y8" userLabel="View 3">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QOk-5f-4y8" userLabel="View 3">
                                 <rect key="frame" x="405" y="70" width="179" height="170"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="mmc-av-wFe" userLabel="chk3">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="mmc-av-wFe" userLabel="chk3">
                                         <rect key="frame" x="141" y="8" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="dGI-ay-ch6"/>
                                             <constraint firstAttribute="height" constant="30" id="v3e-mg-SVm"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uibg_2" translatesAutoresizingMaskIntoConstraints="NO" id="Scv-hA-T2a">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="uibg_2" translatesAutoresizingMaskIntoConstraints="NO" id="Scv-hA-T2a">
                                         <rect key="frame" x="0.0" y="0.0" width="179" height="170"/>
                                     </imageView>
                                 </subviews>
@@ -381,17 +381,17 @@
                                     <constraint firstAttribute="trailing" secondItem="mmc-av-wFe" secondAttribute="trailing" constant="8" id="dA7-g0-eQm"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RSo-cS-z03" userLabel="View 4">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RSo-cS-z03" userLabel="View 4">
                                 <rect key="frame" x="16" y="260" width="179" height="170"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="Puq-BJ-1JS" userLabel="chk4">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="Puq-BJ-1JS" userLabel="chk4">
                                         <rect key="frame" x="141" y="8" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="2S4-4y-hbK"/>
                                             <constraint firstAttribute="width" constant="30" id="Cem-eO-Z1T"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uibg_3" translatesAutoresizingMaskIntoConstraints="NO" id="8YO-U9-b7J">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="uibg_3" translatesAutoresizingMaskIntoConstraints="NO" id="8YO-U9-b7J">
                                         <rect key="frame" x="0.0" y="0.0" width="179" height="170"/>
                                     </imageView>
                                 </subviews>
@@ -406,17 +406,17 @@
                                     <constraint firstAttribute="height" constant="170" id="i5L-bd-c8L"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eeg-3K-cFs" userLabel="View 5">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eeg-3K-cFs" userLabel="View 5">
                                 <rect key="frame" x="210" y="260" width="180" height="170"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="Fzo-Cq-njK" userLabel="chk5">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="Fzo-Cq-njK" userLabel="chk5">
                                         <rect key="frame" x="142" y="8" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="Lbt-9e-WBi"/>
                                             <constraint firstAttribute="height" constant="30" id="jLV-Lf-sZ9"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uibg_4" translatesAutoresizingMaskIntoConstraints="NO" id="77v-m5-Aw3">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="uibg_4" translatesAutoresizingMaskIntoConstraints="NO" id="77v-m5-Aw3">
                                         <rect key="frame" x="0.0" y="0.0" width="180" height="170"/>
                                     </imageView>
                                 </subviews>
@@ -430,17 +430,17 @@
                                     <constraint firstItem="77v-m5-Aw3" firstAttribute="leading" secondItem="eeg-3K-cFs" secondAttribute="leading" id="gJq-XD-CiW"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jnu-4K-Yg8" userLabel="View 6">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jnu-4K-Yg8" userLabel="View 6">
                                 <rect key="frame" x="405" y="260" width="179" height="170"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="zSD-2E-9O6" userLabel="chk6">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="photo_checked" translatesAutoresizingMaskIntoConstraints="NO" id="zSD-2E-9O6" userLabel="chk6">
                                         <rect key="frame" x="141" y="8" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="3YR-OG-a1h"/>
                                             <constraint firstAttribute="width" constant="30" id="MuC-ji-Z9i"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sJn-ne-v48">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sJn-ne-v48">
                                         <rect key="frame" x="0.0" y="0.0" width="179" height="170"/>
                                     </imageView>
                                 </subviews>
@@ -453,7 +453,7 @@
                                     <constraint firstItem="zSD-2E-9O6" firstAttribute="top" secondItem="Jnu-4K-Yg8" secondAttribute="top" constant="8" id="viX-MD-ckh"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDJ-wp-Dy0">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZDJ-wp-Dy0">
                                 <rect key="frame" x="497" y="440" width="45" height="30"/>
                                 <state key="normal" title="自定义">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -874,10 +874,10 @@
         <image name="line_phone" width="32" height="32"/>
         <image name="logo" width="72" height="72"/>
         <image name="photo_checked" width="31" height="31"/>
-        <image name="uibg_0" width="375" height="667"/>
-        <image name="uibg_1" width="375" height="667"/>
-        <image name="uibg_2" width="375" height="667"/>
-        <image name="uibg_3" width="375" height="667"/>
-        <image name="uibg_4" width="375" height="667"/>
+        <image name="uibg_0" width="300" height="533"/>
+        <image name="uibg_1" width="300" height="533"/>
+        <image name="uibg_2" width="300" height="533"/>
+        <image name="uibg_3" width="300" height="533"/>
+        <image name="uibg_4" width="300" height="533"/>
     </resources>
 </document>
