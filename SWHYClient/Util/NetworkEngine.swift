@@ -35,6 +35,9 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
     
     class var sharedInstance: NetworkEngine {
         let configuration:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForRequest = 120  //超时设置为300秒
+        configuration.timeoutIntervalForResource = 120 
+        print(configuration.timeoutIntervalForRequest) //= 15 //连接超时时间
         Inner.instance.session = NSURLSession(configuration: configuration,delegate: Inner.instance,delegateQueue:NSOperationQueue.mainQueue())
         
         return Inner.instance
@@ -78,8 +81,8 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             // handle the data of the successful response here
             let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
             let res:String = NSString(data: data!, encoding: enc)! as String
-                      
-
+            
+            
         }
         task.resume()
         
@@ -92,8 +95,8 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
         
         if let itemlist:NSArray = DBAdapter.shared.queryAccessLogList("sync <> ?", paralist: ["Y"]) {
             /*
-            [{"ID":"2","UserID":"shenyd","Time":"2015-04-29+20:48:20","ModuleID":"M9A","OnLine":"true","ModuleName":"测试Jquery","Type":"OpenModule"},{"ID":"3","UserID":"shenyd","Time":"2015-04-29+20:48:47","ModuleID":"M01","OnLine":"true","ModuleName":"所内通讯录","Type":"OpenModule"},{"ID":"4","UserID":"shenyd","Time":"2015-04-29+21:53:46","ModuleID":"M22","OnLine":"true","ModuleName":"内网待办事宜","Type":"OpenModule"},{"ID":"5","UserID":"shenyd","Time":"2015-04-29+21:54:42","ModuleID":"M01","OnLine":"true","ModuleName":"所内通讯录","Type":"OpenModule"},{"ID":"6","UserID":"shenyd","Time":"2015-05-03+13:33:41","ModuleID":"","OnLine":"true","ModuleName":"","Type":"Login"},{"ID":"7","UserID":"shenyd","Time":"2015-05-03+13:33:44","ModuleID":"M01","OnLine":"true","ModuleName":"所内通讯录","Type":"OpenModule"}]
-            */
+             [{"ID":"2","UserID":"shenyd","Time":"2015-04-29+20:48:20","ModuleID":"M9A","OnLine":"true","ModuleName":"测试Jquery","Type":"OpenModule"},{"ID":"3","UserID":"shenyd","Time":"2015-04-29+20:48:47","ModuleID":"M01","OnLine":"true","ModuleName":"所内通讯录","Type":"OpenModule"},{"ID":"4","UserID":"shenyd","Time":"2015-04-29+21:53:46","ModuleID":"M22","OnLine":"true","ModuleName":"内网待办事宜","Type":"OpenModule"},{"ID":"5","UserID":"shenyd","Time":"2015-04-29+21:54:42","ModuleID":"M01","OnLine":"true","ModuleName":"所内通讯录","Type":"OpenModule"},{"ID":"6","UserID":"shenyd","Time":"2015-05-03+13:33:41","ModuleID":"","OnLine":"true","ModuleName":"","Type":"Login"},{"ID":"7","UserID":"shenyd","Time":"2015-05-03+13:33:44","ModuleID":"M01","OnLine":"true","ModuleName":"所内通讯录","Type":"OpenModule"}]
+             */
             
             var json:String = ""
             for var i:Int=0;i<itemlist.count; i++ {
@@ -165,7 +168,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                     }
                     
                 }else if res.componentsSeparatedByString("Error").count > 1{
-                
+                    
                     result = "Error: 同步访问日志出错)"
                     //println(result)
                     self.dispatchResponse(result,tag: tag)
@@ -185,8 +188,8 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
         
         if let itemlist:NSArray = DBAdapter.shared.queryCustomerLogList("sync <> ?", paralist: ["Y"]) {
             /*
-            [{"CustContactMode":"18616829776","CustContactID":"","Type":"1","Duration":"42","ID":"15","EndTime":"","UserName":"shenyd","StartTime":"2014-11-22+14:55:22","Module":"com.simpleflow.androidtest.PhoneTaskReceiver"},{"CustContactMode":"13641694940","CustContactID":"","Type":"2","Duration":"19","ID":"16","EndTime":"","UserName":"shenyd","StartTime":"2014-11-22+16:12:48","Module":"com.simpleflow.androidtest.PhoneTaskReceiver"}]
-            */
+             [{"CustContactMode":"18616829776","CustContactID":"","Type":"1","Duration":"42","ID":"15","EndTime":"","UserName":"shenyd","StartTime":"2014-11-22+14:55:22","Module":"com.simpleflow.androidtest.PhoneTaskReceiver"},{"CustContactMode":"13641694940","CustContactID":"","Type":"2","Duration":"19","ID":"16","EndTime":"","UserName":"shenyd","StartTime":"2014-11-22+16:12:48","Module":"com.simpleflow.androidtest.PhoneTaskReceiver"}]
+             */
             
             var json:String = ""
             for var i:Int=0;i<itemlist.count; i++ {
@@ -255,7 +258,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                         self.dispatchResponse("系统已自动同步客户通讯录日志:\(String(sqlresult)) 条",tag: tag)
                         
                     }else if (tag != Config.RequestTag.PostCustomerLog){
-                                                
+                        
                     }
                     
                 }else if res.componentsSeparatedByString("Error").count > 1{
@@ -268,10 +271,84 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             task.resume()
             
         }
-      
+        
     }
-
     
+    //===========上传文件===============================
+    func postUploadFile(url:String,filePath:String,tag:String){
+        print(url)
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        //let multiPartMime = MultiPartMime(dict: ["fulFile": MultiPartPart.StringWrapper(filename), "file": MultiPartPart.PNGImage(img, filename)])
+        
+        let multiPartMime = MultiPartMime(dict: ["File": MultiPartPart.File(filePath),"UserName":MultiPartPart.StringWrapper(Message.shared.postUserName)])
+        
+        //let multiPartMime = MultiPartMime(dict: ["UserName":MultiPartPart.StringWrapper(Message.shared.postUserName)])
+        
+        request.HTTPBody = multiPartMime.multiPartData           
+        request.HTTPMethod = "POST"
+        
+        request.setValue(multiPartMime.contentTypeString, forHTTPHeaderField:"Content-Type")
+        //print(request.HTTPBody)
+        
+        var datastring = String(data: request.HTTPBody!, encoding: NSUTF8StringEncoding)
+        
+        print(datastring)
+        //print(multiPartMime.multiPartData)
+        var result:String = ""
+        //-------------------
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            data, response, error in
+            
+            print("response =\(response)")
+            if let httpResponse = response as? NSHTTPURLResponse {
+                if httpResponse.statusCode != 200 {
+                    print("response was not 200: \(response)")
+                    result =  "Error: \(httpResponse.statusCode)"
+                    self.dispatchResponse(result,tag: tag)
+                    
+                }
+            }
+            if (error != nil) {
+                print("Error ====\(error!.localizedDescription) ==code=\(error!.code)")
+                var errmsg = ""
+                if error!.code == -999{
+                    //cancelled  用户名密码验证不通过时，取消请求
+                    errmsg = "用户名或密码错误"
+                }else{
+                    errmsg = "网络连接出错，请检查网络或稍后再试"
+                }
+                
+                self.success_auth = 0
+                self.alive = false
+                //print("request url host = false  \(request.URL?.host!)")
+                self.serverlist.updateValue(false, forKey: request.URL?.host!  ?? "AnyServer")
+                let result:Result = Result(status: "Error",message:errmsg,userinfo:error!,tag:tag)
+                NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)          
+            }else{
+                // handle the data of the successful response here
+                //let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
+                //let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(NSUTF8StringEncoding))
+                
+                let res:String = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
+                
+                print(" res convert =\(res)")
+                if res.componentsSeparatedByString("OK").count > 1 {
+                    
+                    result = "Success: 上传文件成功"
+                    print(result)
+                    self.dispatchResponse(result,tag: tag)                
+                }else if res.componentsSeparatedByString("Error").count > 1{
+                    
+                    result = "Error: 上传文件出错"
+                    print(result)
+                    self.dispatchResponse(result,tag: tag)
+                }
+            }
+        }
+        print("before resume")
+        task.resume()
+        
+    }
     
     //==========================================================
     
@@ -280,22 +357,22 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
         let getcache = false
         
         /*
-        let cache = Haneke.Shared.dataCache
-        
-        if tag != Config.RequestTag.DoLogin && useCache == true {
-            
-            
-            cache.fetch(key: url).onSuccess { data in
-                println("________get Cache_____________")
-                getcache = true
-                let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
-                let res:String = NSString(data: data, encoding: enc)! as String
-                self.dispatchResponse(res,tag: tag)
-            }
-            
-            
-        }
-*/
+         let cache = Haneke.Shared.dataCache
+         
+         if tag != Config.RequestTag.DoLogin && useCache == true {
+         
+         
+         cache.fetch(key: url).onSuccess { data in
+         println("________get Cache_____________")
+         getcache = true
+         let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
+         let res:String = NSString(data: data, encoding: enc)! as String
+         self.dispatchResponse(res,tag: tag)
+         }
+         
+         
+         }
+         */
         //let url1 = "https://github.com"
         let request = NSMutableURLRequest(URL: NSURL(string: url+"&client="+Config.Net.ClientType)!)
         //let request = NSMutableURLRequest(URL: NSURL(string: url1)!)
@@ -349,7 +426,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             
             //这里写需要大量时间的代码
             //print("dispatch \(res)")
-                        
+            
             var result:Result
             switch tag{
                 
@@ -382,14 +459,14 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                     mainMenuItemBO.offline = elem["offl"][0].element?.text ?? ""
                     
                     /*
-                    let URL = NSURL(string: Config.URL.BaseURL+mainMenuItemBO.itemimage)!
-                    let fetcher = HNKNetworkFetcher< UIImage >(URL: URL)
-                    Haneke.Shared.imageCache.fetch(fetcher: fetcher).onSuccess { image in
-                    // Do something with image
-                    mainMenuItemBO.icon = UIImagePNGRepresentation(image)
-                    
-                    }
-                    */
+                     let URL = NSURL(string: Config.URL.BaseURL+mainMenuItemBO.itemimage)!
+                     let fetcher = HNKNetworkFetcher< UIImage >(URL: URL)
+                     Haneke.Shared.imageCache.fetch(fetcher: fetcher).onSuccess { image in
+                     // Do something with image
+                     mainMenuItemBO.icon = UIImagePNGRepresentation(image)
+                     
+                     }
+                     */
                     //mainMenuItemBO.initWithDic(dict as NSDictionary)
                     userInfo.addObject(mainMenuItemBO)
                 }
@@ -447,7 +524,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                     
                 }
                 result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
-                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+            //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
             case Config.RequestTag.WebViewPreGet:
                 result = Result(status: "OK",message:"",userinfo:NSObject(),tag:tag)
                 //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
@@ -536,7 +613,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                     
                 }
                 result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
-                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+            //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
             case Config.RequestTag.GetParameter_CallDuration:
                 var userInfo = ""
                 //只能处理 xml encoding utf-8的
@@ -545,11 +622,11 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
                 //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
                 
-   
+                
             default:
                 return        
             }
-
+            
             dispatch_async(dispatch_get_main_queue(), {
                 
                 //这里返回主线程，写需要主线程执行的代码
@@ -558,87 +635,87 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             })
         }) 
         
-                
-         
+        
+        
     }
     
     /*
-    //获取图片资源，启用缓存功能 并保存本地CacheStorage
-    -(void) addRequestWithUrlString:(NSString *)urlString Method:(NSString *)requestMethod Tag:(RequestTag) tag Index:(NSInteger)index{
-    //根据基础地址跟API合成链接，创建请求
-    if (!urlString) {
-    return;
-    }
-    
-    NSString *fullUrlString = [NSString stringWithFormat:@"%@%@",URL_BASE,urlString];
-    NSURL *url=[NSURL URLWithString:fullUrlString];
-    
-    NSNumber *indexNum=[NSNumber numberWithInteger:index];
-    NSDictionary *userInfoDic=[NSDictionary dictionaryWithObject:indexNum forKey:@"index"];
-    
-    ASIHTTPRequest *request=[[[ASIHTTPRequest alloc] initWithURL:url] autorelease];
-    //    [request setAllowCompressedResponse:NO];
-    //    [request setShouldWaitToInflateCompressedResponses:NO];
-    
-    [request setRequestMethod:requestMethod];
-    [request setTag:tag];
-    [request setUserInfo:userInfoDic];
-    
-    [request setDownloadCache:[ASIDownloadCache sharedCache]];
-    [request setCacheStoragePolicy:ASICachePermanentlyCacheStoragePolicy];
-    //缓存
-    
-    [self.networkQueue addOperation:request];
-    }
-    */
+     //获取图片资源，启用缓存功能 并保存本地CacheStorage
+     -(void) addRequestWithUrlString:(NSString *)urlString Method:(NSString *)requestMethod Tag:(RequestTag) tag Index:(NSInteger)index{
+     //根据基础地址跟API合成链接，创建请求
+     if (!urlString) {
+     return;
+     }
+     
+     NSString *fullUrlString = [NSString stringWithFormat:@"%@%@",URL_BASE,urlString];
+     NSURL *url=[NSURL URLWithString:fullUrlString];
+     
+     NSNumber *indexNum=[NSNumber numberWithInteger:index];
+     NSDictionary *userInfoDic=[NSDictionary dictionaryWithObject:indexNum forKey:@"index"];
+     
+     ASIHTTPRequest *request=[[[ASIHTTPRequest alloc] initWithURL:url] autorelease];
+     //    [request setAllowCompressedResponse:NO];
+     //    [request setShouldWaitToInflateCompressedResponses:NO];
+     
+     [request setRequestMethod:requestMethod];
+     [request setTag:tag];
+     [request setUserInfo:userInfoDic];
+     
+     [request setDownloadCache:[ASIDownloadCache sharedCache]];
+     [request setCacheStoragePolicy:ASICachePermanentlyCacheStoragePolicy];
+     //缓存
+     
+     [self.networkQueue addOperation:request];
+     }
+     */
     
     func URLSession(session: NSURLSession,didReceiveChallenge challenge:NSURLAuthenticationChallenge,
-        completionHandler:(NSURLSessionAuthChallengeDisposition,NSURLCredential?) -> Void) {
-            //let username = NSUserDefaults.standardUserDefaults().valueForKey("UserName") as String
-            //let password = NSUserDefaults.standardUserDefaults().valueForKey("Password") as String
-            //print("host 55555 = \(challenge.protectionSpace.host)")
-            let username = Message.shared.postUserName
-            let password = Message.shared.postPassword
+                    completionHandler:(NSURLSessionAuthChallengeDisposition,NSURLCredential?) -> Void) {
+        //let username = NSUserDefaults.standardUserDefaults().valueForKey("UserName") as String
+        //let password = NSUserDefaults.standardUserDefaults().valueForKey("Password") as String
+        //print("host 55555 = \(challenge.protectionSpace.host)")
+        let username = Message.shared.postUserName
+        let password = Message.shared.postPassword
+        
+        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust  {
+            print("send credential Server Trust \(String(success_auth))")
+            let credential:NSURLCredential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
+            completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,credential)
+        }else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic{
+            print("send credential HTTP Basic \(String(success_auth))")
+            let defaultCredentials: NSURLCredential = NSURLCredential(user: Config.Net.Domain+"\\"+username, password: password, persistence:NSURLCredentialPersistence.ForSession)
+            completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,defaultCredentials)
             
-            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust  {
-                print("send credential Server Trust \(String(success_auth))")
-                let credential:NSURLCredential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
-                completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,credential)
-            }else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodHTTPBasic{
-                print("send credential HTTP Basic \(String(success_auth))")
+        }else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodNTLM{
+            print("challenge host= \(self.serverlist[challenge.protectionSpace.host])")
+            //if self.alive == false {
+            if self.serverlist[challenge.protectionSpace.host] != true {
+                //if success_auth == 0 {
+                //print("send credential NTLM with user credential \(String(success_auth))")
                 let defaultCredentials: NSURLCredential = NSURLCredential(user: Config.Net.Domain+"\\"+username, password: password, persistence:NSURLCredentialPersistence.ForSession)
                 completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,defaultCredentials)
-                
-            }else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodNTLM{
-                print("challenge host= \(self.serverlist[challenge.protectionSpace.host])")
-                //if self.alive == false {
-                if self.serverlist[challenge.protectionSpace.host] != true {
-                    //if success_auth == 0 {
-                        //print("send credential NTLM with user credential \(String(success_auth))")
-                        let defaultCredentials: NSURLCredential = NSURLCredential(user: Config.Net.Domain+"\\"+username, password: password, persistence:NSURLCredentialPersistence.ForSession)
-                        completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,defaultCredentials)
-                        success_auth = success_auth + 1  
-                    //} else
-                    //{
-                    //    println("Cancel Challenge \(String(success_auth))")
-                    //    completionHandler(NSURLSessionAuthChallengeDisposition.CancelAuthenticationChallenge,nil)
-                    //}
-                }else{
-                   print("Challenge Credential Default alive \(String(success_auth))")
-                   completionHandler(NSURLSessionAuthChallengeDisposition.PerformDefaultHandling,nil)
-               }
-                
-                
-            } else{
-                challenge.sender!.performDefaultHandlingForAuthenticationChallenge!(challenge)
+                success_auth = success_auth + 1  
+                //} else
+                //{
+                //    println("Cancel Challenge \(String(success_auth))")
+                //    completionHandler(NSURLSessionAuthChallengeDisposition.CancelAuthenticationChallenge,nil)
+                //}
+            }else{
+                print("Challenge Credential Default alive \(String(success_auth))")
+                completionHandler(NSURLSessionAuthChallengeDisposition.PerformDefaultHandling,nil)
             }
+            
+            
+        } else{
+            challenge.sender!.performDefaultHandlingForAuthenticationChallenge!(challenge)
+        }
     }
     
     func URLSession(session: NSURLSession,task: NSURLSessionTask,willPerformHTTPRedirection response:NSHTTPURLResponse,newRequest request: NSURLRequest,
-        completionHandler: (NSURLRequest!) -> Void) {
-            let newRequest : NSURLRequest? = request
-            //print("willPerformHTTPRedirection");
-            completionHandler(newRequest)
+                    completionHandler: (NSURLRequest!) -> Void) {
+        let newRequest : NSURLRequest? = request
+        //print("willPerformHTTPRedirection");
+        completionHandler(newRequest)
     }
     
     

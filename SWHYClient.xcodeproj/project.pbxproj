@@ -21,6 +21,27 @@
 		A3BA3A9C1ADE299C003025E4 /* DBAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3A9B1ADE299C003025E4 /* DBAdapter.swift */; };
 		A3BA3B111ADE434B003025E4 /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3AFE1ADE434B003025E4 /* SQLiteDB.swift */; };
 		A3BA3B121ADE434B003025E4 /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3AFF1ADE434B003025E4 /* String-Extras.swift */; };
+		A3BA46C51E41FCC300E6EE06 /* AudioDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46B21E41FCC300E6EE06 /* AudioDetail.swift */; };
+		A3BA46C61E41FCC300E6EE06 /* AudioDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BA46B31E41FCC300E6EE06 /* AudioDetail.xib */; };
+		A3BA46C91E41FCC300E6EE06 /* AudioFileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46B61E41FCC300E6EE06 /* AudioFileItem.swift */; };
+		A3BA46CA1E41FCC300E6EE06 /* AudioFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46B71E41FCC300E6EE06 /* AudioFileList.swift */; };
+		A3BA46CB1E41FCC300E6EE06 /* AudioFileList.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BA46B81E41FCC300E6EE06 /* AudioFileList.xib */; };
+		A3BA46CC1E41FCC300E6EE06 /* AudioListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46B91E41FCC300E6EE06 /* AudioListCell.swift */; };
+		A3BA46CD1E41FCC300E6EE06 /* AudioListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BA46BA1E41FCC300E6EE06 /* AudioListCell.xib */; };
+		A3BA46CF1E41FCC300E6EE06 /* AudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46BC1E41FCC300E6EE06 /* AudioRecorder.swift */; };
+		A3BA46D01E41FCC300E6EE06 /* AudioRecorder.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BA46BD1E41FCC300E6EE06 /* AudioRecorder.xib */; };
+		A3BA46D31E41FCC300E6EE06 /* AudioRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46C01E41FCC300E6EE06 /* AudioRecorderViewController.swift */; };
+		A3BA46D41E41FCC300E6EE06 /* AudioRecorderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BA46C11E41FCC300E6EE06 /* AudioRecorderViewController.xib */; };
+		A3BA46D51E41FCC300E6EE06 /* FileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46C21E41FCC300E6EE06 /* FileViewController.swift */; };
+		A3BA46D71E41FDC500E6EE06 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3BA46D61E41FDC500E6EE06 /* AudioKit.framework */; };
+		A3BA46D81E41FDC500E6EE06 /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A3BA46D61E41FDC500E6EE06 /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A3BA46DA1E41FDD800E6EE06 /* lame.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3BA46D91E41FDD800E6EE06 /* lame.framework */; };
+		A3BA46DC1E41FF4300E6EE06 /* DaiFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46DB1E41FF4300E6EE06 /* DaiFileManager.swift */; };
+		A3BA46DE1E42003D00E6EE06 /* NSURL+xattr.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46DD1E42003D00E6EE06 /* NSURL+xattr.swift */; };
+		A3BA46E11E42023200E6EE06 /* SwiftOverlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46E01E42023200E6EE06 /* SwiftOverlays.swift */; };
+		A3BA46E51E42068400E6EE06 /* AudioWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46E41E42068400E6EE06 /* AudioWrapper.m */; };
+		A3BA46E91E42200E00E6EE06 /* MultiPartMime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46E71E42200E00E6EE06 /* MultiPartMime.swift */; };
+		A3BA46EA1E42200E00E6EE06 /* MultiPartPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46E81E42200E00E6EE06 /* MultiPartPart.swift */; };
 		A3BA51481B07F21A00F1800A /* ContactHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA51471B07F21A00F1800A /* ContactHelper.swift */; };
 		A3BA73CE1AFB3A4C002B5C2F /* AccessLogItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA73CD1AFB3A4C002B5C2F /* AccessLogItem.swift */; };
 		A3BA73D31AFB3F82002B5C2F /* Loger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA73D21AFB3F82002B5C2F /* Loger.swift */; };
@@ -139,6 +160,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				A3BA46D81E41FDC500E6EE06 /* AudioKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,6 +197,27 @@
 		A3BA3AFD1ADE434B003025E4 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A3BA3AFE1ADE434B003025E4 /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
 		A3BA3AFF1ADE434B003025E4 /* String-Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extras.swift"; sourceTree = "<group>"; };
+		A3BA46B21E41FCC300E6EE06 /* AudioDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioDetail.swift; sourceTree = "<group>"; };
+		A3BA46B31E41FCC300E6EE06 /* AudioDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioDetail.xib; sourceTree = "<group>"; };
+		A3BA46B61E41FCC300E6EE06 /* AudioFileItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFileItem.swift; sourceTree = "<group>"; };
+		A3BA46B71E41FCC300E6EE06 /* AudioFileList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFileList.swift; sourceTree = "<group>"; };
+		A3BA46B81E41FCC300E6EE06 /* AudioFileList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioFileList.xib; sourceTree = "<group>"; };
+		A3BA46B91E41FCC300E6EE06 /* AudioListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioListCell.swift; sourceTree = "<group>"; };
+		A3BA46BA1E41FCC300E6EE06 /* AudioListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioListCell.xib; sourceTree = "<group>"; };
+		A3BA46BC1E41FCC300E6EE06 /* AudioRecorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
+		A3BA46BD1E41FCC300E6EE06 /* AudioRecorder.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioRecorder.xib; sourceTree = "<group>"; };
+		A3BA46C01E41FCC300E6EE06 /* AudioRecorderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioRecorderViewController.swift; sourceTree = "<group>"; };
+		A3BA46C11E41FCC300E6EE06 /* AudioRecorderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioRecorderViewController.xib; sourceTree = "<group>"; };
+		A3BA46C21E41FCC300E6EE06 /* FileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileViewController.swift; sourceTree = "<group>"; };
+		A3BA46D61E41FDC500E6EE06 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = framework/AudioKit.framework; sourceTree = "<group>"; };
+		A3BA46D91E41FDD800E6EE06 /* lame.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lame.framework; path = framework/lame.framework; sourceTree = "<group>"; };
+		A3BA46DB1E41FF4300E6EE06 /* DaiFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaiFileManager.swift; sourceTree = "<group>"; };
+		A3BA46DD1E42003D00E6EE06 /* NSURL+xattr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+xattr.swift"; sourceTree = "<group>"; };
+		A3BA46E01E42023200E6EE06 /* SwiftOverlays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftOverlays.swift; sourceTree = "<group>"; };
+		A3BA46E31E42068400E6EE06 /* AudioWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioWrapper.h; sourceTree = "<group>"; };
+		A3BA46E41E42068400E6EE06 /* AudioWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioWrapper.m; sourceTree = "<group>"; };
+		A3BA46E71E42200E00E6EE06 /* MultiPartMime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPartMime.swift; sourceTree = "<group>"; };
+		A3BA46E81E42200E00E6EE06 /* MultiPartPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiPartPart.swift; sourceTree = "<group>"; };
 		A3BA51471B07F21A00F1800A /* ContactHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactHelper.swift; sourceTree = "<group>"; };
 		A3BA73CD1AFB3A4C002B5C2F /* AccessLogItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessLogItem.swift; sourceTree = "<group>"; };
 		A3BA73D21AFB3F82002B5C2F /* Loger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loger.swift; sourceTree = "<group>"; };
@@ -284,6 +327,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3BA46DA1E41FDD800E6EE06 /* lame.framework in Frameworks */,
+				A3BA46D71E41FDC500E6EE06 /* AudioKit.framework in Frameworks */,
 				A3F7A9971BDB9EC500923D23 /* Security.framework in Frameworks */,
 				A3D2D88F1BB80BB3002491ED /* libsqlite3.tbd in Frameworks */,
 			);
@@ -302,6 +347,7 @@
 		A3BA012A1B09B9D900EA1448 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				A3BA46DF1E42023200E6EE06 /* SwiftOverlays */,
 				A3BF778E1B270D3C009EBD5A /* MaterialKit */,
 				A3BA012D1B09BA1800EA1448 /* AIFlatSwitch.swift */,
 			);
@@ -336,6 +382,52 @@
 				A3BA3AFF1ADE434B003025E4 /* String-Extras.swift */,
 			);
 			path = SQLiteDB;
+			sourceTree = "<group>";
+		};
+		A3BA46AF1E41FCC300E6EE06 /* AudioRecord */ = {
+			isa = PBXGroup;
+			children = (
+				A3BA46B21E41FCC300E6EE06 /* AudioDetail.swift */,
+				A3BA46B31E41FCC300E6EE06 /* AudioDetail.xib */,
+				A3BA46B61E41FCC300E6EE06 /* AudioFileItem.swift */,
+				A3BA46B71E41FCC300E6EE06 /* AudioFileList.swift */,
+				A3BA46B81E41FCC300E6EE06 /* AudioFileList.xib */,
+				A3BA46B91E41FCC300E6EE06 /* AudioListCell.swift */,
+				A3BA46BA1E41FCC300E6EE06 /* AudioListCell.xib */,
+				A3BA46BC1E41FCC300E6EE06 /* AudioRecorder.swift */,
+				A3BA46BD1E41FCC300E6EE06 /* AudioRecorder.xib */,
+				A3BA46C01E41FCC300E6EE06 /* AudioRecorderViewController.swift */,
+				A3BA46C11E41FCC300E6EE06 /* AudioRecorderViewController.xib */,
+				A3BA46C21E41FCC300E6EE06 /* FileViewController.swift */,
+			);
+			path = AudioRecord;
+			sourceTree = "<group>";
+		};
+		A3BA46DF1E42023200E6EE06 /* SwiftOverlays */ = {
+			isa = PBXGroup;
+			children = (
+				A3BA46E01E42023200E6EE06 /* SwiftOverlays.swift */,
+			);
+			path = SwiftOverlays;
+			sourceTree = "<group>";
+		};
+		A3BA46E21E42068400E6EE06 /* OC */ = {
+			isa = PBXGroup;
+			children = (
+				A3BA46E31E42068400E6EE06 /* AudioWrapper.h */,
+				A3BA46E41E42068400E6EE06 /* AudioWrapper.m */,
+			);
+			name = OC;
+			path = SWHYClient/Util/OC;
+			sourceTree = SOURCE_ROOT;
+		};
+		A3BA46E61E42200E00E6EE06 /* MultiPartMime */ = {
+			isa = PBXGroup;
+			children = (
+				A3BA46E71E42200E00E6EE06 /* MultiPartMime.swift */,
+				A3BA46E81E42200E00E6EE06 /* MultiPartPart.swift */,
+			);
+			path = MultiPartMime;
 			sourceTree = "<group>";
 		};
 		A3BA73CA1AFB2B0D002B5C2F /* Loger */ = {
@@ -473,6 +565,8 @@
 		A3C73AF71ABDEF96002C299D = {
 			isa = PBXGroup;
 			children = (
+				A3BA46D91E41FDD800E6EE06 /* lame.framework */,
+				A3BA46D61E41FDC500E6EE06 /* AudioKit.framework */,
 				A3E8BA3A1CC2D63800B79E27 /* CoreDataModel.xcdatamodeld */,
 				A3E73D2B1BDBC13B00E10C29 /* KeychainAccessGroups.plist */,
 				A3F7A9961BDB9EC500923D23 /* Security.framework */,
@@ -497,6 +591,7 @@
 		A3C73B021ABDEF96002C299D /* SWHYClient */ = {
 			isa = PBXGroup;
 			children = (
+				A3BA46AF1E41FCC300E6EE06 /* AudioRecord */,
 				A3BA012A1B09B9D900EA1448 /* UIKit */,
 				A3BDBDBB1B045E5D0085DFF1 /* Setting */,
 				A3BA73CA1AFB2B0D002B5C2F /* Loger */,
@@ -551,6 +646,8 @@
 			children = (
 				A3F7A9A91BDBA16600923D23 /* SwiftKeychain */,
 				A3D2D8171BB7D5F7002491ED /* Haneke */,
+				A3BA46E61E42200E00E6EE06 /* MultiPartMime */,
+				A3BA46E21E42068400E6EE06 /* OC */,
 				A3C325441B288A26000953C8 /* Swift-JSON */,
 				A3C0000A1B1C957E0050EBCE /* SMSegmentView */,
 				A3BA51471B07F21A00F1800A /* ContactHelper.swift */,
@@ -562,6 +659,8 @@
 				A3BD365D1AD7944700B59399 /* Message.swift */,
 				A3BA3AC41ADE3B5B003025E4 /* BridgeHeader.h */,
 				A3BA3A9B1ADE299C003025E4 /* DBAdapter.swift */,
+				A3BA46DB1E41FF4300E6EE06 /* DaiFileManager.swift */,
+				A3BA46DD1E42003D00E6EE06 /* NSURL+xattr.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -730,6 +829,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3BA46C61E41FCC300E6EE06 /* AudioDetail.xib in Resources */,
 				A3D2D8AF1BB830E6002491ED /* Images.xcassets in Resources */,
 				A3D2D8AE1BB827FB002491ED /* data.db in Resources */,
 				A3D2D8AC1BB81B47002491ED /* Main.storyboard in Resources */,
@@ -741,13 +841,17 @@
 				A3D2D8A71BB810E6002491ED /* CustomerAddressDetail.xib in Resources */,
 				A3D2D8A81BB810E6002491ED /* LoginViewController.xib in Resources */,
 				A3D2D8A91BB810E6002491ED /* MainMenuItem.xib in Resources */,
+				A3BA46D01E41FCC300E6EE06 /* AudioRecorder.xib in Resources */,
 				A3D2D8AA1BB810E6002491ED /* MainViewController.xib in Resources */,
 				A3D2D8AB1BB810E6002491ED /* WebViewController.xib in Resources */,
 				A3D2D8A11BB81080002491ED /* InnerAddressBookCell.xib in Resources */,
+				A3BA46CB1E41FCC300E6EE06 /* AudioFileList.xib in Resources */,
+				A3BA46D41E41FCC300E6EE06 /* AudioRecorderViewController.xib in Resources */,
 				A3D2D8A01BB81071002491ED /* InnerAddressBook.xib in Resources */,
 				A3D2D8981BB8104D002491ED /* MKButton.swift in Resources */,
 				A3D2D8991BB8104D002491ED /* MKColor.swift in Resources */,
 				A3D2D89A1BB8104E002491ED /* MKImageView.swift in Resources */,
+				A3BA46CD1E41FCC300E6EE06 /* AudioListCell.xib in Resources */,
 				A3D2D89B1BB8104E002491ED /* MKLabel.swift in Resources */,
 				A3D2D89C1BB8104E002491ED /* MKLayer.swift in Resources */,
 				A3D2D89D1BB8104E002491ED /* MKTableViewCell.swift in Resources */,
@@ -777,6 +881,7 @@
 				A3D2D8901BB80DFA002491ED /* MKButton.swift in Sources */,
 				A3D2D8911BB80DFA002491ED /* MKColor.swift in Sources */,
 				A3D2D8921BB80DFA002491ED /* MKImageView.swift in Sources */,
+				A3BA46DC1E41FF4300E6EE06 /* DaiFileManager.swift in Sources */,
 				A3D2D8931BB80DFA002491ED /* MKLabel.swift in Sources */,
 				A3D2D8941BB80DFA002491ED /* MKLayer.swift in Sources */,
 				A3D2D8951BB80DFA002491ED /* MKTableViewCell.swift in Sources */,
@@ -796,6 +901,7 @@
 				A3BA8A691AC1508900CDDE05 /* InnerAddressBook.swift in Sources */,
 				A3D2D83E1BB7D5F7002491ED /* UIImage+Haneke.swift in Sources */,
 				A3BDBDCF1B0462AB0085DFF1 /* StringExtension.swift in Sources */,
+				A3BA46E11E42023200E6EE06 /* SwiftOverlays.swift in Sources */,
 				A3BE90791AD4FD5300D3630B /* Util.swift in Sources */,
 				A3D2D8301BB7D5F7002491ED /* Data.swift in Sources */,
 				A3BDBDC91B0461980085DFF1 /* UIImageViewController.swift in Sources */,
@@ -810,6 +916,9 @@
 				A3D2D8361BB7D5F7002491ED /* Haneke.swift in Sources */,
 				A3D2D8341BB7D5F7002491ED /* Fetcher.swift in Sources */,
 				A3D2D8401BB7D5F7002491ED /* UIView+Haneke.swift in Sources */,
+				A3BA46C91E41FCC300E6EE06 /* AudioFileItem.swift in Sources */,
+				A3BA46E51E42068400E6EE06 /* AudioWrapper.m in Sources */,
+				A3BA46D51E41FCC300E6EE06 /* FileViewController.swift in Sources */,
 				A3D2D83A1BB7D5F7002491ED /* NSFileManager+Haneke.swift in Sources */,
 				A3BA34921B16DEC5002C08C5 /* CustomerAddressItem.swift in Sources */,
 				A3BA348E1B16DC95002C08C5 /* CustomerAddressBook.swift in Sources */,
@@ -824,22 +933,27 @@
 				A3C73B2B1ABDEFD5002C299D /* Config.swift in Sources */,
 				A3C73B3E1ABDF00D002C299D /* MainViewController.swift in Sources */,
 				A3C73B061ABDEF96002C299D /* AppDelegate.swift in Sources */,
+				A3BA46CC1E41FCC300E6EE06 /* AudioListCell.swift in Sources */,
 				A3C0000C1B1C95AD0050EBCE /* SMSegment.swift in Sources */,
 				A3BA8A171AC11A1200CDDE05 /* SWXMLHash.swift in Sources */,
 				A3D2D82F1BB7D5F7002491ED /* CryptoSwiftMD5.swift in Sources */,
+				A3BA46EA1E42200E00E6EE06 /* MultiPartPart.swift in Sources */,
 				A3B91B9A1AC2895900DC3D5A /* InnerAddressBookCell.swift in Sources */,
 				A3BDBDC71B0460FA0085DFF1 /* UIViewControllerExtension.swift in Sources */,
 				A3D2D82D1BB7D5F7002491ED /* Cache.swift in Sources */,
 				A3BDBDCD1B04625D0085DFF1 /* UITableViewExtension.swift in Sources */,
+				A3BA46D31E41FCC300E6EE06 /* AudioRecorderViewController.swift in Sources */,
 				A3D2D82E1BB7D5F7002491ED /* CGSize+Swift.swift in Sources */,
 				A3D2D8351BB7D5F7002491ED /* Format.swift in Sources */,
 				A3BA012E1B09BA1800EA1448 /* AIFlatSwitch.swift in Sources */,
 				A3C325461B288A3C000953C8 /* Json.swift in Sources */,
 				A3BA34961B16E81F002C08C5 /* CustomerSectionInfo.swift in Sources */,
 				A3D2D83B1BB7D5F7002491ED /* NSHTTPURLResponse+Haneke.swift in Sources */,
+				A3BA46CF1E41FCC300E6EE06 /* AudioRecorder.swift in Sources */,
 				A3F7A9D31BDBA61100923D23 /* KeychainService.swift in Sources */,
 				A3D2D8331BB7D5F7002491ED /* Fetch.swift in Sources */,
 				A3BC9A651ACE6CC60047F5C1 /* SectionInfo.swift in Sources */,
+				A3BA46C51E41FCC300E6EE06 /* AudioDetail.swift in Sources */,
 				A3BA3B121ADE434B003025E4 /* String-Extras.swift in Sources */,
 				A3D2D83C1BB7D5F7002491ED /* String+Haneke.swift in Sources */,
 				A3BC9A5A1ACE64FA0047F5C1 /* InnerAddressDeptItem.swift in Sources */,
@@ -849,11 +963,14 @@
 				A3BD365E1AD7944700B59399 /* Message.swift in Sources */,
 				A3C28C9F1B25CD9A0018F308 /* CustomerAddressDetail.swift in Sources */,
 				A3D2D8321BB7D5F7002491ED /* DiskFetcher.swift in Sources */,
+				A3BA46DE1E42003D00E6EE06 /* NSURL+xattr.swift in Sources */,
 				A3F7A9D71BDBA68800923D23 /* KeychainItem.swift in Sources */,
 				A352DB011B05D3770035B4AF /* SettingViewController.swift in Sources */,
+				A3BA46E91E42200E00E6EE06 /* MultiPartMime.swift in Sources */,
 				A3BA51481B07F21A00F1800A /* ContactHelper.swift in Sources */,
 				A3BDBDC31B04601A0085DFF1 /* NonMemuController.swift in Sources */,
 				A3BDBDB91B045A940085DFF1 /* SlideMenuController.swift in Sources */,
+				A3BA46CA1E41FCC300E6EE06 /* AudioFileList.swift in Sources */,
 				A3C0000E1B1C96130050EBCE /* SMSegmentView.swift in Sources */,
 				A3BAF41D1B19796E00D3EA3C /* CustomerAddressBookCell.swift in Sources */,
 				A3CAA52C1AC9185100600394 /* PKNotification.swift in Sources */,
@@ -991,9 +1108,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Dengyan Information Technology Co., Ltd.";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/framework",
+				);
 				INFOPLIST_FILE = SWHYClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1015,9 +1135,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Dengyan Information Technology Co., Ltd.";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/framework",
+				);
 				INFOPLIST_FILE = SWHYClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
