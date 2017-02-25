@@ -117,15 +117,15 @@ class DBAdapter {
             sql = "REPLACE INTO \(Config.TableName.MainMenuList) (id, itemtext, uri, class, offline, itemimage, showindex, updatetime)"
                 + "VALUES ('\(item.id)', '\(item.name)', '\(item.uri)', '\(item.classname)', '\(item.offline)', '\(item.itemimage)', \(index),'\(updatetime)')"
             sqlresult = self.db.execute(sql, parameters: nil)
-            //println("----Insert \(item.name) -------- status = \(sqlresult)---------")
+            print("----Insert \(item.name) -------- status = \(sqlresult)---------")
             
             result += (sqlresult == 0 ? 0 : 1)
         }
         
         sql = "DELETE FROM \(Config.TableName.MainMenuList) WHERE updatetime <> '\(updatetime)'"
         sqlresult = self.db.execute(sql, parameters: nil)
-        
-        //println("-- syncMainMenuList count = \(sqlresult)------------------")
+    
+        print("-- syncMainMenuList count = \(result)------------------")
         return result
     }
     
@@ -141,6 +141,7 @@ class DBAdapter {
                 let mainMenuItemBO:MainMenuItemBO = MainMenuItemBO()
                 mainMenuItemBO.id = elem["id"]?.asString() ?? ""
                 mainMenuItemBO.name = elem["itemtext"]?.asString() ?? ""
+                print(" query menu name \(mainMenuItemBO.name)")
                 mainMenuItemBO.itemimage = elem["itemimage"]?.asString() ?? ""
                 mainMenuItemBO.classname = elem["class"]?.asString() ?? ""
                 mainMenuItemBO.uri = elem["uri"]?.asString() ?? ""

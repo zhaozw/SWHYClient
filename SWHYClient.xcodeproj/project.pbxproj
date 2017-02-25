@@ -22,7 +22,7 @@
 		A3BA3B111ADE434B003025E4 /* SQLiteDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3AFE1ADE434B003025E4 /* SQLiteDB.swift */; };
 		A3BA3B121ADE434B003025E4 /* String-Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3AFF1ADE434B003025E4 /* String-Extras.swift */; };
 		A3BA46C51E41FCC300E6EE06 /* AudioDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46B21E41FCC300E6EE06 /* AudioDetail.swift */; };
-		A3BA46C61E41FCC300E6EE06 /* AudioDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BA46B31E41FCC300E6EE06 /* AudioDetail.xib */; };
+		A3BA46C61E41FCC300E6EE06 /* AudioDetail_bak.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BA46B31E41FCC300E6EE06 /* AudioDetail_bak.xib */; };
 		A3BA46C91E41FCC300E6EE06 /* AudioFileItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46B61E41FCC300E6EE06 /* AudioFileItem.swift */; };
 		A3BA46CA1E41FCC300E6EE06 /* AudioFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA46B71E41FCC300E6EE06 /* AudioFileList.swift */; };
 		A3BA46CB1E41FCC300E6EE06 /* AudioFileList.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3BA46B81E41FCC300E6EE06 /* AudioFileList.xib */; };
@@ -82,6 +82,7 @@
 		A3C73B3E1ABDF00D002C299D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C73B341ABDF00D002C299D /* MainViewController.swift */; };
 		A3C73B3F1ABDF00D002C299D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C73B371ABDF00D002C299D /* WebViewController.swift */; };
 		A3CAA52C1AC9185100600394 /* PKNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CAA52B1AC9185100600394 /* PKNotification.swift */; };
+		A3CF537C1E431ACC00EAE2EF /* AudioDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3CF537B1E431ACC00EAE2EF /* AudioDetail.xib */; };
 		A3D2D82D1BB7D5F7002491ED /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D8181BB7D5F7002491ED /* Cache.swift */; };
 		A3D2D82E1BB7D5F7002491ED /* CGSize+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D8191BB7D5F7002491ED /* CGSize+Swift.swift */; };
 		A3D2D82F1BB7D5F7002491ED /* CryptoSwiftMD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D2D81A1BB7D5F7002491ED /* CryptoSwiftMD5.swift */; };
@@ -198,7 +199,7 @@
 		A3BA3AFE1ADE434B003025E4 /* SQLiteDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLiteDB.swift; sourceTree = "<group>"; };
 		A3BA3AFF1ADE434B003025E4 /* String-Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String-Extras.swift"; sourceTree = "<group>"; };
 		A3BA46B21E41FCC300E6EE06 /* AudioDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioDetail.swift; sourceTree = "<group>"; };
-		A3BA46B31E41FCC300E6EE06 /* AudioDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioDetail.xib; sourceTree = "<group>"; };
+		A3BA46B31E41FCC300E6EE06 /* AudioDetail_bak.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioDetail_bak.xib; sourceTree = "<group>"; };
 		A3BA46B61E41FCC300E6EE06 /* AudioFileItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFileItem.swift; sourceTree = "<group>"; };
 		A3BA46B71E41FCC300E6EE06 /* AudioFileList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFileList.swift; sourceTree = "<group>"; };
 		A3BA46B81E41FCC300E6EE06 /* AudioFileList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioFileList.xib; sourceTree = "<group>"; };
@@ -282,6 +283,7 @@
 		A3C7856F1ACD1B1400428160 /* back.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = back.xib; sourceTree = "<group>"; };
 		A3CAA52B1AC9185100600394 /* PKNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKNotification.swift; sourceTree = "<group>"; };
 		A3CD08501ABFAB1000020495 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		A3CF537B1E431ACC00EAE2EF /* AudioDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioDetail.xib; sourceTree = "<group>"; };
 		A3D2D8181BB7D5F7002491ED /* Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		A3D2D8191BB7D5F7002491ED /* CGSize+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGSize+Swift.swift"; sourceTree = "<group>"; };
 		A3D2D81A1BB7D5F7002491ED /* CryptoSwiftMD5.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CryptoSwiftMD5.swift; sourceTree = "<group>"; };
@@ -387,8 +389,9 @@
 		A3BA46AF1E41FCC300E6EE06 /* AudioRecord */ = {
 			isa = PBXGroup;
 			children = (
+				A3CF537B1E431ACC00EAE2EF /* AudioDetail.xib */,
 				A3BA46B21E41FCC300E6EE06 /* AudioDetail.swift */,
-				A3BA46B31E41FCC300E6EE06 /* AudioDetail.xib */,
+				A3BA46B31E41FCC300E6EE06 /* AudioDetail_bak.xib */,
 				A3BA46B61E41FCC300E6EE06 /* AudioFileItem.swift */,
 				A3BA46B71E41FCC300E6EE06 /* AudioFileList.swift */,
 				A3BA46B81E41FCC300E6EE06 /* AudioFileList.xib */,
@@ -829,11 +832,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3BA46C61E41FCC300E6EE06 /* AudioDetail.xib in Resources */,
+				A3BA46C61E41FCC300E6EE06 /* AudioDetail_bak.xib in Resources */,
 				A3D2D8AF1BB830E6002491ED /* Images.xcassets in Resources */,
 				A3D2D8AE1BB827FB002491ED /* data.db in Resources */,
 				A3D2D8AC1BB81B47002491ED /* Main.storyboard in Resources */,
 				A3D2D8A21BB810E6002491ED /* InnerAddressBookHeader.xib in Resources */,
+				A3CF537C1E431ACC00EAE2EF /* AudioDetail.xib in Resources */,
 				A3D2D8A31BB810E6002491ED /* InnerAddressDetail.xib in Resources */,
 				A3D2D8A41BB810E6002491ED /* CustomerAddressBook.xib in Resources */,
 				A3D2D8A51BB810E6002491ED /* CustomerAddressBookCell.xib in Resources */,

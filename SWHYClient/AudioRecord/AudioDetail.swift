@@ -471,6 +471,7 @@ class AudioDetail: UIViewController,UITextFieldDelegate,UITextViewDelegate,AVAud
                 let auth = DaiFileManager.document["/Audio/"+self.audioFileName].getAttr("C_Auth")
                 let audiourl = DaiFileManager.document["/Audio/"+self.audioFileName].getAttr("C_URL")
                 let authorid = Message.shared.EmployeeId!
+                //let authorid = "00190"
                 
                 print(auth)
                 var authkey:String = ""

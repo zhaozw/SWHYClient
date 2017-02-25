@@ -47,6 +47,10 @@ class MainViewController: UIViewController{
         
         self.margin = (Util.getScreen().width - col*viewW) / (col+1)
 
+        Message.shared.EmployeeId = (NSUserDefaults.standardUserDefaults().objectForKey("EmployeeId") as? String)
+        print("Message EmployeeID = \(Message.shared.EmployeeId)")
+
+        
         //用于更新后台SQL及缓存
         if Message.shared.loginType == "Online"{
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.GetMainMenu, object: nil)
@@ -56,6 +60,10 @@ class MainViewController: UIViewController{
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.GetParameter_CallDuration, object: nil)
             NetworkEngine.sharedInstance.addRequestWithUrlString(Config.URL.GetParameter_CallDuration, tag: Config.RequestTag.GetParameter_CallDuration,useCache:false)
             
+            //取得工号
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "HandleNetworkResult:", name: Config.RequestTag.GetPersonInfoByAD, object: nil)
+            NetworkEngine.sharedInstance.addRequestWithUrlString(Config.URL.GetPersonInfoByAD + Message.shared.postUserName, tag: Config.RequestTag.GetPersonInfoByAD,useCache:false)
+
             
             //从SQL里取得表信息并加载
             if let data:NSMutableArray = DBAdapter.shared.queryMainMenuList("'1'=?", paralist: ["1"]) {
@@ -109,6 +117,7 @@ class MainViewController: UIViewController{
                 print("======================load view from sql=================")
                 loadView(self.arrMutiData)
             }
+             Message.shared.EmployeeId = (NSUserDefaults.standardUserDefaults().objectForKey("EmployeeId") as? String)
         }
         
         
@@ -158,6 +167,11 @@ class MainViewController: UIViewController{
             else if result.tag == Config.RequestTag.GetParameter_CallDuration {
                 
                 NSUserDefaults.standardUserDefaults().setObject(result.userinfo, forKey: "CallDuration")
+            }
+            else if result.tag == Config.RequestTag.GetPersonInfoByAD {
+                
+                NSUserDefaults.standardUserDefaults().setObject(result.userinfo, forKey: "EmployeeId")
+                Message.shared.EmployeeId = result.userinfo as! String
             }
         }
         

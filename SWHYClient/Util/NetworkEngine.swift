@@ -53,7 +53,7 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
         
     }
     //0EB020F9-F3DA-4585-8A24-57212DAEE985
-    func postRequestWithUrlString(url:String,postData:String,tag:String){
+    func postRequestWithUrlString_bak(url:String,postData:String,tag:String){
         
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.setValue("application/text; charset=UTF-8", forHTTPHeaderField: "Content-Type")
@@ -89,6 +89,66 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
         
         
     }
+    
+    func postRequestWithUrlString(url:String,postData:String,tag:String){
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        //let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        
+        request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        //request.setValue("application/text", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/x-www-form-urlencoded;charset=utf-8", forHTTPHeaderField: "Content-Type")
+        
+        
+        print(postData)
+        
+        //let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
+        
+        request.HTTPBody = postData.dataUsingEncoding(NSUTF8StringEncoding)     
+        //request.HTTPBody = postData.dataUsingEncoding(enc)   
+        request.HTTPMethod = "POST"
+        var result:String = ""
+        
+        let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
+            data, response, error in
+            
+            if let httpResponse = response as? NSHTTPURLResponse {
+                if httpResponse.statusCode != 200 {
+                    print("response was not 200: \(response)")
+                    result =  "Error: \(httpResponse.statusCode)"
+                    self.dispatchResponse(result,tag: tag)
+                }
+            }
+            if (error != nil) {
+                print("Error ====\(error!.localizedDescription) ==code=\(error!.code)")
+                var errmsg = ""
+                if error!.code == -999{
+                    //cancelled  用户名密码验证不通过时，取消请求
+                    errmsg = "用户名或密码错误"
+                }else{
+                    errmsg = "网络连接出错，请检查网络或稍后再试"
+                    print("Error ====\(error!.localizedDescription) ==code=\(error!.code)")
+                }
+                
+                self.success_auth = 0
+                self.alive = false
+                //print("request url host = false  \(request.URL?.host!)")
+                self.serverlist.updateValue(false, forKey: request.URL?.host!  ?? "AnyServer")
+                let result:Result = Result(status: "Error",message:errmsg,userinfo:error!,tag:tag)
+                NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+            }else{
+                // handle the data of the successful response here
+                //let enc = CFStringConvertEncodingToNSStringEncoding(CFStringEncoding(Config.Encoding.GB2312))
+                //let res:String = NSString(data: data!, encoding: enc)! as String
+                
+                let res:String = NSString(data: data!, encoding: NSUTF8StringEncoding)! as String
+                print(" res convert =\(res) tag:\(tag)")
+                self.dispatchResponse(res,tag: tag)    
+            }
+        }
+        task.resume()
+        
+    }
+    
     
     func postLogList(url:String,tag:String){
         
@@ -622,6 +682,58 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
                 result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
                 //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
                 
+            case Config.RequestTag.GetPersonInfoByAD:
+                var userInfo = ""
+                //只能处理 xml encoding utf-8的
+                print(res)
+                let json = JSONClass(string:res)
+                userInfo = json["JSON"][0]["value"].asString  ?? "++"
+                result = Result(status: "OK",message:"",userinfo:userInfo,tag:tag)
+                //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                
+            case Config.RequestTag.PostUploadAudioFile:
+                //println("dispatch \(res)  \(tag)")
+                if res.componentsSeparatedByString("Error").count > 1{
+                    //println("========postnotification =====\(res)")
+                    result = Result(status: "Error",message:res,userinfo:NSObject(),tag:tag)
+                    //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                }else{
+                    //println("========postnotification =====\(res)  \(tag)")
+                    result = Result(status: "OK",message:res,userinfo:NSObject(),tag:tag)
+                    //NSNotificationCenter.defaultCenter().postNotificationName(tag, object: result)
+                }
+                
+            case Config.RequestTag.GetWeiXinToken:
+                print("dispatch \(res)  \(tag)")
+                
+                if res.componentsSeparatedByString("errcode").count > 1{
+                    result = Result(status: "Error",message:res,userinfo:NSObject(),tag:tag)
+                }else{
+                    let json = JSONClass(string:res.stringByReplacingOccurrencesOfString("\'", withString: "\"", options: NSStringCompareOptions.LiteralSearch, range: nil))
+                    //print(json.toString())
+                    //print(json["token"].asString)
+                    result = Result(status: "OK",message:json["token"].asString!,userinfo:NSObject(),tag:tag)
+                }
+                
+                
+            case Config.RequestTag.PostAudioTopic:
+                //{'errcode':0,'reportid':'12345678'}  成功样例
+                //   [{'errcode':40015,'errmsg':'invalid token'}] 失败样例
+                //let string1 = "'errcode':0,'reportid':'12345678'}"
+                var userInfo = ""
+                
+                let json = JSONClass(string:res.stringByReplacingOccurrencesOfString("\'", withString: "\"", options: NSStringCompareOptions.LiteralSearch, range: nil))
+                //print(json)
+                if res.containsString("reportid") {
+                    
+                    userInfo = json[0]["reportid"].asString ?? ""
+                    //print(userInfo)
+                    result = Result(status: "OK",message:"发布音频成功",userinfo:userInfo,tag:tag)
+                }else{
+                    userInfo = json[0]["errmsg"].asString ?? ""
+                    result = Result(status: "Error",message:"发布音频失败",userinfo:userInfo,tag:tag)
+                }
+                
                 
             default:
                 return        
@@ -690,16 +802,16 @@ class NetworkEngine:NSObject, NSURLSessionDelegate {
             print("challenge host= \(self.serverlist[challenge.protectionSpace.host])")
             //if self.alive == false {
             if self.serverlist[challenge.protectionSpace.host] != true {
-                //if success_auth == 0 {
-                //print("send credential NTLM with user credential \(String(success_auth))")
-                let defaultCredentials: NSURLCredential = NSURLCredential(user: Config.Net.Domain+"\\"+username, password: password, persistence:NSURLCredentialPersistence.ForSession)
-                completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,defaultCredentials)
-                success_auth = success_auth + 1  
-                //} else
-                //{
-                //    println("Cancel Challenge \(String(success_auth))")
-                //    completionHandler(NSURLSessionAuthChallengeDisposition.CancelAuthenticationChallenge,nil)
-                //}
+                if success_auth == 0 {
+                    print("send credential NTLM with user credential \(String(success_auth))")
+                    let defaultCredentials: NSURLCredential = NSURLCredential(user: Config.Net.Domain+"\\"+username, password: password, persistence:NSURLCredentialPersistence.ForSession)
+                    completionHandler(NSURLSessionAuthChallengeDisposition.UseCredential,defaultCredentials)
+                    success_auth = success_auth + 1  
+                } else
+                {
+                    print("Cancel Challenge \(String(success_auth))")
+                    completionHandler(NSURLSessionAuthChallengeDisposition.CancelAuthenticationChallenge,nil)
+                }
             }else{
                 print("Challenge Credential Default alive \(String(success_auth))")
                 completionHandler(NSURLSessionAuthChallengeDisposition.PerformDefaultHandling,nil)

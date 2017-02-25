@@ -6,7 +6,7 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioRecorderChildViewController" customModule="SWHYClient_DEV" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioRecorderChildViewController" customModule="SWHYClient" customModuleProvider="target">
             <connections>
                 <outlet property="playButton" destination="FPS-8C-jV2" id="IT0-aY-edU"/>
                 <outlet property="recordButton" destination="O7T-HS-1S2" id="OaP-Ol-WRl"/>

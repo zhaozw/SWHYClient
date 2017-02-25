@@ -57,12 +57,12 @@ class Config{
         
         static let GetParameter_CallDuration = "http://swin.swsresearch.mobi/Mobile/mobileInterface.nsf/ag_getparameter?Openagent&key=IOS-Call-Duration-Default"
         
-        static let PostUploadAudioFile = "http://audio.swsresearch.mobi/audio/uploadhandler.ashx"
-        
+        static let PostUploadAudioFile = "http://media.swsresearch.mobi/audio/uploadhandler.ashx"
+        static let AudioBaseURL = "http://media.swsresearch.mobi/audio/audiofile/"
         
         static let GetWeiXinToken = "http://202.109.73.185/swhyweixin/gettoken.ashx?appid=swhyapp&secret=weiwei"
         static let PostAudioTopic = "http://202.109.73.185/swhyweixin/gentopic.ashx?token="
-        static let AudioBaseURL = "http://audio.swsresearch.mobi/audio/audiofile/"
+        
         static let ViewWeiXinReport = "http://wxweb.swsresearch.com/report/getDetailReportInfo.do?reportType=2&reportId="
         
         static let GetPersonInfoByAD = "http://swin.swsresearch.mobi/Portal/SysBase/SysUserInfo.nsf/ag_getPersonInfoByAD?openagent&ReturnField=txtEmployeeID&AD="
