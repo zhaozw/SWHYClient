@@ -58,8 +58,6 @@ import AudioKit
     var but1:UIButton!
     var but2:UIButton!
     var but3:UIButton!
-    var but4:UIButton!
-    var but5:UIButton!
     var butlist:[UIButton]!
     
     
@@ -322,6 +320,9 @@ import AudioKit
         
         let labelView:UIView = UIView()
         labelView.userInteractionEnabled=true
+        labelView.frame = CGRectMake(5 , 0, 240, 25)
+        //labelView.backgroundColor = UIColor.purpleColor() 
+
         
         /*
          var label1:UILabel!
@@ -338,73 +339,57 @@ import AudioKit
          label1.addGestureRecognizer(tap)
          */
         
-        //var but1:UIButton!
         but1 = UIButton.init()
-        but1.frame = CGRectMake(0 , 5, 30, 20) 
-        but1.backgroundColor = UIColor.redColor() 
+        but1.frame = CGRectMake(0 , 5, 70, 20)
+        but1.selected = true
+        but1.setBackgroundImage(UIImage(named: "btn_grey"), forState: UIControlState.Normal)
+        but1.setBackgroundImage(UIImage(named: "btn_light"), forState: UIControlState.Selected)
+        //but1.setBackgroundImage(UIImage(named: "btn_light"), forState: UIControlState.Highlighted | UIControlState.Selected)
+        //but1.backgroundColor = UIColor.redColor() 
         but1.setTitle("公开", forState:UIControlState.Normal)
         but1.titleLabel!.font = UIFont.systemFontOfSize(13) 
         but1.layer.cornerRadius = 4
-        but1.layer.borderColor = UIColor.lightGrayColor().CGColor  
+        //but1.layer.borderColor = UIColor.lightGrayColor().CGColor  
         but1.layer.borderWidth = 0
         
-        but1.addTarget(self, action: "clickbtn:", forControlEvents: UIControlEvents.TouchUpInside)
+        but1.addTarget(self, action: "clickbtn:", forControlEvents: UIControlEvents.TouchDown)
         labelView.addSubview(but1)
         
         
-        //var but2:UIButton!
+        
         but2 = UIButton.init()
-        but2.frame = CGRectMake(35 , 5, 45, 20) 
-        but2.backgroundColor = UIColor.redColor()
-        but2.setTitle("研究所", forState:UIControlState.Normal)
+        but2.frame = CGRectMake(80 , 5, 70, 20) 
+        but2.selected = true
+        but2.setBackgroundImage(UIImage(named: "btn_grey"), forState: UIControlState.Normal)
+        but2.setBackgroundImage(UIImage(named: "btn_light"), forState: UIControlState.Selected)
+        //but2.backgroundColor = UIColor.redColor()
+        but2.setTitle("机构客户", forState:UIControlState.Normal)
         but2.titleLabel!.font = UIFont.systemFontOfSize(13) 
         but2.layer.cornerRadius = 4
-        but2.layer.borderColor = UIColor.lightGrayColor().CGColor  
+        //but2.layer.borderColor = UIColor.lightGrayColor().CGColor  
         but2.layer.borderWidth = 0
         but2.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         but2.addTarget(self, action: "clickbtn:", forControlEvents: UIControlEvents.TouchUpInside)
         labelView.addSubview(but2)
         
-        //var but3:UIButton!
+        
         but3 = UIButton.init()
-        but3.frame = CGRectMake(85 , 5, 55, 20) 
-        but3.backgroundColor = UIColor.redColor() 
-        but3.setTitle("机构客户", forState:UIControlState.Normal)
+        but3.frame = CGRectMake(160 , 5, 70, 20) 
+        but3.selected = true
+        but3.setBackgroundImage(UIImage(named: "btn_grey"), forState: UIControlState.Normal)
+        but3.setBackgroundImage(UIImage(named: "btn_light"), forState: UIControlState.Selected)        
+        //but3.backgroundColor = UIColor.redColor() 
+        but3.setTitle("投顾", forState:UIControlState.Normal)
         but3.titleLabel!.font = UIFont.systemFontOfSize(13) 
         but3.layer.cornerRadius = 4
-        but3.layer.borderColor = UIColor.lightGrayColor().CGColor  
+        //but3.layer.borderColor = UIColor.lightGrayColor().CGColor  
         but3.layer.borderWidth = 0
         but3.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         but3.addTarget(self, action: "clickbtn:", forControlEvents: UIControlEvents.TouchUpInside)
         labelView.addSubview(but3)
         
-        //var but4:UIButton!
-        but4 = UIButton.init()
-        but4.frame = CGRectMake(145 , 5, 35, 20) 
-        but4.backgroundColor = UIColor.redColor() 
-        but4.setTitle("投顾", forState:UIControlState.Normal)
-        but4.titleLabel!.font = UIFont.systemFontOfSize(13)
-        but4.layer.cornerRadius = 4
-        but4.layer.borderColor = UIColor.lightGrayColor().CGColor  
-        but4.layer.borderWidth = 0
-        but4.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        but4.addTarget(self, action: "clickbtn:", forControlEvents: UIControlEvents.TouchUpInside)
-        labelView.addSubview(but4)
         
-        //var but5:UIButton!
-        but5 = UIButton.init()
-        but5.frame = CGRectMake(185 , 5, 55, 20) 
-        but5.backgroundColor = UIColor.redColor()
-        but5.setTitle("认证客户", forState:UIControlState.Normal)
-        but5.titleLabel!.font = UIFont.systemFontOfSize(13) 
-        but5.layer.cornerRadius = 4
-        but5.layer.borderColor = UIColor.lightGrayColor().CGColor  
-        but5.layer.borderWidth = 0
-        but5.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        but5.addTarget(self, action: "clickbtn:", forControlEvents: UIControlEvents.TouchUpInside)
-        labelView.addSubview(but5)
-        
-        butlist = [but1,but2,but3,but4,but5]
+        butlist = [but1,but2,but3]
         print(butlist.count)
         
         let btnOK:PKButton = PKButton(title: "发布",
@@ -423,7 +408,7 @@ import AudioKit
                                         
                                         var authtext:String = ""
                                         for item1 in self.butlist {     
-                                            if(item1.backgroundColor != nil){
+                                            if(item1.selected == true){
                                                 authtext = authtext + item1.currentTitle! + ","
                                             }
                                         }
@@ -456,7 +441,7 @@ import AudioKit
                                             
                                             var authtext:String = ""
                                             for item1 in self.butlist {     
-                                                if(item1.backgroundColor != nil){
+                                                if(item1.selected == true){
                                                     authtext = authtext + item1.currentTitle! + ","
                                                 }
                                             }
@@ -580,11 +565,11 @@ import AudioKit
                 if auth.componentsSeparatedByString("公开").count > 1 { 
                     authkey = "1111111111"
                 } else { 
-                    if auth.componentsSeparatedByString("研究所").count > 1 {  
-                        authkey = authkey + "1" 
-                    } else {  
-                        authkey = authkey + "0"
-                    }  
+                    //if auth.componentsSeparatedByString("研究所").count > 1 {  
+                    authkey = authkey + "1"     //研究所为默认权限 ，自动加上
+                    //} else {  
+                    //    authkey = authkey + "0"
+                    //}  
                     if auth.componentsSeparatedByString("机构客户").count > 1 {  
                         authkey = authkey + "1" 
                     } else {  
@@ -595,12 +580,8 @@ import AudioKit
                     } else {  
                         authkey = authkey + "0"
                     }
-                    if auth.componentsSeparatedByString("认证客户").count > 1 {  
-                        authkey = authkey+"1" 
-                    } else {  
-                        authkey = authkey + "0"
-                    }
-                    authkey = authkey + "000000"
+                    
+                    authkey = authkey + "0000000"
                 }
                 print(Message.shared.EmployeeId)
                 print(authkey)
@@ -944,64 +925,31 @@ import AudioKit
     }
     func clickbtn(sender:UIButton)
     {
+        sender.selected = !sender.selected;
         print("点击事件\(sender.currentTitle)")
-        print("背景色\(sender.backgroundColor)")
+        print("state\(sender.state)")
         
         /*
-        if(sender.backgroundColor == nil){
-            sender.backgroundColor = UIColor.redColor()
-            sender.layer.borderWidth = 0
-            sender.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            
-            if(sender.currentTitle != "公开"){
-                but1.backgroundColor = nil
-                but1.layer.borderWidth = 1
-                but1.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-            }
-            
-        }else{
-            sender.backgroundColor = nil
-            sender.layer.borderWidth = 1
-            sender.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-            
-        }
-        */
-        if(sender.backgroundColor == nil){
-            sender.backgroundColor = UIColor.redColor()
-            sender.layer.borderWidth = 0
-            sender.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            
-            //公开选中时，全选所有按钮
-            if(sender.currentTitle == "公开"){
-                for item1 in self.butlist {     
-                    item1.backgroundColor = UIColor.redColor()
-                    item1.layer.borderWidth = 0
-                    item1.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                } 
-            }
-            
-        }else{
-            sender.backgroundColor = nil
-            sender.layer.borderWidth = 1
-            sender.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-            
-            //公开非选中时，非选所有按钮
-            if(sender.currentTitle == "公开"){
-                for item1 in self.butlist {     
-                    item1.backgroundColor = nil
-                    item1.layer.borderWidth = 1
-                    item1.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-                } 
-            }else{
-                but1.backgroundColor = nil
-                but1.layer.borderWidth = 1
-                but1.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-                
-            }
-            
-        }
-
-        
-        
+         点的是公开 则如果选中，则全部都选中 
+         如果非选中，则全部都非选中
+         
+         点的不是公开  则选中  自己选中
+         非选中   自己和公开都非选中
+         //2017-02-25 取消联动
+         */
+        /*
+         if(sender.currentTitle == "公开"){
+         for item1 in self.butlist {     
+         item1.selected = sender.selected
+         } 
+         }else{
+         if (sender.selected == false){
+         but1.selected = false
+         }
+         
+         }
+         */
     }
+
+    
 }

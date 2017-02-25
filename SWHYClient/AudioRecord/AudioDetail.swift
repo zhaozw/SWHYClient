@@ -29,8 +29,7 @@ class AudioDetail: UIViewController,UITextFieldDelegate,UITextViewDelegate,AVAud
     @IBOutlet weak var btn1: UIButton!
     @IBOutlet weak var btn2: UIButton!
     @IBOutlet weak var btn3: UIButton!
-    @IBOutlet weak var btn4: UIButton!
-    @IBOutlet weak var btn5: UIButton!
+
     
     var butlist:[UIButton]!
     
@@ -152,96 +151,62 @@ class AudioDetail: UIViewController,UITextFieldDelegate,UITextViewDelegate,AVAud
         self.placeholderLabel.textColor = UIColor.lightGrayColor()  
         
         let auth = DaiFileManager.document["/Audio/"+self.audioFileName].getAttr("C_Auth")
-        self.butlist = [btn1,btn2,btn3,btn4,btn5]
+        self.butlist = [btn1,btn2,btn3]
         for but in self.butlist {     
             but.titleLabel!.font = UIFont.systemFontOfSize(14)
-            but.layer.cornerRadius = 4
-            but.layer.borderColor = UIColor.lightGrayColor().CGColor  
-            but.layer.borderWidth = 1
-            but.setTitleColor(UIColor.lightGrayColor(), forState: .Normal) 
+            //but.layer.cornerRadius = 4
+            but.setBackgroundImage(UIImage(named: "btn_grey"), forState: UIControlState.Normal)
+            but.setBackgroundImage(UIImage(named: "btn_light"), forState: UIControlState.Selected)
+            but.layer.borderWidth = 0
+            but.setTitleColor(UIColor.whiteColor(), forState: .Normal) 
             //but.contentEdgeInsets = UIEdgeInsetMake(10, 10, 10, 10)
             but.contentEdgeInsets = UIEdgeInsetsMake(2,2,2,2) 
             but.addTarget(self, action: "clickbtn:", forControlEvents: UIControlEvents.TouchUpInside)
         }
         
         if auth.componentsSeparatedByString("公开").count > 1 { 
-            btn1.backgroundColor = UIColor.redColor()
-            btn1.layer.borderWidth = 0
-            btn1.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        }
-        if auth.componentsSeparatedByString("研究所").count > 1 {  
-            btn2.backgroundColor = UIColor.redColor()
-            btn2.layer.borderWidth = 0
-            btn2.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        } 
+            btn1.selected = true        }
+        
         if auth.componentsSeparatedByString("机构客户").count > 1 {  
-            btn3.backgroundColor = UIColor.redColor()
-            btn3.layer.borderWidth = 0
-            btn3.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            btn2.selected = true
         } 
         if auth.componentsSeparatedByString("投顾").count > 1 {  
-            btn4.backgroundColor = UIColor.redColor()
-            btn4.layer.borderWidth = 0
-            btn4.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        }         
-        if auth.componentsSeparatedByString("认证客户").count > 1 {  
-            btn5.backgroundColor = UIColor.redColor()
-            btn5.layer.borderWidth = 0
-            btn5.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        }
-        
-        
-        
-        
+            btn3.selected = true        }         
+                
         //NSNotificationCenter.defaultCenter().addObserver(self, selector: "textDidEndEditing", name: UITextViewTextDidEndEditingNotification, object: nil)
     }
     
     
     func clickbtn(sender:UIButton)
     {
+        sender.selected = !sender.selected;
         print("点击事件\(sender.currentTitle)")
-        print("背景色\(sender.backgroundColor)")
+        print("state\(sender.state)")
         
-        if(sender.backgroundColor == nil){
-            sender.backgroundColor = UIColor.redColor()
-            sender.layer.borderWidth = 0
-            sender.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-            
-            //公开选中时，全选所有按钮
-            if(sender.currentTitle == "公开"){
-                for item1 in self.butlist {     
-                    item1.backgroundColor = UIColor.redColor()
-                    item1.layer.borderWidth = 0
-                    item1.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                } 
-            }
-                        
-        }else{
-            sender.backgroundColor = nil
-            sender.layer.borderWidth = 1
-            sender.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-            
-            //公开非选中时，非选所有按钮
-            if(sender.currentTitle == "公开"){
-                for item1 in self.butlist {     
-                    item1.backgroundColor = nil
-                    item1.layer.borderWidth = 1
-                    item1.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-                } 
-            }else{
-                btn1.backgroundColor = nil
-                btn1.layer.borderWidth = 1
-                btn1.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-            
-            }
-            
-        }
-        
-        
+        /*
+         点的是公开 则如果选中，则全部都选中 
+         如果非选中，则全部都非选中
+         
+         点的不是公开  则选中  自己选中
+         非选中   自己和公开都非选中
+         */
+        /*
+         2017-02-25 取消联动
+         if(sender.currentTitle == "公开"){
+         for item1 in self.butlist {     
+         item1.selected = sender.selected
+         } 
+         }else{
+         if (sender.selected == false){
+         btn1.selected = false
+         }
+         
+         }
+         */
         
         var authtext:String = ""
         for item1 in self.butlist {     
-            if(item1.backgroundColor != nil){
+            if(item1.selected == true){
                 authtext = authtext + item1.currentTitle! + ","
             }
         }
@@ -478,11 +443,11 @@ class AudioDetail: UIViewController,UITextFieldDelegate,UITextViewDelegate,AVAud
                 if auth.componentsSeparatedByString("公开").count > 1 { 
                     authkey = "1111111111"
                 } else { 
-                    if auth.componentsSeparatedByString("研究所").count > 1 {  
-                        authkey = authkey + "1" 
-                    } else {  
-                        authkey = authkey + "0"
-                    }  
+                    //if auth.componentsSeparatedByString("研究所").count > 1 {  
+                    authkey = authkey + "1"     //研究所权限为默认权限 自动设置为1
+                    //} else {  
+                    //   authkey = authkey + "0"
+                    //}  
                     if auth.componentsSeparatedByString("机构客户").count > 1 {  
                         authkey = authkey + "1" 
                     } else {  
@@ -493,12 +458,12 @@ class AudioDetail: UIViewController,UITextFieldDelegate,UITextViewDelegate,AVAud
                     } else {  
                         authkey = authkey + "0"
                     }
-                    if auth.componentsSeparatedByString("认证客户").count > 1 {  
-                        authkey = authkey+"1" 
-                    } else {  
-                        authkey = authkey + "0"
-                    }
-                    authkey = authkey + "000000"
+                    //if auth.componentsSeparatedByString("认证客户").count > 1 {  
+                    //    authkey = authkey+"1" 
+                    //} else {  
+                    //    authkey = authkey + "0"
+                    //}
+                    authkey = authkey + "0000000"
                 }
                 
                 
